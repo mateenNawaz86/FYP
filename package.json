@@ -1,21 +1,24 @@
 {
-  "name": "mvc",
+  "name": "fyp",
   "version": "1.0.0",
-  "description": "this app is all about mvc",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mateenNawaz86/FYP.git"
+  },
+  "keywords": [],
   "author": "Mateen Nawaz",
   "license": "ISC",
-  "type": "module",
+  "bugs": {
+    "url": "https://github.com/mateenNawaz86/FYP/issues"
+  },
+  "homepage": "https://github.com/mateenNawaz86/FYP#readme",
   "dependencies": {
     "express": "^4.18.2",
     "nodemon": "^2.0.20"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.19.3",
-    "@babel/core": "^7.19.3",
-    "@babel/preset-env": "^7.19.4"
   }
 }
