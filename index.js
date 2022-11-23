@@ -1,4 +1,5 @@
 const express = require("express");
+
 const { connectedToMongo } = require("./database");
 const userRoute = require("./routes/user");
 
