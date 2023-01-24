@@ -1,14 +1,19 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+dotenv.config();
 
 // MONGODB URI
-const uri = "mongodb://localhost:27017/dummy__fyp";
+const mongoURI = process.env.MONGO_URI;
 
 // function for connecting to MongoDB
-const connectedToMongo = () => {
-  mongoose.connect(uri, () => {
-    console.log("Connected to mongo successfully");
-  });
+export const connectedToMongo = () => {
+  mongoose
+    .connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then("Connected to MongoDB successfully!")
+    .catch((err) => {
+      console.log(err);
+    });
 };
-
-// export the connection function
-module.exports = { connectedToMongo };

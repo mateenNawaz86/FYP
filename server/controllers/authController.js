@@ -1,20 +1,22 @@
-const userModel = require("../models/UserModel");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
+import userModel from "../models/UserModel.js";
+import bcrypt from "bcryptjs"; // used for hash password
+import jwt from "jsonwebtoken"; // used for generate JWT_token
+import dotenv from "dotenv";
 dotenv.config();
 
-// SCreate key
+// Secret key
 const SECRET_KEY = process.env.SECRET__KEY;
 
 // Controller for sign up route -> logged in NOT required
-const signUp_user = async (req, res) => {
+export const signUp = async (req, res) => {
   try {
-    // destructure the data from the request
+    // destructure the data from the request body
     const { name, email, password } = req.body;
+
+    // Match requested email with already exists emails
     let user = await userModel.findOne({ email: email });
 
-    // check if the user is already exists or NOT
+    // IF user already exist return response with 400 status code
     if (user) {
       return res.status(400).json({
         error: "User already exists with that email address",
@@ -32,56 +34,46 @@ const signUp_user = async (req, res) => {
       password: secPsw,
     });
 
-    // Cretae a data for token
-    const data = {
-      user: {
-        id: newUser.id,
-      },
-    };
-
-    const authToken = jwt.sign(data, SECRET_KEY);
-    res.json({ authToken });
+    // Save user into database
+    const savedUser = await newUser.save();
+    res.status(201).json(savedUser);
   } catch (error) {
     console.log(error);
   }
 };
 
 // Controller for sign in route -> logged in NOT required
-const signIn = async (req, res) => {
+export const signIn = async (req, res) => {
   try {
+    // Grabe Email, Password from request body
     const { email, password } = req.body;
+    // Find entered email from Databse
     const user = await userModel.findOne({ email });
 
-    // Check if the user exist with this email address
+    // IF requested email address NOT found then throw error
     if (!user) {
       return res
         .status(400)
         .json({ error: "User not found with that email address" });
     }
 
-    // Compare the enter password with given password
+    // Compare the enter password with exist password
     const comparePsw = bcrypt.compare(password, user.password);
+
+    // Return Error IF entered Password wrong
     if (!comparePsw) {
       return res.status(400).json({ error: "Invalid email or password" });
     }
 
     // If user enter correct credentials then return token
     const data = {
-      user: {
-        id: user.id,
-      },
+      id: user.id,
     };
 
-    // return a token
+    // Return JWT_TOKEN to user as a response
     const authToken = jwt.sign(data, SECRET_KEY);
-    res.json({ authToken });
+    res.status(200).json({ authToken });
   } catch (error) {
     console.log(error);
   }
-};
-
-// Export the controller function
-module.exports = {
-  signUp_user,
-  signIn,
 };
