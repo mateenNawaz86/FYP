@@ -1,11 +1,11 @@
 import React from "react";
-import SignUp from "./SignUp";
+import Navbar from "./Navbar";
 
 const HomePage = () => {
   return (
-    <div>
-      <SignUp />
-    </div>
+    <>
+      <Navbar />
+    </>
   );
 };
 

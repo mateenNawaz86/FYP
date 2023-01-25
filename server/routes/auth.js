@@ -11,7 +11,7 @@ import { validateUser, validate } from "../middleware/validator.js";
 router.post("/signup", validateUser, validate, signUp);
 
 // 2. Create a Login route
-router.post("/signin", validateUser, validate, signIn);
+router.post("/signin", signIn);
 
 // Export the router
 export default router;

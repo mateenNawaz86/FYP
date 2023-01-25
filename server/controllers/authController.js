@@ -58,7 +58,7 @@ export const signIn = async (req, res) => {
     }
 
     // Compare the enter password with exist password
-    const comparePsw = bcrypt.compare(password, user.password);
+    const comparePsw = await bcrypt.compare(password, user.password);
 
     // Return Error IF entered Password wrong
     if (!comparePsw) {
@@ -72,7 +72,7 @@ export const signIn = async (req, res) => {
 
     // Return JWT_TOKEN to user as a response
     const authToken = jwt.sign(data, SECRET_KEY);
-    res.status(200).json({ authToken });
+    res.status(200).json({ authToken, user });
   } catch (error) {
     console.log(error);
   }
