@@ -1,8 +1,6 @@
 import React from "react";
 import Form from "../components/Form";
 import { Box, useMediaQuery } from "@mui/material";
-import DummyForm from "../components/DummyForm";
-
 const SignUp = () => {
   const isNonResponsive = useMediaQuery("(min-width:1000px)");
   return (

@@ -44,26 +44,21 @@ const Form = () => {
 
   // Function for handling the register of new user
   const register = async (values, onSubmitProps) => {
-    try {
-      // Saved the user info on local storage
-      let savedUserResponse = await fetch("http://localhost:6000/api/signup", {
-        method: "POST",
-        RequestMode:'no-cors',
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(values),
-      });
+    // Saved the user info on local storage
+    let savedUserResponse = await fetch("http://localhost:6000/api/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values),
+    });
 
-      console.log(JSON.stringify(values));
+    // save the user response
+    const savedUser = await savedUserResponse.json();
+    // Reset the form
+    onSubmitProps.resetForm();
+    // After Register the user set page type to login
 
-      // save the user response
-      const savedUser = await savedUserResponse.json();
-
-      // After Register the user set page type to login
-      if (savedUser) {
-        setPageType("login");
-      }
-    } catch (error) {
-      console.log(error);
+    if (savedUser) {
+      setPageType("login");
     }
   };
 
@@ -71,12 +66,13 @@ const Form = () => {
   const signIn = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch("http://localhost:6000/api/signin", {
       method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(values),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ values }),
     });
 
     // Grabe logged-In info
     const loggedIn = await loggedInResponse.json();
+
     // Reset the form
     onSubmitProps.resetForm();
 

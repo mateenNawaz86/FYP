@@ -1,4 +1,5 @@
 {
+  "proxy": "http://localhost:6000",
   "name": "fyp",
   "version": "1.0.0",
   "description": "",

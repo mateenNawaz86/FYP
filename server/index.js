@@ -1,5 +1,6 @@
 import express from "express"; // for creating express server
 import dotenv from "dotenv"; // for environment variables
+import cors from "cors";
 dotenv.config();
 
 // Database connection
@@ -15,6 +16,9 @@ const port = process.env.PORT || 8000; // Default port
 
 // Midleware used for read/write JSON formate data
 app.use(express.json());
+
+// Invoke cross-origin sharing policy
+app.use(cors());
 
 // ROUTES
 app.use("/api", authRoute);
