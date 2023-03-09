@@ -45,7 +45,7 @@ const Form = () => {
   // Function for handling the register of new user
   const register = async (values, onSubmitProps) => {
     // Saved the user info on local storage
-    let savedUserResponse = await fetch("http://localhost:6000/api/signup", {
+    let savedUserResponse = await fetch("http://localhost:5000/api/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
@@ -64,7 +64,7 @@ const Form = () => {
 
   // Function for control the login page
   const signIn = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:6000/api/signin", {
+    const loggedInResponse = await fetch("http://localhost:5000/api/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ values }),
