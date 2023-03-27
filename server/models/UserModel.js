@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 // Data Pattern for signup route
@@ -25,4 +25,4 @@ const userSchema = new Schema({
 
 // export the model
 const User = mongoose.model("user", userSchema);
-export default User;
+module.exports = User;

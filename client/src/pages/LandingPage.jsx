@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const LandingPage = () => {
   return (
     <div>
-        <h1>Welcome to WBHSP </h1>
+      <h1>Welcome to WBHSP </h1>
     </div>
-  )
-}
+  );
+};
 
-export default LandingPage
+export default LandingPage;

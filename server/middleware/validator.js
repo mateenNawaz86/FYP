@@ -1,7 +1,7 @@
-import { check, validationResult } from "express-validator";
+const { check, validationResult } = require("express-validator");
 
 // Validation checks for new entery
-export const validateUser = [
+exports.validateUser = [
   check("name")
     .isLength({ min: 3 })
     .withMessage("Name must be contain atleast 3 characters")
@@ -22,7 +22,7 @@ export const validateUser = [
 ];
 
 // Return an error array if new user is not valid
-export const validate = (req, res, next) => {
+exports.validate = (req, res, next) => {
   const error = validationResult(req).array();
   console.log(error);
   if (!error.length) return next();

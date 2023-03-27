@@ -1,12 +1,12 @@
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
 dotenv.config();
 
 // MONGODB URI
 const mongoURI = process.env.MONGO_URI;
 
 // function for connecting to MongoDB
-export const connectedToMongo = () => {
+const connectedToMongo = () => {
   mongoose
     .connect(mongoURI, {
       useNewUrlParser: true,
@@ -17,3 +17,5 @@ export const connectedToMongo = () => {
       console.log(err);
     });
 };
+
+module.exports = connectedToMongo;
