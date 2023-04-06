@@ -112,14 +112,19 @@ exports.getResetPsw = async (req, res) => {
   const { id, authToken } = req.params;
   const { email } = req.body;
 
-  // Find entered email from Databse
+  // Find entered email from Database
   const user = await userModel.findOne({ email });
 
-  // Check if this 'id' exist in the database or NOT
-  if (id !== user.id) {
+  // Check if the user exists in the database
+  if (!user) {
     return res
       .status(400)
       .json({ error: "User not found with that email address" });
+  }
+
+  // Check if the user ID matches the ID from the request parameter
+  if (id !== user.id) {
+    return res.status(400).json({ error: "Invalid user ID" });
   }
 
   // If we have a valid id & email address
@@ -158,3 +163,24 @@ exports.postResetPsw = async (req, res) => {
     console.log(error.mess);
   }
 };
+
+// Controller for the change password Route
+// exports.postChangePsw = async (req, res) => {
+//   const { currentPsw, newPsw, email } = req.body;
+
+//   const user = await userModel.find({ email });
+
+//   // verify the user current password
+//   const isValidPsw = await bcrypt.compare(currentPsw, user.password);
+
+//   if (!isValidPsw) {
+//     return res.status(400).json({ error: "Invalid current password!" });
+//   }
+
+//   // Update the user's password with the new password
+//   const hashedPassword = await bcrypt.hash(newPsw, 10);
+//   user.password = hashedPassword;
+//   await user.save();
+
+//   res.json({ message: "Password updated successfully" });
+// };

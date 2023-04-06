@@ -23,7 +23,12 @@ router.post("/forget-password", authController.postForgetPsw);
 router.get("/reset-password/:id/:authToken", authController.getResetPsw);
 
 // 6. Create a POST route for reset-password
-router.post("/reset-password/:id/:authToken");
+router.post("/reset-password/:id/:authToken", authController.postResetPsw);
+
+// 7. Create a GET route for change-password
+
+// 8. Create a POST route for change-psw
+// router.post("/change-password", authController.postChangePsw);
 
 // Export the router
 module.exports = router;

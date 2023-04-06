@@ -1,6 +1,6 @@
 import React from "react";
-import FlexBetween from "../components/FlexBetween";
 import { Link } from "react-router-dom";
+import FlexBetween from "../components/FlexBetween";
 import Button from "@mui/material/Button";
 import {
   FormControl,
@@ -16,7 +16,7 @@ import { setLogout } from "../state";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user);
+  // const user = useSelector((state) => state.user);
   const isAuth = useSelector((state) => state.authToken);
   const fullName = "Mateen";
   const routeChange = () => {
@@ -27,7 +27,7 @@ const Navbar = () => {
     <>
       <FlexBetween padding="1rem 5%" backgroundColor="#fff">
         <h2 className="text-[#4280EA] font-bold text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer">
-          WBHSP
+          HandyHome
         </h2>
         <FlexBetween gap="2rem">
           <Link
@@ -40,7 +40,7 @@ const Navbar = () => {
             className="text-[#000] hover:text-[#4280EA] text-base font-semibold"
             to="/about"
           >
-            About
+            About Us
           </Link>
           <Link
             className=" text-[#000] hover:text-[#4280EA] text-base font-semibold"

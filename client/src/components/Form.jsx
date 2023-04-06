@@ -84,7 +84,7 @@ const Form = () => {
           authToken: loggedIn.authToken,
         })
       );
-      navigate("/home");
+      navigate("/");
     }
   };
 

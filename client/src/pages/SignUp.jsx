@@ -12,10 +12,9 @@ const SignUp = () => {
       backgroundColor="#fff"
     >
       <h1 className="font-medium mb-6 uppercase tracking-wider text-lg text-cyan-500 text-center">
-        Welcome to WBHSP
+        Welcome to HandyHome
       </h1>
       <Form />
-      {/* <DummyForm /> */}
     </Box>
   );
 };
