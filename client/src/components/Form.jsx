@@ -4,7 +4,7 @@ import { Formik } from "formik"; // Used for Validation and error messages
 import * as yup from "yup"; // JavaScript schema builder for value parsing and validation
 import { useNavigate } from "react-router-dom"; // switch to pages
 import { useDispatch } from "react-redux"; // action dispatch
-import { setLogin } from "../state/index"; //Method of state for log-in setup
+import { setLogin } from "../state/userSlice"; //Method of state for log-in setup
 
 // Registor Scehma => Used for how form library saving required INFO
 const registerSchema = yup.object().shape({
@@ -64,24 +64,28 @@ const Form = () => {
 
   // Function for control the login page
   const signIn = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:5000/api/signin", {
-      method: "POST",
+    const response = await fetch("http://localhost:5000/api/signin", {
+      method: "GET",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ values }),
     });
 
+    if (!response.ok) {
+      throw new Error(`Failed to fetch user with ID`);
+    }
+
     // Grabe logged-In info
-    const loggedIn = await loggedInResponse.json();
+    const user = await response.json();
 
     // Reset the form
     onSubmitProps.resetForm();
 
     // After login user navigate to home page
-    if (loggedIn) {
+    if (user) {
       dispatch(
         setLogin({
-          user: loggedIn.user,
-          authToken: loggedIn.authToken,
+          user: user.user,
+          authToken: user.authToken,
         })
       );
       navigate("/");

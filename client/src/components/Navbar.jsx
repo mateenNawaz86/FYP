@@ -16,7 +16,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setLogout } from "../state";
+import { setLogout } from "../state/userSlice";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -24,7 +24,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   const showMenuHandler = () => setShowMenu(!showMenu);
-  const isAuth = useSelector((state) => state.authToken);
+  const isAuth = useSelector((state) => state.user.authToken);
   const fullName = "Mateen";
   const routeChange = () => {
     let path = "/signup";
@@ -57,19 +57,29 @@ const Navbar = () => {
             } md:opacity-100`}
           >
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 md:ml-6 border-b-2 border-[#e7e7e7] md:border-b-0">
-              <Link to="#">Home</Link>
+              <Link to="#" className="hover:text-[#0f48aa]">
+                Home
+              </Link>
             </li>
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 border-b-2 border-[#e7e7e7] md:border-b-0">
-              <Link to="#about">About Us</Link>
+              <Link to="#about" className="hover:text-[#0f48aa]">
+                About Us
+              </Link>
             </li>
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 border-b-2 border-[#e7e7e7] md:border-b-0">
-              <Link to="#services">Services</Link>
+              <Link to="#services" className="hover:text-[#0f48aa]">
+                Services
+              </Link>
             </li>
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0">
-              <Link to="#provider">Become Provider</Link>
+              <Link to="/profile" className="hover:text-[#0f48aa]">
+                Become Provider
+              </Link>
             </li>
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0">
-              <Link to="#contact">Contact Us</Link>
+              <Link to="#contact" className="hover:text-[#0f48aa]">
+                Contact Us
+              </Link>
             </li>
           </ul>
         </div>
