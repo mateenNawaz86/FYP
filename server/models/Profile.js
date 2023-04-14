@@ -14,7 +14,7 @@ const profileSchema = new Schema({
     type: String,
     required: true,
   },
-  cnic: {
+  cnicNumber: {
     type: String,
     required: true,
   },

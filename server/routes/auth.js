@@ -11,7 +11,7 @@ const { validateUser, validate } = require("../middleware/validator");
 router.post("/signup", validateUser, validate, authController.signUp);
 
 // 2. Create a Login route
-router.get("/signin", authController.signIn);
+router.post("/signin", authController.signIn);
 
 // 3. Create a GET route for forget-password
 router.get("/forget-password", authController.getForgetPsw);

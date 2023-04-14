@@ -1,10 +1,10 @@
 const Profile = require("../models/Profile");
 
-
 // 1. Controller for posting a new User profile to the database
 exports.postProfile = async (req, res) => {
   try {
-    const { name, email, contactNum, cnic, address, skill, imgURL } = req.body;
+    const { name, email, contactNum, cnicNumber, address, skill, imgURL } =
+      req.body;
 
     // Match requested email with already exists emails
     let serviceProvider = await Profile.findOne({ email: email });
@@ -17,11 +17,11 @@ exports.postProfile = async (req, res) => {
     }
 
     // Create a new user is here
-    const newServiceProvider = await userModel.create({
+    const newServiceProvider = await Profile.create({
       name: name,
       email: email,
       contactNum: contactNum,
-      cnic: cnic,
+      cnicNumber: cnicNumber,
       address: address,
       skill: skill,
       imgURL: imgURL,

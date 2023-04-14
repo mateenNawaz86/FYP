@@ -64,28 +64,24 @@ const Form = () => {
 
   // Function for control the login page
   const signIn = async (values, onSubmitProps) => {
-    const response = await fetch("http://localhost:5000/api/signin", {
-      method: "GET",
+    const loggedInResponse = await fetch("http://localhost:5000/api/signin", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ values }),
     });
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch user with ID`);
-    }
-
     // Grabe logged-In info
-    const user = await response.json();
+    const loggedIn = await loggedInResponse.json();
 
     // Reset the form
     onSubmitProps.resetForm();
 
     // After login user navigate to home page
-    if (user) {
+    if (loggedIn) {
       dispatch(
         setLogin({
-          user: user.user,
-          authToken: user.authToken,
+          user: loggedIn.user,
+          authToken: loggedIn.authToken,
         })
       );
       navigate("/");

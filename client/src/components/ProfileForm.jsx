@@ -1,137 +1,191 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import React from "react";
 
 const ProfileForm = () => {
-  // Function for handling the register of new user
-  // const register = async (values, onSubmitProps) => {
-  //   // Saved the user info on local storage
-  //   let savedUserResponse = await fetch("http://localhost:5000/api/profile", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify(values),
-  //   });
+  const [enteredInput, setEnteredInput] = useState({
+    name: "",
+    email: "",
+    contactNum: "",
+    cnicNumber: "",
+    address: "",
+    skill: "",
+    imgURL: "",
+  });
 
-  //   // save the user response
-  //   const savedUser = await savedUserResponse.json();
-  //   // Reset the form
-  //   onSubmitProps.resetForm();
-  //   // After Register the user set page type to login
+  const navigate = useNavigate();
 
-  //   if (savedUser) {
-  //     setPageType("login");
-  //   }
-  // };
+  const inputChangeHandler = (event) => {
+    setEnteredInput({
+      ...enteredInput,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const formSubmitHandler = async (event) => {
+    event.preventDefault();
+    const response = await fetch("http://localhost:5000/api/profile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: enteredInput.name,
+        email: enteredInput.email,
+        contactNum: enteredInput.contactNum,
+        cnicNumber: enteredInput.cnicNumber,
+        address: enteredInput.address,
+        skill: enteredInput.skill,
+        imgURL: enteredInput.imgURL,
+      }),
+    });
+
+    const json = await response.json();
+    if (json.success) {
+      localStorage.setItem("token", json.authicationToken);
+      // showAlertHandler("Your account is created successfully", "success");
+      navigate("/");
+    } else {
+      // showAlertHandler("Invailed Details", "error");
+      console.log("Error");
+    }
+  };
   return (
     <>
-      <form class="w-11/12 max-w-lg m-auto mt-20">
-        <div class="flex flex-wrap -mx-3 mb-6">
-          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+      <form
+        onSubmit={formSubmitHandler}
+        className="w-11/12 max-w-lg m-auto mt-20"
+      >
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label
-              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="name"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="name"
             >
               Name
             </label>
             <input
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="name"
               type="text"
               placeholder="Mateen"
+              value={enteredInput.name}
+              onChange={inputChangeHandler}
+              name="name"
             />
-            {/* <p class="text-red-500 text-xs italic">
+            {/* <p className="text-red-500 text-xs italic">
               Please fill out this field.
             </p> */}
           </div>
-          <div class="w-full md:w-1/2 px-3">
+          <div className="w-full md:w-1/2 px-3">
             <label
-              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="email"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="email"
             >
               Email
             </label>
             <input
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="email"
               type="email"
               placeholder="example@gmail.com"
+              value={enteredInput.email}
+              onChange={inputChangeHandler}
+              name="email"
             />
           </div>
-          <div class="w-full md:w-1/2 px-3 mt-6">
+          <div className="w-full md:w-1/2 px-3 mt-6">
             <label
-              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="contact-num"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="mobileNumberInput"
             >
               Contact NO
             </label>
             <input
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="contact-num"
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="mobileNumberInput"
+              value={enteredInput.contactNum}
+              onChange={inputChangeHandler}
+              name="contactNum"
               type="text"
               placeholder="+923326176987"
             />
           </div>
-          <div class="w-full md:w-1/2 px-3 mt-6 ">
+          <div className="w-full md:w-1/2 px-3 mt-6 ">
             <label
-              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="cnic"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="cnic"
             >
               CNIC
             </label>
             <input
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="cnic"
               type="text"
               placeholder="3220345678123"
+              value={enteredInput.cnicNumber}
+              onChange={inputChangeHandler}
+              name="cnicNumber"
             />
           </div>
         </div>
 
-        <div class="flex flex-wrap -mx-3 mb-2">
-          <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <div className="flex flex-wrap -mx-3 mb-2">
+          <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label
-              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="grid-city"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="grid-city"
             >
               Address
             </label>
             <input
-              class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               id="address"
               type="text"
               placeholder="Layyah, Pakistan"
+              onChange={inputChangeHandler}
+              value={enteredInput.address}
+              name="address"
             />
           </div>
-          <div class="w-full md:w-1/2 px-3">
+          <div className="w-full md:w-1/2 px-3">
             <label
-              class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              for="skill"
+              className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              htmlFor="skill"
             >
               Skill
             </label>
-            <div class="relative">
+            <div className="relative">
               <input
-                class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="skill"
                 placeholder="Plunmber"
+                value={enteredInput.skill}
+                onChange={inputChangeHandler}
+                name="skill"
               />
             </div>
           </div>
         </div>
-        <div class="w-full my-6 md:my-0">
+        <div className="w-full my-6 md:my-0">
           <label
-            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-            for="email"
+            className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            htmlFor="email"
           >
             Image URL
           </label>
           <input
-            class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             id="img"
             type="text"
             placeholder="image URL"
+            value={enteredInput.imgURL}
+            onChange={inputChangeHandler}
+            name="imgURL"
           />
         </div>
         <Button
+          type="submit"
           variant="contained"
           sx={{
             margin: "1rem 0",
