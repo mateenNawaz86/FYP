@@ -5,9 +5,9 @@ import Button from "./Button";
 const About = () => {
   return (
     <>
-      <main>
-        <section className="w-4/5 m-auto py-20">
-          <h1 className="text-3xl text-[#4280EA] font-medium text-center">
+      <main className="pt-20">
+        <section className="w-4/5 m-auto pb-20">
+          <h1 className="text-3xl text-orange-500 font-medium text-center">
             About Us
           </h1>
           <p className="text-center text-base text-[#212529] font-medium md:text-xl tracking-wide py-6">

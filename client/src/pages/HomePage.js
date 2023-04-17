@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import About from "../components/About";
 import Services from "../components/Services";
+import Reviews from "./Reviews";
 
 const HomePage = () => {
   return (
@@ -9,6 +10,7 @@ const HomePage = () => {
       <Navbar />
       <About />
       <Services />
+      <Reviews />
     </>
   );
 };

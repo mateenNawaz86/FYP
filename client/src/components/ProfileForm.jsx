@@ -40,9 +40,9 @@ const ProfileForm = () => {
       }),
     });
 
-    const json = await response.json();
-    if (json.success) {
-      localStorage.setItem("token", json.authicationToken);
+    const profile = await response.json();
+    if (profile) {
+      // localStorage.setItem("authToken", json.authToken);
       // showAlertHandler("Your account is created successfully", "success");
       navigate("/");
     } else {

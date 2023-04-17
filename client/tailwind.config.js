@@ -6,6 +6,9 @@ module.exports = {
       flexBasis: {
         "2/7": "45%",
       },
+      maxWidth: {
+        eighty: "80%",
+      },
     },
   },
   plugins: [],
