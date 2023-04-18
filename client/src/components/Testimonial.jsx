@@ -1,6 +1,8 @@
 import React from "react";
 import userOneImg from "../assets/user1.jpg";
 import userTwoImg from "../assets/user2.jpg";
+import userThreeImg from "../assets/user-3.jpg";
+import userFourImg from "../assets/user-4.jpg";
 import { FaStar } from "react-icons/fa";
 
 const Testimonial = () => {
@@ -20,15 +22,29 @@ const Testimonial = () => {
       userImg: userTwoImg,
       date: "August 2021",
     },
+    {
+      name: "Mark Miller",
+      feedback:
+        "Great experience with this seller! The service provided was top-notch and delivered promptly. Communication was clear and professional, making the process smooth and stress-free.",
+      userImg: userThreeImg,
+      date: "May 2022",
+    },
+    {
+      name: "Horeena",
+      feedback:
+        "I had a fantastic experience working with this seller. Their attention to detail and dedication to providing the best possible service was evident in every step of the process. The end result exceeded my expectations and I couldn't be happier.",
+      userImg: userFourImg,
+      date: "June 2020",
+    },
   ];
 
   return (
     <main className="py-20">
-      <section className="max-w-eighty m-auto">
-        <h1 className="text-base sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-20">
+      <section className="max-w-eighty m-auto mb-12">
+        <h1 className="text-base uppercase sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-20">
           What Our Client Say's
         </h1>
-        <div className="grid  grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {userData.map((item, index) => {
             return (
               <div
@@ -54,6 +70,7 @@ const Testimonial = () => {
           })}
         </div>
       </section>
+      <hr />
     </main>
   );
 };

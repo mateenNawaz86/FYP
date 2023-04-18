@@ -7,7 +7,7 @@ const About = () => {
     <>
       <main className="pt-20">
         <section className="w-4/5 m-auto pb-20">
-          <h1 className="text-3xl text-orange-500 font-medium text-center">
+          <h1 className="text-base uppercase sm:text-xl md:text-3xl text-orange-500 font-medium text-center">
             About Us
           </h1>
           <p className="text-center text-base text-[#212529] font-medium md:text-xl tracking-wide py-6">

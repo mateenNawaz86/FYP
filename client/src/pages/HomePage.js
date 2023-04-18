@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import About from "../components/About";
 import Services from "../components/Services";
 import Reviews from "./Reviews";
+import ContactUs from "./ContactUs";
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
       <About />
       <Services />
       <Reviews />
+      <ContactUs />
     </>
   );
 };
