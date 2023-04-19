@@ -47,7 +47,7 @@ const Navbar = () => {
             title="Search Microsoft.com"
           />
         </div>
-        <div className="flex justify-between items-center md:order-1">
+        <nav className="flex justify-between items-center md:order-1">
           <h2 className="text-[#4280EA] font-bold text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer">
             HandyHome
           </h2>
@@ -82,7 +82,7 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-        </div>
+        </nav>
 
         <div className="flex justify-between items-center md:order-3 space-x-4 text-sm">
           <FlexBetween gap="1rem">

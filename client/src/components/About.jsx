@@ -1,6 +1,6 @@
 import React from "react";
 import aboutImg from "../assets/electerician.jpg";
-import Button from "./Button";
+import OrangeButton from "../UI/OrangeButton";
 
 const About = () => {
   return (
@@ -30,7 +30,7 @@ const About = () => {
                 home services. Contact us today to schedule your service and
                 experience the difference!
               </p>
-              <Button>Read More</Button>
+              <OrangeButton>Read More</OrangeButton>
             </div>
             <div className="right-side mt-10 basis-2/7">
               <img src={aboutImg} alt="aboutImg" className="rounded-md" />

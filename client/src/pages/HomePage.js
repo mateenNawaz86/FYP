@@ -2,8 +2,9 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import About from "../components/About";
 import Services from "../components/Services";
-import Reviews from "./Reviews";
 import ContactUs from "./ContactUs";
+import Footer from "../components/Footer";
+import ServiceProvider from "./ServiceProvider";
 
 const HomePage = () => {
   return (
@@ -11,8 +12,9 @@ const HomePage = () => {
       <Navbar />
       <About />
       <Services />
-      <Reviews />
+      <ServiceProvider />
       <ContactUs />
+      <Footer />
     </>
   );
 };

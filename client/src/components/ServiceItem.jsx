@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import BlueButton from "./BlueButton";
 
 const ServiceItem = (props) => {
   const { img, title, description } = props;
@@ -11,7 +11,7 @@ const ServiceItem = (props) => {
         <p className="text-center text-[#757575] mb-3 md:text-sm">
           {description}
         </p>
-        <Button>Book Now</Button>
+        <BlueButton>Book Now</BlueButton>
       </div>
     </>
   );
