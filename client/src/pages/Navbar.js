@@ -49,7 +49,7 @@ const Navbar = () => {
             Services
           </Link>
           <Link
-            to="become-provider"
+            to="/service-provider"
             className="text-[#000] hover:text-[#4280EA] text-base font-semibold"
           >
             Become Provider

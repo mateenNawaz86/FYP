@@ -12,7 +12,7 @@ const HomePage = () => {
       <Navbar />
       <About />
       <Services />
-      <ServiceProvider />
+      {/* <ServiceProvider /> */}
       <ContactUs />
       <Footer />
     </>

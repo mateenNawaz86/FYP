@@ -72,7 +72,7 @@ const Navbar = () => {
               </Link>
             </li>
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 border-b-2 border-[#e7e7e7] md:border-b-0">
-              <Link to="/profile" className="hover:text-[#0f48aa]">
+              <Link to="/service-provider" className="hover:text-[#0f48aa]">
                 Become Provider
               </Link>
             </li>
