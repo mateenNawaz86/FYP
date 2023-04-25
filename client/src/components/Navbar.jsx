@@ -48,9 +48,9 @@ const Navbar = () => {
           />
         </div>
         <nav className="flex justify-between items-center md:order-1">
-          <h2 className="text-[#4280EA] font-bold text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer">
+          <Link to='/' className="text-[#4280EA] font-bold text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer">
             HandyHome
-          </h2>
+          </Link>
           <ul
             className={`md:flex justify-between items-center absolute left-0 w-full md:w-auto md:z-auto md:space-x-5 md:bg-white bg-[#f2f2f2]  md:static text-sm  transition-all duration-300 ease-in pb-6 top-12 md:pb-0 ${
               showMenu ? "left-0 opacity-100" : "left-[-800px]"
