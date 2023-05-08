@@ -48,7 +48,10 @@ const Navbar = () => {
           />
         </div>
         <nav className="flex justify-between items-center md:order-1">
-          <Link to='/' className="text-[#4280EA] font-bold text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer">
+          <Link
+            to="/"
+            className="text-[#4280EA] font-bold text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
+          >
             HandyHome
           </Link>
           <ul

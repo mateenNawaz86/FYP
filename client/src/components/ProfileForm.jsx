@@ -54,7 +54,7 @@ const ProfileForm = () => {
     <>
       <form
         onSubmit={formSubmitHandler}
-        className="w-11/12 max-w-lg m-auto mt-20"
+        className="w-11/12 max-w-lg m-auto my-16"
       >
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">

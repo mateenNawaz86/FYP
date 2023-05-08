@@ -10,6 +10,7 @@ connectedToMongo(); // connect to MONGODB cluster
 // Import routes from ROUTES folder
 const authRoute = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
+const bookingRoute = require("./routes/booking");
 
 // create server using express
 const app = express();
@@ -28,6 +29,7 @@ app.set("views", "views"); // set the dynamic route for file
 // ROUTES
 app.use("/api", authRoute);
 app.use("/api", profileRoutes);
+app.use("/api", bookingRoute);
 
 app.listen(port, () => {
   console.log(`FYP application listening on ${port}`);
