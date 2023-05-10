@@ -1,14 +1,14 @@
 import React from "react";
-import ProfileForm from "../components/ProfileForm";
+import ContactComp from "../components/ContactComp";
 import Footer from "../components/Footer";
 
-const Profile = () => {
+const Contact = () => {
   return (
     <>
-      <ProfileForm />
+      <ContactComp />
       <Footer />
     </>
   );
 };
 
-export default Profile;
+export default Contact;

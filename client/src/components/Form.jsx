@@ -44,7 +44,7 @@ const Form = () => {
 
   // Function for handling the register of new user
   const register = async (values, onSubmitProps) => {
-    // Saved the user info on local storage 
+    // Saved the user info on local storage
     let savedUserResponse = await fetch("http://localhost:5000/api/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -158,15 +158,28 @@ const Form = () => {
             </Box>
 
             {/* BUTTONS SECTION START */}
-            <Box>
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{ margin: "10px 0" }}
+            <div className="flex justify-between items-center">
+              <Box>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{ margin: "10px 0" }}
+                >
+                  {isLogin ? "LOGIN " : "SIGN UP"}
+                </Button>
+              </Box>
+              {/* Typography for switch the pages */}
+              <Typography
+                onClick={() => {
+                  setPageType(isLogin ? "register" : "login");
+                  resetForm();
+                }}
+                className="underline text-cyan-700 text-base cursor-pointer hover:text-cyan-900"
               >
-                {isLogin ? "LOGIN " : "SIGN UP"}
-              </Button>
-            </Box>
+                {isLogin ? "Forgot Password" : ""}
+              </Typography>
+            </div>
+
             {/* BUTTONS SECTION END */}
 
             {/* Typography for switch the pages */}

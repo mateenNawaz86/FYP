@@ -1,5 +1,4 @@
 import React from "react";
-import ServiceItem from "./ServiceItem";
 import plumberImg from "../assets/plumber@2x.png";
 import homeRepImg from "../assets/repair@2x.png";
 import mainAcImg from "../assets/maintenance@2x.png";
@@ -11,6 +10,7 @@ import cleaningImg from "../assets/cleaning.png";
 import firstAdImg from "../assets/medic.png";
 import catSolImg from "../assets/degh.png";
 import homeShiftImg from "../assets/HomeShift.png";
+import ServiceItem from "./ServiceItem";
 
 const Services = () => {
   const serviceData = [

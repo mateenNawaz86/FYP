@@ -1,18 +1,15 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import About from "../components/About";
-import Services from "../components/Services";
-import ContactUs from "./ContactUs";
+import ServiceComp from "../components/ServiceComp";
+import ContactUs from "./contact";
 import Footer from "../components/Footer";
-import ServiceProvider from "./ServiceProvider";
-
+import Testimonial from "../components/Testimonial";
 const HomePage = () => {
   return (
     <>
-      <Navbar />
       <About />
-      <Services />
-      {/* <ServiceProvider /> */}
+      <ServiceComp />
+      <Testimonial />
       <ContactUs />
       <Footer />
     </>

@@ -1,14 +1,14 @@
 import React from "react";
-import ProfileForm from "../components/ProfileForm";
+import About from "../components/About";
 import Footer from "../components/Footer";
 
-const Profile = () => {
+const about = () => {
   return (
     <>
-      <ProfileForm />
+      <About />
       <Footer />
     </>
   );
 };
 
-export default Profile;
+export default about;

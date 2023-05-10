@@ -1,9 +1,9 @@
 import React from "react";
 import { SlCallIn } from "react-icons/sl";
 import { TbMailForward } from "react-icons/tb";
-import ContactForm from "../components/ContactForm";
+import ContactForm from "./ContactForm";
 
-const ContactUs = () => {
+const ContactComp = () => {
   return (
     <>
       <main className="py-10">
@@ -44,4 +44,4 @@ const ContactUs = () => {
   );
 };
 
-export default ContactUs;
+export default ContactComp;

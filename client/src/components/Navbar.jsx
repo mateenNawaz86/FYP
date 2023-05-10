@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { BsList } from "react-icons/bs";
 import { VscSearch } from "react-icons/vsc";
@@ -22,6 +22,7 @@ const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const showMenuHandler = () => setShowMenu(!showMenu);
   const isAuth = useSelector((state) => state.user.authToken);
@@ -55,32 +56,59 @@ const Navbar = () => {
             HandyHome
           </Link>
           <ul
-            className={`md:flex justify-between items-center absolute left-0 w-full md:w-auto md:z-auto md:space-x-5 md:bg-white bg-[#f2f2f2]  md:static text-sm  transition-all duration-300 ease-in pb-6 top-12 md:pb-0 ${
+            className={`md:flex justify-between items-center absolute left-0 w-full md:w-auto md:z-auto md:space-x-5 md:bg-white bg-[#f2f2f2] md:static text-sm transition-all duration-300 ease-in top-12 md:pb-0 ${
               showMenu ? "left-0 opacity-100" : "left-[-800px]"
             } md:opacity-100`}
           >
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 md:ml-6 border-b-2 border-[#e7e7e7] md:border-b-0">
-              <Link to="#" className="hover:text-[#0f48aa]">
+              <Link
+                to="/"
+                className={` hover:text-[#ec5446] ${
+                  location.pathname === "/" ? "text-[#E74133]" : ""
+                }`}
+              >
                 Home
               </Link>
             </li>
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 border-b-2 border-[#e7e7e7] md:border-b-0">
-              <Link to="#about" className="hover:text-[#0f48aa]">
+              <Link
+                to="/about"
+                className={`hover:text-[#ec5446] ${
+                  location.pathname === "/about" ? "text-[#E74133]" : ""
+                }`}
+              >
                 About Us
               </Link>
             </li>
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 border-b-2 border-[#e7e7e7] md:border-b-0">
-              <Link to="#services" className="hover:text-[#0f48aa]">
+              <Link
+                to="/services"
+                className={`hover:text-[#ec5446] ${
+                  location.pathname === "/services" ? "text-[#E74133]" : ""
+                }`}
+              >
                 Services
               </Link>
             </li>
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 border-b-2 border-[#e7e7e7] md:border-b-0">
-              <Link to="/service-provider" className="hover:text-[#0f48aa]">
+              <Link
+                to="/service-provider"
+                className={`hover:text-[#ec5446] ${
+                  location.pathname === "/service-provider"
+                    ? "text-[#E74133]"
+                    : ""
+                }`}
+              >
                 Become Provider
               </Link>
             </li>
             <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0">
-              <Link to="#contact" className="hover:text-[#0f48aa]">
+              <Link
+                to="/contact"
+                className={`hover:text-[#ec5446] ${
+                  location.pathname === "/contact" ? "text-[#E74133]" : ""
+                }`}
+              >
                 Contact Us
               </Link>
             </li>
