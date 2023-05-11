@@ -5,7 +5,7 @@ import homeRepImg from "../assets/repair@2x.png";
 import mainAcImg from "../assets/maintenance@2x.png";
 import pestConImg from "../assets/pest_control@2x.png";
 
-const ServiceComp = () => {
+const Services = () => {
   const serviceData = [
     {
       img: plumberImg,
@@ -58,4 +58,4 @@ const ServiceComp = () => {
   );
 };
 
-export default ServiceComp;
+export default Services;

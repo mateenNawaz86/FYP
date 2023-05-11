@@ -6,7 +6,7 @@ import ContactForm from "./ContactForm";
 const ContactComp = () => {
   return (
     <>
-      <main className="py-10">
+      <main className="py-4 md:py-10">
         <section className="max-w-eighty m-auto mb-12">
           <h1 className="text-base uppercase sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-20">
             Get In Touch

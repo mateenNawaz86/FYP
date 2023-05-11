@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
-const ProfileForm = () => {
+const BookingForm = () => {
   const [enteredInput, setEnteredInput] = useState({
     name: "",
     email: "",
-    contactNum: "",
-    cnicNumber: "",
+    phoneNumber: "",
+    service: "",
     address: "",
-    skill: "",
-    imgURL: "",
+    postalCode: "",
+    description: "",
   });
 
   const navigate = useNavigate();
@@ -24,7 +24,24 @@ const ProfileForm = () => {
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:5000/api/profile", {
+    // const requiredFields = [
+    //   "name",
+    //   "email",
+    //   "address",
+    //   "phoneNumber",
+    //   "service",
+    //   "postalCode",
+    //   "description",
+    // ];
+    // const isFormValid = requiredFields.every(
+    //   (field) => enteredInput[field].trim() !== ""
+    // );
+
+    // if (!isFormValid) {
+    //   console.log("Please fill in all required fields.");
+    //   return;
+    // }
+    const response = await fetch("http://localhost:5000/api/book-service", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -32,21 +49,18 @@ const ProfileForm = () => {
       body: JSON.stringify({
         name: enteredInput.name,
         email: enteredInput.email,
-        contactNum: enteredInput.contactNum,
-        cnicNumber: enteredInput.cnicNumber,
+        phoneNumber: enteredInput.phoneNumber,
+        service: enteredInput.service,
         address: enteredInput.address,
-        skill: enteredInput.skill,
-        imgURL: enteredInput.imgURL,
+        postalCode: enteredInput.postalCode,
+        description: enteredInput.description,
       }),
     });
 
-    const profile = await response.json();
-    if (profile) {
-      // localStorage.setItem("authToken", json.authToken);
-      // showAlertHandler("Your account is created successfully", "success");
+    const booking = await response.json();
+    if (booking) {
       navigate("/");
     } else {
-      // showAlertHandler("Invailed Details", "error");
       console.log("Error");
     }
   };
@@ -54,8 +68,8 @@ const ProfileForm = () => {
     <>
       <main className="py-8">
         <section className="max-w-eighty m-auto mb-12">
-          <h1 className="text-base uppercase underline underline-offset-4 sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-14">
-            Create your profile
+          <h1 className="text-base uppercase underline underline-offset-4 sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-8">
+            Book your sevrice
           </h1>
           <form
             onSubmit={formSubmitHandler}
@@ -78,9 +92,6 @@ const ProfileForm = () => {
                   onChange={inputChangeHandler}
                   name="name"
                 />
-                {/* <p className="text-red-500 text-xs italic">
-              Please fill out this field.
-            </p> */}
               </div>
               <div className="w-full md:w-1/2 px-3">
                 <label
@@ -104,14 +115,14 @@ const ProfileForm = () => {
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                   htmlFor="mobileNumberInput"
                 >
-                  Contact NO
+                  Phone NO
                 </label>
                 <input
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   id="mobileNumberInput"
-                  value={enteredInput.contactNum}
+                  value={enteredInput.phoneNumber}
                   onChange={inputChangeHandler}
-                  name="contactNum"
+                  name="phoneNumber"
                   type="text"
                   placeholder="+923326176987"
                 />
@@ -119,18 +130,18 @@ const ProfileForm = () => {
               <div className="w-full md:w-1/2 px-3 mt-6 ">
                 <label
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  htmlFor="cnic"
+                  htmlFor="service"
                 >
-                  CNIC
+                  Service
                 </label>
                 <input
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="cnic"
+                  id="service"
                   type="text"
-                  placeholder="3220345678123"
-                  value={enteredInput.cnicNumber}
+                  placeholder="Electrician"
+                  value={enteredInput.service}
                   onChange={inputChangeHandler}
-                  name="cnicNumber"
+                  name="service"
                 />
               </div>
             </div>
@@ -158,45 +169,40 @@ const ProfileForm = () => {
                   className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                   htmlFor="skill"
                 >
-                  Skill
+                  Postal Code
                 </label>
                 <div className="relative">
                   <input
                     className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                     id="skill"
-                    placeholder="Plunmber"
-                    value={enteredInput.skill}
+                    placeholder="44000"
+                    value={enteredInput.postalCode}
                     onChange={inputChangeHandler}
-                    name="skill"
+                    name="postalCode"
                   />
                 </div>
               </div>
             </div>
-            <div className="w-full my-6 md:my-0">
+            <div className="w-full my-6">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
                 htmlFor="email"
               >
-                Image URL
+                Description
               </label>
-              <input
+              <textarea
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="img"
+                id="description"
                 type="text"
-                placeholder="image URL"
-                value={enteredInput.imgURL}
+                rows="5"
+                placeholder="Please describe your work..."
+                value={enteredInput.description}
                 onChange={inputChangeHandler}
-                name="imgURL"
-              />
+                name="description"
+              ></textarea>
             </div>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{
-                margin: "1rem 0",
-              }}
-            >
-              Create Profile
+            <Button type="submit" variant="contained">
+              Booking
             </Button>
           </form>
         </section>
@@ -206,4 +212,4 @@ const ProfileForm = () => {
   );
 };
 
-export default ProfileForm;
+export default BookingForm;

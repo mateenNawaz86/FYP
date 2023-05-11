@@ -6,13 +6,17 @@ import Services from "./pages/services";
 import SignUp from "./pages/signUp";
 import ServiceProvider from "./pages/serviceProvider";
 import Profile from "./pages/profile";
+import Booking from "./pages/booking";
 import ContactUs from "./pages/contact";
 import Navbar from "./components/Navbar";
+import BackToTopButton from "./UI/BackToTopButton";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
     <>
       <Navbar />
+      <BackToTopButton />
       <Routes>
         <Route path="/" element={<HomePage />} exact />
         <Route path="/signup" element={<SignUp />} exact />
@@ -21,7 +25,9 @@ const App = () => {
         <Route path="/about" element={<About />} exact />
         <Route path="/services" element={<Services />} exact />
         <Route path="/contact" element={<ContactUs />} exact />
+        <Route path="/book-service" element={<Booking />} exact />
       </Routes>
+      <Footer />
     </>
   );
 };

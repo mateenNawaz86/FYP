@@ -49,7 +49,7 @@ const Testimonial = () => {
             return (
               <div
                 key={index}
-                className="flex flex-col bg-[#fff] p-6 rounded-lg hover:shadow-lg transition-all duration-500"
+                className="flex flex-col bg-[#fff] p-6 rounded-lg shadow-2xl active:shadow-2xl transition-all duration-200 hover:shadow-none"
               >
                 <p className="mb-4 text-[#757575] text-left">{item.feedback}</p>
 
