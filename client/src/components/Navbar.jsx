@@ -19,13 +19,15 @@ import { useNavigate } from "react-router-dom";
 import { setLogout } from "../state/userSlice";
 
 const Navbar = () => {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
   const showMenuHandler = () => setShowMenu(!showMenu);
-  const isAuth = useSelector((state) => state.user.authToken);
+
   const fullName = "Mateen";
   const routeChange = () => {
     let path = "/signup";
@@ -34,24 +36,24 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center bg-white h-14 px-4 md:px-8 lg:px-16">
+      <div className="flex justify-between items-center border-b-2 bg-white h-14 px-4 md:px-8 lg:px-16">
         <div className="flex justify-between items-center space-x-3 md:order-2">
           <p onClick={() => showMenuHandler()}>
             {showMenu ? (
-              <IoClose className="text-2xl cursor-pointer md:hidden" />
+              <IoClose className="text-xl cursor-pointer md:hidden" />
             ) : (
-              <BsList className="text-2xl cursor-pointer md:hidden" />
+              <BsList className="text-xl cursor-pointer md:hidden" />
             )}
           </p>
           <VscSearch
-            className="text-xl cursor-pointer md:hidden"
+            className="text-lg cursor-pointer md:hidden"
             title="Search Microsoft.com"
           />
         </div>
         <nav className="flex justify-between items-center md:order-1">
           <Link
             to="/"
-            className="text-[#4280EA] font-bold text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
+            className="text-[#4280EA] font-bold text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
           >
             HandyHome
           </Link>
@@ -117,10 +119,7 @@ const Navbar = () => {
 
         <div className="flex justify-between items-center md:order-3 space-x-4 text-sm">
           <FlexBetween gap="1rem">
-            <Button variant="contained" onClick={routeChange}>
-              Login
-            </Button>
-            {isAuth && (
+            {isAuthenticated ? (
               <FormControl variant="standard" value={fullName}>
                 <Select
                   value={fullName}
@@ -147,6 +146,10 @@ const Navbar = () => {
                   </MenuItem>
                 </Select>
               </FormControl>
+            ) : (
+              <Button variant="contained" onClick={routeChange}>
+                Login
+              </Button>
             )}
           </FlexBetween>
         </div>

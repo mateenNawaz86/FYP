@@ -8,7 +8,7 @@ const ContactComp = () => {
     <>
       <main className="py-4 md:py-10">
         <section className="max-w-eighty m-auto mb-12">
-          <h1 className="text-base uppercase sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-20">
+          <h1 className="text-base uppercase sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-12">
             Get In Touch
           </h1>
 

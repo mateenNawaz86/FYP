@@ -5,9 +5,9 @@ import OrangeButton from "../UI/OrangeButton";
 const About = () => {
   return (
     <>
-      <main className="pt-20">
-        <section className="w-4/5 m-auto pb-20">
-          <h1 className="text-base uppercase sm:text-xl md:text-3xl text-orange-500 font-medium text-center">
+      <main className="py-4 md:py-10">
+        <section className="w-4/5 m-auto mb-12">
+          <h1 className="text-lg uppercase sm:text-xl md:text-3xl text-orange-500 font-semibold text-center">
             About Us
           </h1>
           <p className="text-center text-base text-[#212529] font-medium md:text-xl tracking-wide py-6">
@@ -16,7 +16,7 @@ const About = () => {
           </p>
           <article className="flex justify-between flex-col md:flex-row">
             <div className="flex justify-center flex-col items-center basis-2/7">
-              <p className="text-base text-[#757575] md:text-lg pb-6">
+              <p className="text-sm text-[#757575] md:text-base pb-6">
                 At HandyHome, we are a team of dedicated professionals who are
                 passionate about providing high-quality home services to our
                 customers. We understand that maintaining a home can be a

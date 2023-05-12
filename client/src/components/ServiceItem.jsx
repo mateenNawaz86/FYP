@@ -1,5 +1,4 @@
 import React from "react";
-import BlueButton from "./BlueButton";
 import { Link } from "react-router-dom";
 
 const ServiceItem = (props) => {

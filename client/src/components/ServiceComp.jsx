@@ -34,9 +34,9 @@ const Services = () => {
   ];
   return (
     <>
-      <main className="pt-20">
+      <main className="py-4 md:py-10">
         <section className="w-4/5 m-auto ">
-          <h1 className="text-base uppercase sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-20">
+          <h1 className="text-base uppercase sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-12">
             HandyHome - Home Service Solution
           </h1>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
