@@ -14,11 +14,17 @@ const ServiceItem = (props) => {
           {description}
         </p>
         <Link
-          to="/book-service"
+          to="/service-providers"
           className="bg-[#4280EA] text-white rounded-full py-1 px-4 hover:bg-[#000000] hover:ease-in duration-200"
         >
           Book Now
         </Link>
+        {/* <Link
+          to="/book-service"
+          className="bg-[#4280EA] text-white rounded-full py-1 px-4 hover:bg-[#000000] hover:ease-in duration-200"
+        >
+          Book Now
+        </Link> */}
       </div>
     </>
   );

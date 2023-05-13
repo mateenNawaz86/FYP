@@ -4,6 +4,7 @@ import ServiceComp from "../components/ServiceComp";
 import ContactUs from "./contact";
 import Testimonial from "../components/Testimonial";
 import LandingPage from "../components/LandingPage";
+import Working from "../components/Working";
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
       <LandingPage />
       <About />
       <ServiceComp />
+      <Working /> 
       <Testimonial />
       <ContactUs />
     </>

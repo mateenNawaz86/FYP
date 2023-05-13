@@ -34,23 +34,25 @@ const Navbar = () => {
     navigate(path);
   };
 
+  
+
   return (
     <>
       <div className="flex justify-between items-center border-b-2 bg-white h-14 px-4 md:px-8 lg:px-16">
-        <div className="flex justify-between items-center space-x-3 md:order-2">
+        <div className="flex justify-between items-center space-x-3 lg:order-2">
           <p onClick={() => showMenuHandler()}>
             {showMenu ? (
-              <IoClose className="text-xl cursor-pointer md:hidden" />
+              <IoClose className="text-xl cursor-pointer lg:hidden" />
             ) : (
-              <BsList className="text-xl cursor-pointer md:hidden" />
+              <BsList className="text-xl cursor-pointer lg:hidden" />
             )}
           </p>
           <VscSearch
-            className="text-lg cursor-pointer md:hidden"
+            className="text-lg cursor-pointer lg:hidden"
             title="Search Microsoft.com"
           />
         </div>
-        <nav className="flex justify-between items-center md:order-1">
+        <nav className="flex justify-between items-center lg:order-1">
           <Link
             to="/"
             className="text-[#4280EA] font-bold text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
@@ -58,44 +60,44 @@ const Navbar = () => {
             HandyHome
           </Link>
           <ul
-            className={`md:flex justify-between items-center absolute left-0 w-full md:w-auto md:z-auto md:space-x-5 md:bg-white bg-[#f2f2f2] md:static text-sm transition-all duration-300 ease-in top-12 md:pb-0 ${
-              showMenu ? "left-0 opacity-100" : "left-[-800px]"
-            } md:opacity-100`}
+            className={`lg:flex justify-between items-center absolute left-0 w-full lg:w-auto lg:z-auto lg:space-x-5 lg:bg-white bg-[#f2f2f2] lg:static text-sm transition-all duration-300 ease-in top-14 lg:pb-0 ${
+              showMenu ? "left-0 opacity-100" : "left-[-1000px]"
+            } lg:opacity-100`}
           >
-            <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 md:ml-6 border-b-2 border-[#e7e7e7] md:border-b-0">
+            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
               <Link
                 to="/"
-                className={` hover:text-[#ec5446] ${
+                className={`${
                   location.pathname === "/" ? "text-[#E74133]" : ""
                 }`}
               >
                 Home
               </Link>
             </li>
-            <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 border-b-2 border-[#e7e7e7] md:border-b-0">
+            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
               <Link
                 to="/about"
-                className={`hover:text-[#ec5446] ${
+                className={`${
                   location.pathname === "/about" ? "text-[#E74133]" : ""
                 }`}
               >
                 About Us
               </Link>
             </li>
-            <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 border-b-2 border-[#e7e7e7] md:border-b-0">
+            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
               <Link
                 to="/services"
-                className={`hover:text-[#ec5446] ${
+                className={`${
                   location.pathname === "/services" ? "text-[#E74133]" : ""
                 }`}
               >
                 Services
               </Link>
             </li>
-            <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0 border-b-2 border-[#e7e7e7] md:border-b-0">
+            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
               <Link
                 to="/service-provider"
-                className={`hover:text-[#ec5446] ${
+                className={` hover:translate-x-2 transition duration-300 ease-in-out ${
                   location.pathname === "/service-provider"
                     ? "text-[#E74133]"
                     : ""
@@ -104,10 +106,10 @@ const Navbar = () => {
                 Become Provider
               </Link>
             </li>
-            <li className="cursor-pointer py-3 px-6 md:py-0 md:px-0">
+            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0">
               <Link
                 to="/contact"
-                className={`hover:text-[#ec5446] ${
+                className={`${
                   location.pathname === "/contact" ? "text-[#E74133]" : ""
                 }`}
               >
@@ -125,7 +127,7 @@ const Navbar = () => {
                   value={fullName}
                   sx={{
                     backgroundColor: "#3366C0",
-                    width: "150px",
+                    width: "auto",
                     borderRadius: "0.25rem",
                     p: "0.25rem 1rem",
                     "& .MuiSvgIcon-root": {

@@ -11,6 +11,7 @@ import ContactUs from "./pages/contact";
 import Navbar from "./components/Navbar";
 import BackToTopButton from "./UI/BackToTopButton";
 import Footer from "./components/Footer";
+import ServiceProList from "./components/ServiceProList";
 
 const App = () => {
   return (
@@ -25,7 +26,8 @@ const App = () => {
         <Route path="/about" element={<About />} exact />
         <Route path="/services" element={<Services />} exact />
         <Route path="/contact" element={<ContactUs />} exact />
-        <Route path="/book-service" element={<Booking />} exact />
+        <Route path="/service-providers" element={<ServiceProList />} exact />
+        {/* <Route path="/book-service" element={<Booking />} exact /> */}
       </Routes>
       <Footer />
     </>

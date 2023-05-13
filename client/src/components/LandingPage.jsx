@@ -1,11 +1,24 @@
 import React from "react";
-import landingImg from "../assets/landing.png";
 import BlueButton from "../UI/BlueButton";
+
+import landingImg from "../assets/landing.png";
+import mobLandingImg from "../assets/mobile-landing.png";
 
 const LandingPage = () => {
   return (
     <>
-      <img src={landingImg} alt="Landing" className="object-cover w-auto" />
+      <div>
+        <img
+          src={mobLandingImg}
+          alt="Landing"
+          className="object-cover w-auto lg:hidden"
+        />
+        <img
+          src={landingImg}
+          alt="Landing"
+          className="object-cover w-auto hidden lg:block"
+        />
+      </div>
       <div className="flex flex-col px-4 py-10 md:bg-white md:shadow-lg md:p-10 md:w-11/13 md:mx-auto md:-translate-y-10 md:rounded lg:shadow-none lg:absolute lg:top-48 lg:left-24 lg:bg-transparent lg:w-fit xl:top-52">
         <h2 className="text-xl font-semibold lg:text-2xl xl:text-3xl">
           The Efficient & Rapid Approach
