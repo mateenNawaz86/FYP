@@ -1,6 +1,20 @@
 const Profile = require("../models/Profile");
 
-// 1. Controller for posting a new User profile to the database
+// 1. Controller for getting the user profile
+exports.getProfile = async (req, res) => {
+  try {
+    // Assuming you have a logged-in user ID stored in req.user
+    const profile = await Profile.find();
+    
+    // Return the profile data
+    res.status(200).json(profile);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+// 2. Controller for posting a new User profile to the database
 exports.postProfile = async (req, res) => {
   try {
     const { name, email, contactNum, cnicNumber, address, skill, imgURL } =

@@ -4,7 +4,10 @@ const router = express.Router();
 const profileController = require("../controllers/profileController");
 const { validateUser, validate } = require("../middleware/profileValidator");
 
-// 1. Route for creating a service provider profile
+// 1. Route for getting the user profile
+router.get("/profile", profileController.getProfile);
+
+// 2. Route for creating a service provider profile
 router.post("/profile", validateUser, validate, profileController.postProfile);
 
 module.exports = router;

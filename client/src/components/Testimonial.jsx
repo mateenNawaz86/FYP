@@ -49,6 +49,7 @@ const Testimonial = () => {
             return (
               <div
                 key={index}
+                // eslint-disable-next-line
                 className="flex flex-col bg-[#fff] p-6 rounded-lg shadow-2xl active:shadow-2xl transition-all duration-200 hover:shadow-none"
               >
                 <p className="mb-4 text-[#757575] text-left">{item.feedback}</p>

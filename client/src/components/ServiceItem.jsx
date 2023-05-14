@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ServiceItem = (props) => {
+  const isAuthenticated = useSelector((state) => state.auth.token);
+
   const { img, title, description } = props;
   return (
     <>
@@ -13,12 +16,14 @@ const ServiceItem = (props) => {
         <p className="text-center text-[#757575] mb-3 md:text-sm">
           {description}
         </p>
-        <Link
-          to="/service-providers"
-          className="bg-[#4280EA] text-white rounded-full py-1 px-4 hover:bg-[#000000] hover:ease-in duration-200"
-        >
-          Book Now
-        </Link>
+        {isAuthenticated && (
+          <Link
+            to="/service-providers"
+            className="bg-[#4280EA] text-white rounded-full py-1 px-4 hover:bg-[#000000] hover:ease-in duration-200"
+          >
+            Book Now
+          </Link>
+        )}
         {/* <Link
           to="/book-service"
           className="bg-[#4280EA] text-white rounded-full py-1 px-4 hover:bg-[#000000] hover:ease-in duration-200"

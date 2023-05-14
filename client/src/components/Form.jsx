@@ -3,8 +3,8 @@ import { Box, TextField, Typography, Button } from "@mui/material";
 import { Formik } from "formik"; // Used for Validation and error messages
 import * as yup from "yup"; // JavaScript schema builder for value parsing and validation
 import { useNavigate } from "react-router-dom"; // switch to pages
-import { useDispatch } from "react-redux"; // action dispatch
-import { setLogin } from "../state/userSlice"; //Method of state for log-in setup
+import { useDispatch, useSelector } from "react-redux"; // action dispatch
+import { signin } from "../state/userSlice"; //Method of state for log-in setup
 
 // Registor Scehma => Used for how form library saving required INFO
 const registerSchema = yup.object().shape({
@@ -63,34 +63,45 @@ const Form = () => {
   };
 
   // Function for control the login page
-  const signIn = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:5000/api/signin", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ values }),
-    });
+  // const signIn = async (values, onSubmitProps) => {
+  //   const loggedInResponse = await fetch("http://localhost:5000/api/signin", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ values }),
+  //   });
 
-    // Grabe logged-In info
-    const loggedIn = await loggedInResponse.json();
+  //   // Grabe logged-In info
+  //   const loggedIn = await loggedInResponse.json();
 
-    // Reset the form
-    onSubmitProps.resetForm();
+  //   // Reset the form
+  //   onSubmitProps.resetForm();
 
-    // After login user navigate to home page
-    if (loggedIn) {
-      dispatch(
-        setLogin({
-          user: loggedIn.user,
-          authToken: loggedIn.authToken,
-        })
-      );
+  //   // After login user navigate to home page
+  //   if (loggedIn) {
+  //     dispatch(
+  //       setLogin({
+  //         user: loggedIn.user,
+  //         authToken: loggedIn.authToken,
+  //       })
+  //     );
+  //     navigate("/");
+  //   }
+  // };
+
+  const isAuthenticated = useSelector((state) => state.auth.token);
+
+  const signIn = (values) => {
+    try {
+      dispatch(signin(values));
       navigate("/");
+    } catch (error) {
+      console.log(error);
     }
   };
 
   // Function working with the help of FORMIK package
   const submitHandler = async (values, onSubmitProps) => {
-    if (isLogin) await signIn(values, onSubmitProps);
+    if (isLogin) signIn(values, onSubmitProps);
     console.log(values);
     console.log(JSON.stringify(values));
     if (isRegister) await register(values, onSubmitProps);
@@ -169,15 +180,17 @@ const Form = () => {
                 </Button>
               </Box>
               {/* Typography for switch the pages */}
-              <Typography
-                onClick={() => {
-                  setPageType(isLogin ? "register" : "login");
-                  resetForm();
-                }}
-                className="underline text-cyan-700 text-base cursor-pointer hover:text-cyan-900"
-              >
-                {isLogin ? "Forgot Password" : ""}
-              </Typography>
+              {isAuthenticated && (
+                <Typography
+                  onClick={() => {
+                    setPageType(isLogin ? "register" : "login");
+                    resetForm();
+                  }}
+                  className="underline text-cyan-700 text-base cursor-pointer hover:text-cyan-900"
+                >
+                  {isLogin ? "Forgot Password" : ""}
+                </Typography>
+              )}
             </div>
 
             {/* BUTTONS SECTION END */}

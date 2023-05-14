@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/services" element={<Services />} exact />
         <Route path="/contact" element={<ContactUs />} exact />
         <Route path="/service-providers" element={<ServiceProList />} exact />
-        {/* <Route path="/book-service" element={<Booking />} exact /> */}
+        <Route path="/book-service" element={<Booking />} exact />
       </Routes>
       <Footer />
     </>

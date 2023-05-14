@@ -19,7 +19,8 @@ import { useNavigate } from "react-router-dom";
 import { setLogout } from "../state/userSlice";
 
 const Navbar = () => {
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.token);
+  // const user = useSelector((state) => state.auth.user);
 
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
@@ -27,14 +28,11 @@ const Navbar = () => {
   const location = useLocation();
 
   const showMenuHandler = () => setShowMenu(!showMenu);
+  const user = useSelector((state) => state.auth.user);
 
-  const fullName = "Mateen";
   const routeChange = () => {
-    let path = "/signup";
-    navigate(path);
+    navigate("/signup");
   };
-
-  
 
   return (
     <>
@@ -59,80 +57,84 @@ const Navbar = () => {
           >
             HandyHome
           </Link>
-          <ul
-            className={`lg:flex justify-between items-center absolute left-0 w-full lg:w-auto lg:z-auto lg:space-x-5 lg:bg-white bg-[#f2f2f2] lg:static text-sm transition-all duration-300 ease-in top-14 lg:pb-0 ${
-              showMenu ? "left-0 opacity-100" : "left-[-1000px]"
-            } lg:opacity-100`}
-          >
-            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
-              <Link
-                to="/"
-                className={`${
-                  location.pathname === "/" ? "text-[#E74133]" : ""
-                }`}
-              >
-                Home
-              </Link>
-            </li>
-            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
-              <Link
-                to="/about"
-                className={`${
-                  location.pathname === "/about" ? "text-[#E74133]" : ""
-                }`}
-              >
-                About Us
-              </Link>
-            </li>
-            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
-              <Link
-                to="/services"
-                className={`${
-                  location.pathname === "/services" ? "text-[#E74133]" : ""
-                }`}
-              >
-                Services
-              </Link>
-            </li>
-            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
-              <Link
-                to="/service-provider"
-                className={` hover:translate-x-2 transition duration-300 ease-in-out ${
-                  location.pathname === "/service-provider"
-                    ? "text-[#E74133]"
-                    : ""
-                }`}
-              >
-                Become Provider
-              </Link>
-            </li>
-            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0">
-              <Link
-                to="/contact"
-                className={`${
-                  location.pathname === "/contact" ? "text-[#E74133]" : ""
-                }`}
-              >
-                Contact Us
-              </Link>
-            </li>
-          </ul>
+          {isAuthenticated && (
+            <ul
+              className={`lg:flex justify-between items-center absolute left-0 w-full lg:w-auto lg:z-auto lg:space-x-5 lg:bg-white bg-[#f2f2f2] lg:static text-sm transition-all duration-300 ease-in top-14 lg:pb-0 ${
+                showMenu ? "left-0 opacity-100" : "left-[-1000px]"
+              } lg:opacity-100`}
+            >
+              <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
+                <Link
+                  to="/"
+                  className={`${
+                    location.pathname === "/" ? "text-[#E74133]" : ""
+                  }`}
+                >
+                  Home
+                </Link>
+              </li>
+              <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
+                <Link
+                  to="/about"
+                  className={`${
+                    location.pathname === "/about" ? "text-[#E74133]" : ""
+                  }`}
+                >
+                  About Us
+                </Link>
+              </li>
+              <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
+                <Link
+                  to="/services"
+                  className={`${
+                    location.pathname === "/services" ? "text-[#E74133]" : ""
+                  }`}
+                >
+                  Services
+                </Link>
+              </li>
+              <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
+                <Link
+                  to="/service-provider"
+                  className={` hover:translate-x-2 transition duration-300 ease-in-out ${
+                    location.pathname === "/service-provider"
+                      ? "text-[#E74133]"
+                      : ""
+                  }`}
+                >
+                  Become Provider
+                </Link>
+              </li>
+              <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0">
+                <Link
+                  to="/contact"
+                  className={`${
+                    location.pathname === "/contact" ? "text-[#E74133]" : ""
+                  }`}
+                >
+                  Contact Us
+                </Link>
+              </li>
+            </ul>
+          )}
         </nav>
 
         <div className="flex justify-between items-center md:order-3 space-x-4 text-sm">
           <FlexBetween gap="1rem">
             {isAuthenticated ? (
-              <FormControl variant="standard" value={fullName}>
+              <FormControl variant="standard" value={user}>
                 <Select
-                  value={fullName}
+                  value={user}
                   sx={{
                     backgroundColor: "#3366C0",
                     width: "auto",
                     borderRadius: "0.25rem",
+                    color: "#fff",
                     p: "0.25rem 1rem",
                     "& .MuiSvgIcon-root": {
                       pr: "0.25rem",
                       width: "3rem",
+                      color: "#fff",
                     },
                     "& .MuiSelect-select:focus": {
                       backgroundColor: "#3366C0",
@@ -140,8 +142,8 @@ const Navbar = () => {
                   }}
                   input={<InputBase />}
                 >
-                  <MenuItem value={fullName}>
-                    <Typography>{fullName}</Typography>
+                  <MenuItem value={user}>
+                    <Typography>{user}</Typography>
                   </MenuItem>
                   <MenuItem onClick={() => dispatch(setLogout())}>
                     Log Out

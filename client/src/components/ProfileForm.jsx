@@ -42,11 +42,8 @@ const ProfileForm = () => {
 
     const profile = await response.json();
     if (profile) {
-      // localStorage.setItem("authToken", json.authToken);
-      // showAlertHandler("Your account is created successfully", "success");
-      navigate("/");
+      navigate("/service-providers");
     } else {
-      // showAlertHandler("Invailed Details", "error");
       console.log("Error");
     }
   };
