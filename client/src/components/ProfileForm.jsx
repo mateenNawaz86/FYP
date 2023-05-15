@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
 const ProfileForm = () => {
+  const navigate = useNavigate();
   const [enteredInput, setEnteredInput] = useState({
     name: "",
     email: "",
@@ -11,9 +12,9 @@ const ProfileForm = () => {
     address: "",
     skill: "",
     imgURL: "",
+    description: "",
   });
 
-  const navigate = useNavigate();
 
   const inputChangeHandler = (event) => {
     setEnteredInput({
@@ -37,6 +38,7 @@ const ProfileForm = () => {
         address: enteredInput.address,
         skill: enteredInput.skill,
         imgURL: enteredInput.imgURL,
+        description: enteredInput.description,
       }),
     });
 
@@ -75,9 +77,6 @@ const ProfileForm = () => {
                   onChange={inputChangeHandler}
                   name="name"
                 />
-                {/* <p className="text-red-500 text-xs italic">
-              Please fill out this field.
-            </p> */}
               </div>
               <div className="w-full md:w-1/2 px-3">
                 <label
@@ -169,10 +168,10 @@ const ProfileForm = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full my-6 md:my-0">
+            <div className="w-full my-6">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="email"
+                htmlFor="img"
               >
                 Image URL
               </label>
@@ -185,6 +184,24 @@ const ProfileForm = () => {
                 onChange={inputChangeHandler}
                 name="imgURL"
               />
+            </div>
+            <div className="w-full md:my-0">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="description"
+              >
+                Descrption
+              </label>
+              <textarea
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="description"
+                type="text"
+                rows="5"
+                placeholder="Please describe yourelf..."
+                value={enteredInput.description}
+                onChange={inputChangeHandler}
+                name="description"
+              ></textarea>
             </div>
             <Button
               type="submit"

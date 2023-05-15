@@ -62,32 +62,7 @@ const Form = () => {
     }
   };
 
-  // Function for control the login page
-  // const signIn = async (values, onSubmitProps) => {
-  //   const loggedInResponse = await fetch("http://localhost:5000/api/signin", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ values }),
-  //   });
-
-  //   // Grabe logged-In info
-  //   const loggedIn = await loggedInResponse.json();
-
-  //   // Reset the form
-  //   onSubmitProps.resetForm();
-
-  //   // After login user navigate to home page
-  //   if (loggedIn) {
-  //     dispatch(
-  //       setLogin({
-  //         user: loggedIn.user,
-  //         authToken: loggedIn.authToken,
-  //       })
-  //     );
-  //     navigate("/");
-  //   }
-  // };
-
+  
   const isAuthenticated = useSelector((state) => state.auth.token);
 
   const signIn = (values) => {
@@ -102,7 +77,7 @@ const Form = () => {
   // Function working with the help of FORMIK package
   const submitHandler = async (values, onSubmitProps) => {
     if (isLogin) signIn(values, onSubmitProps);
-    console.log(values);
+    console.log(values.name);
     console.log(JSON.stringify(values));
     if (isRegister) await register(values, onSubmitProps);
   };
