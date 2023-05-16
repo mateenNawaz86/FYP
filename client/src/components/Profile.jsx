@@ -39,7 +39,7 @@ const Profile = () => {
 
             <article className="flex flex-col md:flex-row gap-8 justify-between items-center mt-12 shadow-xl p-8 rounded-sm">
               <img
-                className="rounded-full border-dashed border-2 border-orange-600 hover:shadow-lg sm:rounded-sm"
+                className="rounded-full w-40  border-dashed border-2 border-orange-600 hover:shadow-lg sm:rounded-sm"
                 src={profile.imgURL}
                 alt="Profile"
               />

@@ -5,7 +5,7 @@ import About from "./pages/about";
 import Services from "./pages/services";
 import SignUp from "./pages/signUp";
 import ServiceProvider from "./pages/serviceProvider";
-import Profiles from "./pages/profile";
+import ProfileCreation from "./pages/profile";
 import Booking from "./pages/booking";
 import ContactUs from "./pages/contact";
 import Navbar from "./components/Navbar";
@@ -23,11 +23,11 @@ const App = () => {
         <Route path="/" element={<HomePage />} exact />
         <Route path="/signup" element={<SignUp />} exact />
         <Route path="/service-provider" element={<ServiceProvider />} exact />
-        <Route path="/create-profile" element={<Profiles />} exact />
         <Route path="/about" element={<About />} exact />
         <Route path="/services" element={<Services />} exact />
         <Route path="/contact" element={<ContactUs />} exact />
         <Route path="/service-providers" element={<ServiceProList />} exact />
+        <Route path="/create-profile" element={<ProfileCreation />} exact />
         <Route path="/book-service" element={<Booking />} exact />
         <Route path="/api/profile-detail/:id" element={<Profile />} exact />
       </Routes>

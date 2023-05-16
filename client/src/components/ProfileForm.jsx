@@ -15,7 +15,6 @@ const ProfileForm = () => {
     description: "",
   });
 
-
   const inputChangeHandler = (event) => {
     setEnteredInput({
       ...enteredInput,
@@ -25,7 +24,7 @@ const ProfileForm = () => {
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:5000/api/profile", {
+    const response = await fetch("http://localhost:5000/api/create-profile", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -123,7 +122,7 @@ const ProfileForm = () => {
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   id="cnic"
                   type="text"
-                  placeholder="3220345678123"
+                  placeholder="32203-6452314-9"
                   value={enteredInput.cnicNumber}
                   onChange={inputChangeHandler}
                   name="cnicNumber"

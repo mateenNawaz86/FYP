@@ -8,9 +8,17 @@ const { validateUser, validate } = require("../middleware/profileValidator");
 router.get("/profile", profileController.getProfiles);
 
 // 2. Route for creating a service provider profile
-router.post("/profile", validateUser, validate, profileController.postProfile);
+router.post(
+  "/create-profile",
+  validateUser,
+  validate,
+  profileController.postProfile
+);
 
 // 3. Route for getting the single profile detail
 router.get("/profile-detail/:id", profileController.getProfile);
+
+// 4. Route for search a profile with skill
+router.get("/search-profile", profileController.getSearchedProfile);
 
 module.exports = router;

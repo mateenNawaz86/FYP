@@ -78,3 +78,22 @@ exports.getProfile = async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 };
+
+// Controller for getting searched profile
+exports.getSearchedProfile = async (req, res) => {
+  try {
+    const { skill } = req.query;
+
+    if (!skill) {
+      return res.status(400).json({ message: "Skill parameter is required." });
+    }
+
+    // Find profiles by skill using Mongoose
+    const filteredProfiles = await Profile.find({ skill });
+
+    res.json(filteredProfiles);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};

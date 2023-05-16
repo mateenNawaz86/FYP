@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import FlexBetween from "../components/FlexBetween";
+import Button from "@mui/material/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { setLogout } from "../state/userSlice";
 
 import { BsList } from "react-icons/bs";
 import { VscSearch } from "react-icons/vsc";
 import { IoClose } from "react-icons/io5";
-import FlexBetween from "../components/FlexBetween";
-import Button from "@mui/material/Button";
+
 import {
   FormControl,
   Select,
@@ -13,10 +17,6 @@ import {
   Typography,
   InputBase,
 } from "@mui/material";
-
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { setLogout } from "../state/userSlice";
 
 const Navbar = () => {
   const isAuthenticated = useSelector((state) => state.auth.token);
@@ -30,6 +30,8 @@ const Navbar = () => {
   const showMenuHandler = () => setShowMenu(!showMenu);
   const user = useSelector((state) => state.auth.user);
 
+  const userName = user.slice(0, 6);
+
   const routeChange = () => {
     navigate("/signup");
   };
@@ -40,20 +42,20 @@ const Navbar = () => {
         <div className="flex justify-between items-center space-x-3 lg:order-2">
           <p onClick={() => showMenuHandler()}>
             {showMenu ? (
-              <IoClose className="text-xl cursor-pointer lg:hidden" />
+              <IoClose className="text-2xl cursor-pointer lg:hidden" />
             ) : (
-              <BsList className="text-xl cursor-pointer lg:hidden" />
+              <BsList className="text-2xl cursor-pointer lg:hidden" />
             )}
           </p>
           <VscSearch
-            className="text-lg cursor-pointer lg:hidden"
+            className="text-lg cursor-pointer hidden"
             title="Search Microsoft.com"
           />
         </div>
         <nav className="flex justify-between items-center lg:order-1">
           <Link
             to="/"
-            className="text-[#4280EA] font-bold text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
+            className="text-[#4280EA] font-bold text-xs sm:text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
           >
             HandyHome
           </Link>
@@ -122,9 +124,9 @@ const Navbar = () => {
         <div className="flex justify-between items-center md:order-3 space-x-4 text-sm">
           <FlexBetween gap="1rem">
             {isAuthenticated ? (
-              <FormControl variant="standard" value={user}>
+              <FormControl variant="standard" value={userName}>
                 <Select
-                  value={user}
+                  value={userName}
                   sx={{
                     backgroundColor: "#3366C0",
                     width: "auto",
@@ -132,7 +134,6 @@ const Navbar = () => {
                     color: "#fff",
                     p: "0.25rem 1rem",
                     "& .MuiSvgIcon-root": {
-                      pr: "0.25rem",
                       width: "3rem",
                       color: "#fff",
                     },
@@ -142,8 +143,8 @@ const Navbar = () => {
                   }}
                   input={<InputBase />}
                 >
-                  <MenuItem value={user}>
-                    <Typography>{user}</Typography>
+                  <MenuItem value={userName}>
+                    <Typography>{userName}</Typography>
                   </MenuItem>
                   <MenuItem onClick={() => dispatch(setLogout())}>
                     Log Out
