@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Box, TextField, Typography, Button } from "@mui/material";
 import { Formik } from "formik"; // Used for Validation and error messages
 import * as yup from "yup"; // JavaScript schema builder for value parsing and validation
-import { useNavigate } from "react-router-dom"; // switch to pages
-import { useDispatch, useSelector } from "react-redux"; // action dispatch
+import { Link, useNavigate } from "react-router-dom"; // switch to pages
+import { useDispatch } from "react-redux"; // action dispatch
 import { signin } from "../state/userSlice"; //Method of state for log-in setup
 
 // Registor Scehma => Used for how form library saving required INFO
@@ -61,9 +61,6 @@ const Form = () => {
       setPageType("login");
     }
   };
-
-  
-  const isAuthenticated = useSelector((state) => state.auth.token);
 
   const signIn = (values) => {
     try {
@@ -154,18 +151,15 @@ const Form = () => {
                   {isLogin ? "LOGIN " : "SIGN UP"}
                 </Button>
               </Box>
-              {/* Typography for switch the pages */}
-              {isAuthenticated && (
-                <Typography
-                  onClick={() => {
-                    setPageType(isLogin ? "register" : "login");
-                    resetForm();
-                  }}
-                  className="underline text-cyan-700 text-base cursor-pointer hover:text-cyan-900"
-                >
-                  {isLogin ? "Forgot Password" : ""}
-                </Typography>
-              )}
+
+              {/* Typography for /reset-password */}
+
+              <Link
+                to="/reset-password"
+                className="underline text-cyan-700 text-base cursor-pointer hover:text-cyan-900"
+              >
+                Forgot Password
+              </Link>
             </div>
 
             {/* BUTTONS SECTION END */}

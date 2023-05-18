@@ -1,6 +1,8 @@
 const userModel = require("../models/UserModel");
 const bcrypt = require("bcryptjs"); // used for hash password
 const jwt = require("jsonwebtoken"); // used for generate JWT_token
+const { sendPasswordResetEmail } = require("../utils/email");
+
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -78,109 +80,30 @@ exports.signIn = async (req, res) => {
   }
 };
 
-// GET Controller for forget-password
-exports.getForgetPsw = (req, res) => {
-  res.render("forget-password");
-};
-
-// POST controller for forget-password
-exports.postForgetPsw = async (req, res, next) => {
-  const { email } = req.body;
-  // Find entered email from Databse
-  const user = await userModel.findOne({ email });
-
-  if (!user) {
-    return res.status(400).json({ error: "User NOT resgistered!" });
-  }
-
-  // User exist & now create a one time valid link for 15m
-  const secret = SECRET_KEY + user.password;
-  const payload = {
-    email: user.email,
-    id: user.id,
-  };
-
-  const authToken = jwt.sign(payload, secret, { expiresIn: "10m" });
-  const link = `http://localhost:5000/api/reset-password/${user.id}/${authToken}`;
-  console.log(link);
-
-  res.send("Password reset link successfully send to the user email...");
-};
-
-// GET controller for reset-password route
-exports.getResetPsw = async (req, res) => {
-  const { id, authToken } = req.params;
+// Controller for forgot password
+exports.resetPassword = async (req, res) => {
   const { email } = req.body;
 
-  // Find entered email from Database
-  const user = await userModel.findOne({ email });
-
-  // Check if the user exists in the database
-  if (!user) {
-    return res
-      .status(400)
-      .json({ error: "User not found with that email address" });
-  }
-
-  // Check if the user ID matches the ID from the request parameter
-  if (id !== user.id) {
-    return res.status(400).json({ error: "Invalid user ID" });
-  }
-
-  // If we have a valid id & email address
-  const secret = SECRET_KEY + user.password;
   try {
-    const payload = jwt.verify(authToken, secret);
-    res.render("reset-password", { email: email });
+    // Check if the user exists
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Generate a password reset token
+    user.generatePasswordResetToken();
+
+    // Save the user with the reset token
+    await user.save();
+
+    // Send password reset email
+    await sendPasswordResetEmail(user.email, user.resetToken);
+
+    res.status(200).json({ message: "Password reset email sent" });
   } catch (error) {
-    console.log(error.message);
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
-
-// POST controller for the Reset-password
-exports.postResetPsw = async (req, res) => {
-  const { id, authToken } = req.params;
-  const { email, password } = req.body;
-
-  // Find entered email from Databse
-  const user = await userModel.findOne({ email });
-
-  // Check if this 'id' exist in the database or NOT
-  if (id !== user.id) {
-    return res
-      .status(400)
-      .json({ error: "User not found with that email address" });
-  }
-
-  const secret = SECRET_KEY + user.password;
-  try {
-    const payload = jwt.sign(authToken, secret);
-
-    // We can simply find the user  with the payload email & id and update the psw
-    // Always hash the pse before saving
-    user.password = password;
-  } catch (error) {
-    console.log(error.mess);
-  }
-};
-
-// Controller for the change password Route
-// exports.postChangePsw = async (req, res) => {
-//   const { currentPsw, newPsw, email } = req.body;
-
-//   const user = await userModel.find({ email });
-
-//   // verify the user current password
-//   const isValidPsw = await bcrypt.compare(currentPsw, user.password);
-
-//   if (!isValidPsw) {
-//     return res.status(400).json({ error: "Invalid current password!" });
-//   }
-
-//   // Update the user's password with the new password
-//   const hashedPassword = await bcrypt.hash(newPsw, 10);
-//   user.password = hashedPassword;
-//   await user.save();
-
-//   res.json({ message: "Password updated successfully" });
-// };

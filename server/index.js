@@ -4,7 +4,7 @@ const cors = require("cors");
 dotenv.config();
 
 // Database connection
-const connectedToMongo = require("./database");
+const connectedToMongo = require("./utils/database");
 connectedToMongo(); // connect to MONGODB cluster
 
 // Import routes from ROUTES folder

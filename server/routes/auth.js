@@ -13,22 +13,8 @@ router.post("/signup", validateUser, validate, authController.signUp);
 // 2. Create a Login route
 router.post("/signin", authController.signIn);
 
-// 3. Create a GET route for forget-password
-router.get("/forget-password", authController.getForgetPsw);
-
 // 4. Create a POST route for forget-password
-router.post("/forget-password", authController.postForgetPsw);
-
-// 5. Create a GET route for reset-password
-router.get("/reset-password/:id/:authToken", authController.getResetPsw);
-
-// 6. Create a POST route for reset-password
-router.post("/reset-password/:id/:authToken", authController.postResetPsw);
-
-// 7. Create a GET route for change-password
-
-// 8. Create a POST route for change-psw
-// router.post("/change-password", authController.postChangePsw);
+router.post("/reset-password", authController.resetPassword);
 
 // Export the router
 module.exports = router;
