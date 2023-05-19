@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
-const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
+
+const dotenv = require("dotenv");
+dotenv.config();
 
 const { Schema } = mongoose;
 
@@ -29,8 +32,10 @@ const userSchema = new Schema({
 
 // Method to generate a password reset token
 userSchema.methods.generatePasswordResetToken = function () {
-  this.resetToken = crypto.randomBytes(20).toString("hex");
-  this.resetTokenExpiration = Date.now() + 900000; // Token valid for 1 hour
+  this.resetToken = jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+  this.resetTokenExpiration = Date.now() + 60 * 60 * 1000; // Token valid for 1 hour
 };
 
 // export the model

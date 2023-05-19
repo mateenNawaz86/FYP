@@ -13,6 +13,7 @@ import BackToTopButton from "./UI/BackToTopButton";
 import Footer from "./components/Footer";
 import ServiceProList from "./components/ServiceProList";
 import Profile from "./components/Profile";
+import ForgotPsw from "./components/ForgotPsw";
 import ResetPsw from "./components/ResetPsw";
 
 const App = () => {
@@ -23,7 +24,8 @@ const App = () => {
       <Routes>
         <Route path="/" element={<HomePage />} exact />
         <Route path="/signup" element={<SignUp />} exact />
-        <Route path="/reset-password" element={<ResetPsw />} exact />
+        <Route path="/reset-password" element={<ForgotPsw />} exact />
+        <Route path="/reset-password/:token" element={<ResetPsw />} exact />
         <Route path="/service-provider" element={<ServiceProvider />} exact />
         <Route path="/about" element={<About />} exact />
         <Route path="/services" element={<Services />} exact />

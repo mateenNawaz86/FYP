@@ -6,8 +6,6 @@ const { sendPasswordResetEmail } = require("../utils/email");
 const dotenv = require("dotenv");
 dotenv.config();
 
-// Secret key
-const SECRET_KEY = process.env.SECRET__KEY;
 
 // Controller for sign up route -> logged in NOT required
 exports.signUp = async (req, res) => {
@@ -73,7 +71,7 @@ exports.signIn = async (req, res) => {
     };
 
     // Return JWT_TOKEN to user as a response
-    const authToken = jwt.sign(data, SECRET_KEY);
+    const authToken = jwt.sign(data, process.env.JWT_SECRET);
     res.status(200).json({ authToken, user });
   } catch (error) {
     console.log(error);
@@ -81,7 +79,7 @@ exports.signIn = async (req, res) => {
 };
 
 // Controller for forgot password
-exports.resetPassword = async (req, res) => {
+exports.forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -102,6 +100,37 @@ exports.resetPassword = async (req, res) => {
     await sendPasswordResetEmail(user.email, user.resetToken);
 
     res.status(200).json({ message: "Password reset email sent" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Controller for change the psw via link
+exports.postResetPsw = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  try {
+    // Verify the reset token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.userId;
+
+    // Find the user
+    const user = await userModel.findById(userId);
+
+    // IF user NOT exist with that ID
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    user.resetToken = undefined;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successful" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

@@ -1,20 +1,23 @@
 const express = require("express");
 const router = express.Router();
 
-// import the user controller
+// 1. import the user controller
 const authController = require("../controllers/authController");
 
-// import the middleware for validation
+// 2. import the middleware for validation
 const { validateUser, validate } = require("../middleware/validator");
 
-// 1. Create a Signup route
+// 3. Create a Signup route
 router.post("/signup", validateUser, validate, authController.signUp);
 
-// 2. Create a Login route
+// 4. Create a Login route
 router.post("/signin", authController.signIn);
 
-// 4. Create a POST route for forget-password
-router.post("/reset-password", authController.resetPassword);
+// 5. Create a POST route for reset-password email sending
+router.post("/reset-password", authController.forgotPassword);
+
+// 6. Create a POST route for chaning psw through link
+router.post("/reset-password/:token", authController.postResetPsw);
 
 // Export the router
 module.exports = router;
