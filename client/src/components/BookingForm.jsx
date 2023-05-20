@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
-const BookingForm = () => {
+const BookingForm = ({ alertHandler }) => {
   const [enteredInput, setEnteredInput] = useState({
     name: "",
     email: "",
@@ -24,23 +24,6 @@ const BookingForm = () => {
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
-    // const requiredFields = [
-    //   "name",
-    //   "email",
-    //   "address",
-    //   "phoneNumber",
-    //   "service",
-    //   "postalCode",
-    //   "description",
-    // ];
-    // const isFormValid = requiredFields.every(
-    //   (field) => enteredInput[field].trim() !== ""
-    // );
-
-    // if (!isFormValid) {
-    //   console.log("Please fill in all required fields.");
-    //   return;
-    // }
     const response = await fetch("http://localhost:5000/api/book-service", {
       method: "POST",
       headers: {
@@ -60,10 +43,16 @@ const BookingForm = () => {
     const booking = await response.json();
     if (booking) {
       navigate("/");
+      alertHandler("Your service has been booked successfully!", "success");
     } else {
       console.log("Error");
+      alertHandler("An error occurred while booking the service.", "error");
     }
   };
+
+  const isFormValid = Object.values(enteredInput).every(
+    (value) => value.trim() !== ""
+  );
   return (
     <>
       <main className="py-8">
@@ -201,7 +190,7 @@ const BookingForm = () => {
                 name="description"
               ></textarea>
             </div>
-            <Button type="submit" variant="contained">
+            <Button type="submit" variant="contained" disabled={!isFormValid}>
               Booking
             </Button>
           </form>

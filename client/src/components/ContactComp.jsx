@@ -3,7 +3,7 @@ import { SlCallIn } from "react-icons/sl";
 import { TbMailForward } from "react-icons/tb";
 import ContactForm from "./ContactForm";
 
-const ContactComp = () => {
+const ContactComp = ({ alertHandler }) => {
   return (
     <>
       <main className="py-4 md:py-10">
@@ -34,7 +34,7 @@ const ContactComp = () => {
               </div>
             </div>
             <div className="form">
-              <ContactForm />
+              <ContactForm alertHandler={alertHandler} />
             </div>
           </div>
         </section>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
-const ProfileForm = () => {
+const ProfileForm = ({ alertHandler }) => {
   const navigate = useNavigate();
   const [enteredInput, setEnteredInput] = useState({
     name: "",
@@ -44,10 +44,16 @@ const ProfileForm = () => {
     const profile = await response.json();
     if (profile) {
       navigate("/service-providers");
+      alertHandler("Profile Register successfully!", "success");
     } else {
       console.log("Error");
+      alertHandler("Something goes wrong..!", "error");
     }
   };
+
+  const isFormValid = Object.values(enteredInput).every(
+    (value) => value.trim() !== ""
+  );
   return (
     <>
       <main className="py-8">
@@ -208,6 +214,7 @@ const ProfileForm = () => {
               sx={{
                 margin: "1rem 0",
               }}
+              disabled={!isFormValid}
             >
               Create Profile
             </Button>

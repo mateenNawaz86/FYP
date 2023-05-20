@@ -18,9 +18,8 @@ import {
   InputBase,
 } from "@mui/material";
 
-const Navbar = () => {
+const Navbar = ({ alertHandler }) => {
   const isAuthenticated = useSelector((state) => state.auth.token);
-  // const user = useSelector((state) => state.auth.user);
 
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
@@ -34,6 +33,11 @@ const Navbar = () => {
 
   const routeChange = () => {
     navigate("/signup");
+  };
+
+  const logoutHandler = () => {
+    dispatch(setLogout());
+    alertHandler("Logout successfully!", "success");
   };
 
   return (
@@ -146,9 +150,8 @@ const Navbar = () => {
                   <MenuItem value={userName}>
                     <Typography>{userName}</Typography>
                   </MenuItem>
-                  <MenuItem onClick={() => dispatch(setLogout())}>
-                    Log Out
-                  </MenuItem>
+
+                  <MenuItem onClick={logoutHandler}>Log Out</MenuItem>
                 </Select>
               </FormControl>
             ) : (

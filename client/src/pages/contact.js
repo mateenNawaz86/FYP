@@ -1,10 +1,10 @@
 import React from "react";
 import ContactComp from "../components/ContactComp";
 
-const Contact = () => {
+const Contact = ({ alertHandler }) => {
   return (
     <>
-      <ContactComp />
+      <ContactComp alertHandler={alertHandler} />
     </>
   );
 };

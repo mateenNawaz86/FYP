@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import OrangeButton from "../UI/OrangeButton";
 
-const ContactForm = () => {
+const ContactForm = ({ alertHandler }) => {
   const [enteredInp, setEnteredInp] = useState({
     name: "",
     email: "",
@@ -10,7 +10,7 @@ const ContactForm = () => {
   });
 
   const inputChangeHandler = (event) => {
-    setEnteredInput({
+    setEnteredInp({
       ...enteredInp,
       [event.target.name]: event.target.value,
     });
@@ -19,22 +19,28 @@ const ContactForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    const { name, email, subject, message } = enteredInp; // Destructure the enteredInp
     const formData = { name, email, subject, message };
 
     // Send form data to the backend API
-    fetch("http://localhost:5000/contact", {
+    fetch("http://localhost:5000/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        alert("Email sent successfully");
+        setEnteredInp({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+        alertHandler("Message sent Successfully!", "success");
       })
       .catch((error) => {
         console.error(error);
-        alert("Error sending email");
+        alertHandler("Error Occured!", "error");
       });
   };
   return (
@@ -76,7 +82,7 @@ const ContactForm = () => {
           onChange={inputChangeHandler}
           className="block w-full border border-[#757575] py-2 px-3 rounded-sm outline-none hover:border-[#E74133] resize-y"
         ></textarea>
-        <OrangeButton>Send Message</OrangeButton>
+        <OrangeButton type="submit">Send Message</OrangeButton>
       </form>
     </>
   );

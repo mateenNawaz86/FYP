@@ -1,10 +1,10 @@
 import React from "react";
 import ProfileForm from "../components/ProfileForm";
 
-const Profile = () => {
+const Profile = ({ alertHandler }) => {
   return (
     <>
-      <ProfileForm />
+      <ProfileForm alertHandler={alertHandler} />
     </>
   );
 };

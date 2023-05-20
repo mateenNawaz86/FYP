@@ -1,10 +1,10 @@
 import React from "react";
 import BookingForm from "../components/BookingForm";
 
-const booking = () => {
+const booking = ({ alertHandler }) => {
   return (
     <>
-      <BookingForm />
+      <BookingForm alertHandler={alertHandler} />
     </>
   );
 };
