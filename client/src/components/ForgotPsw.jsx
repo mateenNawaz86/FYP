@@ -15,21 +15,20 @@ const ForgotPsw = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        // Display success message or handle errors
       })
       .catch((error) => {
         console.error(error);
-        // Display error message
       });
   };
 
   const inpChangeHandler = (event) => {
     setEmail(event.target.value);
   };
+
   return (
     <>
-      <section class="bg-gray-50 dark:bg-gray-900">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <section class="bg-[#fff]">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-fit lg:py-0">
           <div class="w-full p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
             <h2 class="mb-1 text-xl font-bold leading-tight text-center tracking-tight text-blue-500 md:text-2xl">
               Forgot Password

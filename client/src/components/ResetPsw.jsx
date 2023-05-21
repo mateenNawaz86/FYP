@@ -25,11 +25,10 @@ const ResetPsw = () => {
           title="Success"
           message="Password changed successfully!!"
         />;
-        navigate("/signup");
+        navigate("/");
       })
       .catch((error) => {
         console.error(error);
-        // Display error message
       });
   };
 
@@ -38,7 +37,7 @@ const ResetPsw = () => {
   };
   return (
     <>
-      <section class="bg-gray-50 dark:bg-gray-900">
+      <section class="bg-white">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div class="w-full p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">
             <h2 class="mb-1 text-xl font-bold leading-tight text-center tracking-tight text-blue-500 md:text-2xl">

@@ -1,9 +1,14 @@
 const Profile = require("../models/Profile");
+const bcrypt = require("bcryptjs"); // used for hash password
+const jwt = require("jsonwebtoken"); // used for generate JWT_token
 
-// 1. Controller for getting the user profile
+const dotenv = require("dotenv");
+dotenv.config();
+
+// 1. Controller for getting the seller profile
 exports.getProfiles = async (req, res) => {
   try {
-    // Assuming you have a logged-in user ID stored in req.user
+    // Assuming you have a logged-in seller ID stored in req.seller
     const profile = await Profile.find();
 
     // Return the profile data
@@ -14,12 +19,13 @@ exports.getProfiles = async (req, res) => {
   }
 };
 
-// 2. Controller for posting a new User profile to the database
+// 2. Controller for posting a new seller profile to the database
 exports.postProfile = async (req, res) => {
   try {
     const {
       name,
       email,
+      password,
       contactNum,
       cnicNumber,
       address,
@@ -31,17 +37,22 @@ exports.postProfile = async (req, res) => {
     // Match requested email with already exists emails
     let serviceProvider = await Profile.findOne({ email: email });
 
-    // IF user already exist return response with 400 status code
+    // IF seller already exist return response with 400 status code
     if (serviceProvider) {
       return res.status(400).json({
-        error: "User already exists with that email address",
+        error: "seller already exists with that email address",
       });
     }
 
-    // Create a new user is here
+    // Create a password hash and add salt to the password
+    const salt = await bcrypt.genSalt(10);
+    const secPsw = await bcrypt.hash(password, salt);
+
+    // Create a new seller profile is here
     const newServiceProvider = await Profile.create({
       name: name,
       email: email,
+      password: secPsw,
       contactNum: contactNum,
       cnicNumber: cnicNumber,
       address: address,
@@ -50,9 +61,45 @@ exports.postProfile = async (req, res) => {
       description: description,
     });
 
-    // Save user into database
-    const savedUser = await newServiceProvider.save();
-    res.status(201).json(savedUser);
+    // Save seller into database
+    const savedSeller = await newServiceProvider.save();
+    res.status(201).json(savedSeller);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.signSeller = async (req, res) => {
+  try {
+    // Getting Email, Password from request body
+    const { email, password } = req.body;
+
+    // Find Seller alreayd exist or NOT
+    const seller = await Profile.findOne({ email });
+
+    // IF requested email address NOT found then throw error
+    if (!seller) {
+      return res
+        .status(400)
+        .json({ error: "Seller not found with that email address" });
+    }
+
+    // Compare the enter password with exist password
+    const comparePsw = await bcrypt.compare(password, seller.password);
+
+    // Return Error IF entered Password wrong
+    if (!comparePsw) {
+      return res.status(400).json({ error: "Invalid email or password" });
+    }
+
+    // If seller enter correct credentials then return token
+    const data = {
+      id: seller.id,
+    };
+
+    // Return JWT_TOKEN to seller as a response
+    const authToken = jwt.sign(data, process.env.JWT_SECRET);
+    res.status(200).json({ authToken, seller });
   } catch (error) {
     console.log(error);
   }

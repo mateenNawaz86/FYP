@@ -15,10 +15,13 @@ router.post(
   profileController.postProfile
 );
 
-// 3. Route for getting the single profile detail
+// 3. Route for sign in seller profile
+router.post("/seller-signIn", profileController.signSeller);
+
+// 4. Route for getting the single profile detail
 router.get("/profile-detail/:id", profileController.getProfile);
 
-// 4. Route for search a profile with skill
+// 5. Route for search a profile with skill
 router.get("/search-profile", profileController.getSearchedProfile);
 
 module.exports = router;

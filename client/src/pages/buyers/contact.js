@@ -1,5 +1,5 @@
 import React from "react";
-import ContactComp from "../components/ContactComp";
+import ContactComp from "../../components/ContactComp";
 
 const Contact = ({ alertHandler }) => {
   return (

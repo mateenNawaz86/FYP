@@ -4,7 +4,7 @@ import FlexBetween from "../components/FlexBetween";
 import Button from "@mui/material/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setLogout } from "../state/userSlice";
+import { setLogout } from "../state/profileSlice";
 
 import { BsList } from "react-icons/bs";
 import { VscSearch } from "react-icons/vsc";
@@ -18,8 +18,8 @@ import {
   InputBase,
 } from "@mui/material";
 
-const Navbar = ({ alertHandler }) => {
-  const isAuthenticated = useSelector((state) => state.auth.token);
+const SellerNav = ({ alertHandler }) => {
+  const isAuthenticated = useSelector((state) => state.profile.token);
 
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
@@ -27,17 +27,16 @@ const Navbar = ({ alertHandler }) => {
   const location = useLocation();
 
   const showMenuHandler = () => setShowMenu(!showMenu);
-  const user = useSelector((state) => state.auth.user);
+  const seller = useSelector((state) => state.profile.seller);
 
-  const userName = user.slice(0, 6);
+  const sellerName = seller !== null ? seller.slice(0, 6) : "No User";
 
   const routeChange = () => {
-    navigate("/");
+    navigate("/seller-signIn");
   };
 
   const logoutHandler = () => {
     dispatch(setLogout());
-    navigate("/");
     alertHandler("Logout successfully!", "success");
   };
 
@@ -59,7 +58,7 @@ const Navbar = ({ alertHandler }) => {
         </div>
         <nav className="flex justify-between items-center lg:order-1">
           <Link
-            to="/service-seaker"
+            to="/"
             className="text-[#4280EA] font-bold text-xs sm:text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
           >
             HandyHome
@@ -72,54 +71,62 @@ const Navbar = ({ alertHandler }) => {
             >
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
                 <Link
-                  to="/service-seaker"
+                  to="/"
                   className={`${
-                    location.pathname === "/service-seaker"
-                      ? "text-[#E74133]"
-                      : ""
+                    location.pathname === "/" ? "text-[#E74133]" : ""
                   }`}
                 >
-                  Home
+                  Profile
                 </Link>
               </li>
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
                 <Link
-                  to="/about"
+                  to="/my-services"
                   className={`${
-                    location.pathname === "/about" ? "text-[#E74133]" : ""
+                    location.pathname === "/my-services" ? "text-[#E74133]" : ""
                   }`}
                 >
-                  About Us
+                  My Services
                 </Link>
               </li>
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
                 <Link
-                  to="/services"
+                  to="/orders"
                   className={`${
-                    location.pathname === "/services" ? "text-[#E74133]" : ""
+                    location.pathname === "/orders" ? "text-[#E74133]" : ""
                   }`}
                 >
-                  Services
+                  orders
                 </Link>
               </li>
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
                 <Link
-                  to="/dashboard"
+                  to="/messages"
                   className={` hover:translate-x-2 transition duration-300 ease-in-out ${
-                    location.pathname === "/dashboard" ? "text-[#E74133]" : ""
+                    location.pathname === "/messages" ? "text-[#E74133]" : ""
                   }`}
                 >
-                  Dashboard
+                  Messages
                 </Link>
               </li>
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0">
                 <Link
-                  to="/contact"
+                  to="/reviews"
                   className={`${
-                    location.pathname === "/contact" ? "text-[#E74133]" : ""
+                    location.pathname === "/reviews" ? "text-[#E74133]" : ""
                   }`}
                 >
-                  Contact Us
+                  Reviews
+                </Link>
+              </li>
+              <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0">
+                <Link
+                  to="/earnings"
+                  className={`${
+                    location.pathname === "/earnings" ? "text-[#E74133]" : ""
+                  }`}
+                >
+                  Earnings
                 </Link>
               </li>
             </ul>
@@ -129,9 +136,9 @@ const Navbar = ({ alertHandler }) => {
         <div className="flex justify-between items-center md:order-3 space-x-4 text-sm">
           <FlexBetween gap="1rem">
             {isAuthenticated ? (
-              <FormControl variant="standard" value={userName}>
+              <FormControl variant="standard" value={sellerName}>
                 <Select
-                  value={userName}
+                  value={sellerName}
                   sx={{
                     backgroundColor: "#3366C0",
                     width: "auto",
@@ -148,8 +155,8 @@ const Navbar = ({ alertHandler }) => {
                   }}
                   input={<InputBase />}
                 >
-                  <MenuItem value={userName}>
-                    <Typography>{userName}</Typography>
+                  <MenuItem value={sellerName}>
+                    <Typography>{sellerName}</Typography>
                   </MenuItem>
 
                   <MenuItem onClick={logoutHandler}>Log Out</MenuItem>
@@ -167,4 +174,4 @@ const Navbar = ({ alertHandler }) => {
   );
 };
 
-export default Navbar;
+export default SellerNav;

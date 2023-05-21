@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import HomePage from "./pages/home";
-import About from "./pages/about";
-import Services from "./pages/services";
-import SignUp from "./pages/signUp";
-import ServiceProvider from "./pages/serviceProvider";
-import ProfileCreation from "./pages/profile";
-import Booking from "./pages/booking";
-import ContactUs from "./pages/contact";
+import { useSelector } from "react-redux";
+
+import SeakerHomePage from "./pages/buyers/seakerHome";
+import SellerHome from "./pages/seller/SellerHome";
+import About from "./pages/buyers/about";
+import Services from "./pages/buyers/services";
+import SignUp from "./pages/buyers/signUp";
+import ServiceProvider from "./pages/seller/serviceProvider";
+import ProfileCreation from "./pages/seller/profile";
+import Booking from "./pages/buyers/booking";
+import ContactUs from "./pages/buyers/contact";
 import Navbar from "./components/Navbar";
 import BackToTopButton from "./UI/BackToTopButton";
 import Footer from "./components/Footer";
@@ -16,9 +19,12 @@ import Profile from "./components/Profile";
 import ForgotPsw from "./components/ForgotPsw";
 import ResetPsw from "./components/ResetPsw";
 import AlertComp from "./UI/AlertComp";
+import SellerSignIn from "./components/SellerSignIn";
+import SellerNav from "./components/SellerNav";
 
 const App = () => {
   const [showAlert, setShowAlert] = useState(null);
+  const userRole = useSelector((state) => state.profile.userRole);
 
   const showAlertHandler = (messsage, alertType) => {
     setShowAlert({
@@ -29,49 +35,67 @@ const App = () => {
   };
   return (
     <>
-      <Navbar alertHandler={showAlertHandler} />
-      <div className="h-12 bg-[#F6F6F6]">
-        <AlertComp alert={showAlert} />
-      </div>
+      {userRole === "service-provider" ? (
+        <SellerNav alertHandler={showAlertHandler} />
+      ) : (
+        <Navbar alertHandler={showAlertHandler} />
+      )}
+      <>
+        <div className="h-12 bg-[#fff]">
+          <AlertComp alert={showAlert} />
+        </div>
+        <Routes>
+          <Route
+            path="/"
+            element={<SignUp alertHandler={showAlertHandler} />}
+            exact
+          />
+
+          <Route
+            path="/reset-password"
+            element={<ForgotPsw alertHandler={showAlertHandler} />}
+            exact
+          />
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPsw alertHandler={showAlertHandler} />}
+            exact
+          />
+
+          <Route path="/seller-home" element={<SellerHome />} exact />
+          <Route path="/service-seaker" element={<SeakerHomePage />} exact />
+          <Route path="/about" element={<About />} exact />
+          <Route path="/services" element={<Services />} exact />
+          <Route
+            path="/contact"
+            element={<ContactUs alertHandler={showAlertHandler} />}
+            exact
+          />
+
+          <Route
+            path="/seller-signIn"
+            element={<SellerSignIn />}
+            alertHandler={showAlertHandler}
+            exact
+          />
+
+          <Route
+            path="/create-profile"
+            element={<ProfileCreation alertHandler={showAlertHandler} />}
+            exact
+          />
+          <Route path="/service-providers" element={<ServiceProList />} exact />
+          <Route path="/api/profile-detail/:id" element={<Profile />} exact />
+          <Route path="/service-provider" element={<ServiceProvider />} exact />
+          <Route path="/service-providers" element={<ServiceProList />} exact />
+          <Route
+            path="/book-service"
+            element={<Booking alertHandler={showAlertHandler} />}
+            exact
+          />
+        </Routes>
+      </>
       <BackToTopButton />
-      <Routes>
-        <Route path="/" element={<HomePage />} exact />
-        <Route
-          path="/signup"
-          element={<SignUp alertHandler={showAlertHandler} />}
-          exact
-        />
-        <Route
-          path="/reset-password"
-          element={<ForgotPsw alertHandler={showAlertHandler} />}
-          exact
-        />
-        <Route
-          path="/reset-password/:token"
-          element={<ResetPsw alertHandler={showAlertHandler} />}
-          exact
-        />
-        <Route path="/service-provider" element={<ServiceProvider />} exact />
-        <Route path="/about" element={<About />} exact />
-        <Route path="/services" element={<Services />} exact />
-        <Route
-          path="/contact"
-          element={<ContactUs alertHandler={showAlertHandler} />}
-          exact
-        />
-        <Route path="/service-providers" element={<ServiceProList />} exact />
-        <Route
-          path="/create-profile"
-          element={<ProfileCreation alertHandler={showAlertHandler} />}
-          exact
-        />
-        <Route
-          path="/book-service"
-          element={<Booking alertHandler={showAlertHandler} />}
-          exact
-        />
-        <Route path="/api/profile-detail/:id" element={<Profile />} exact />
-      </Routes>
       <Footer />
     </>
   );

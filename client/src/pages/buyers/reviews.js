@@ -1,5 +1,5 @@
 import React from "react";
-import Testimonial from "../components/Testimonial";
+import Testimonial from "../../components/Testimonial";
 
 const Reviews = () => {
   return (

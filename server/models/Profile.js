@@ -10,6 +10,11 @@ const profileSchema = new Schema({
     type: String,
     required: true,
   },
+
+  password: {
+    type: String,
+    required: true,
+  },
   contactNum: {
     type: String,
     required: true,

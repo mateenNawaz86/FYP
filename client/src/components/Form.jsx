@@ -57,7 +57,7 @@ const Form = ({ alertHandler }) => {
     try {
       dispatch(signin(values));
       alertHandler("Sign in successfully!", "success");
-      navigate("/");
+      navigate("/service-seaker");
     } catch (error) {
       console.log(error);
       alertHandler("Please enter a correct credentials!", "error");
