@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import experienceImg from "../assets/goal.png";
 import phoneImg from "../assets/phone.png";
 import simImg from "../assets/sim.png";
@@ -63,14 +63,14 @@ const Requirements = () => {
           </div>
         </section>
 
-        <div className="flex justify-center items-center mb-10">
+        {/* <div className="flex justify-center items-center mb-10">
           <Link
             to="/create-profile"
             className="bg-transparent text-[#f44336] border border-[#f44336] hover:text-[#fff] hover:bg-[#f44336] transition-all duration-300 rounded-sm w-fit p-1 px-4"
           >
             Become Service Provider
           </Link>
-        </div>
+        </div> */}
         <hr />
       </main>
     </>

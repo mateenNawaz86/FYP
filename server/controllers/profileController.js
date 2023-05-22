@@ -75,17 +75,17 @@ exports.signSeller = async (req, res) => {
     const { email, password } = req.body;
 
     // Find Seller alreayd exist or NOT
-    const seller = await Profile.findOne({ email });
+    const user = await Profile.findOne({ email });
 
     // IF requested email address NOT found then throw error
-    if (!seller) {
+    if (!user) {
       return res
         .status(400)
         .json({ error: "Seller not found with that email address" });
     }
 
     // Compare the enter password with exist password
-    const comparePsw = await bcrypt.compare(password, seller.password);
+    const comparePsw = await bcrypt.compare(password, user.password);
 
     // Return Error IF entered Password wrong
     if (!comparePsw) {
@@ -94,12 +94,12 @@ exports.signSeller = async (req, res) => {
 
     // If seller enter correct credentials then return token
     const data = {
-      id: seller.id,
+      id: user.id,
     };
 
     // Return JWT_TOKEN to seller as a response
     const authToken = jwt.sign(data, process.env.JWT_SECRET);
-    res.status(200).json({ authToken, seller });
+    res.status(200).json({ authToken, user });
   } catch (error) {
     console.log(error);
   }

@@ -18,8 +18,8 @@ export const sellerSignIn = createAsyncThunk(
 
       // Store the token in local storage or Redux state
       localStorage.setItem("token", data.authToken);
-      localStorage.setItem("user", data.seller.name); // Store the user's name
-      return { token: data.authToken, seller: data.seller };
+      localStorage.setItem("user", data.user.name); // Store the user's name
+      return { token: data.token, user: data.user };
     } else {
       const error = await response.json();
       throw new Error(error.message);
@@ -48,9 +48,8 @@ const profileSlice = createSlice({
   name: "profile",
   initialState: {
     token: localStorage.getItem("token"),
-    seller: localStorage.getItem("seller"),
+    user: localStorage.getItem("user"),
     profile: null,
-    userRole: "",
     loading: false,
     error: null,
   },
