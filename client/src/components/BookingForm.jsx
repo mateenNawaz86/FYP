@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
 
 const BookingForm = ({ alertHandler }) => {
@@ -10,10 +10,12 @@ const BookingForm = ({ alertHandler }) => {
     service: "",
     address: "",
     postalCode: "",
+    price: "",
     description: "",
   });
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const inputChangeHandler = (event) => {
     setEnteredInput({
@@ -24,25 +26,29 @@ const BookingForm = ({ alertHandler }) => {
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:5000/api/book-service", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: enteredInput.name,
-        email: enteredInput.email,
-        phoneNumber: enteredInput.phoneNumber,
-        service: enteredInput.service,
-        address: enteredInput.address,
-        postalCode: enteredInput.postalCode,
-        description: enteredInput.description,
-      }),
-    });
+    const response = await fetch(
+      `http://localhost:5000/api/service-providers/${id}/bookings`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: enteredInput.name,
+          email: enteredInput.email,
+          phoneNumber: enteredInput.phoneNumber,
+          service: enteredInput.service,
+          address: enteredInput.address,
+          postalCode: enteredInput.postalCode,
+          price: enteredInput.price,
+          description: enteredInput.description,
+        }),
+      }
+    );
 
     const booking = await response.json();
     if (booking) {
-      navigate("/");
+      navigate("/seaker/orders");
       alertHandler("Your service has been booked successfully!", "success");
     } else {
       console.log("Error");
@@ -171,6 +177,23 @@ const BookingForm = ({ alertHandler }) => {
                   />
                 </div>
               </div>
+            </div>
+            <div className="w-full my-6">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="email"
+              >
+                Price
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="price"
+                type="number"
+                placeholder="$5-$2000"
+                value={enteredInput.price}
+                onChange={inputChangeHandler}
+                name="price"
+              ></input>
             </div>
             <div className="w-full my-6">
               <label

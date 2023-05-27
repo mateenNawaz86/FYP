@@ -59,7 +59,7 @@ const SellerNav = ({ alertHandler }) => {
         </div>
         <nav className="flex justify-between items-center lg:order-1">
           <Link
-            to="/seller-home"
+            to="/seller"
             className="text-[#4280EA] font-bold text-xs sm:text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
           >
             HandyHome
@@ -72,9 +72,11 @@ const SellerNav = ({ alertHandler }) => {
             >
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
                 <Link
-                  to="/my-profile"
+                  to="/seller/my-profile"
                   className={`${
-                    location.pathname === "/my-profile" ? "text-[#E74133]" : ""
+                    location.pathname === "/seller/my-profile"
+                      ? "text-[#E74133]"
+                      : ""
                   }`}
                 >
                   Profile
@@ -82,9 +84,11 @@ const SellerNav = ({ alertHandler }) => {
               </li>
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
                 <Link
-                  to="/my-services"
+                  to="/seller/my-services"
                   className={`${
-                    location.pathname === "/my-services" ? "text-[#E74133]" : ""
+                    location.pathname === "/seller/my-services"
+                      ? "text-[#E74133]"
+                      : ""
                   }`}
                 >
                   My Services
@@ -92,9 +96,11 @@ const SellerNav = ({ alertHandler }) => {
               </li>
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
                 <Link
-                  to="/orders"
+                  to="/seller/orders"
                   className={`${
-                    location.pathname === "/orders" ? "text-[#E74133]" : ""
+                    location.pathname === "/seller/orders"
+                      ? "text-[#E74133]"
+                      : ""
                   }`}
                 >
                   orders
@@ -102,9 +108,11 @@ const SellerNav = ({ alertHandler }) => {
               </li>
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
                 <Link
-                  to="/messages"
+                  to="/seller/messages"
                   className={` hover:translate-x-2 transition duration-300 ease-in-out ${
-                    location.pathname === "/messages" ? "text-[#E74133]" : ""
+                    location.pathname === "/seller/messages"
+                      ? "text-[#E74133]"
+                      : ""
                   }`}
                 >
                   Messages
@@ -112,9 +120,11 @@ const SellerNav = ({ alertHandler }) => {
               </li>
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0">
                 <Link
-                  to="/reviews"
+                  to="/seller/reviews"
                   className={`${
-                    location.pathname === "/reviews" ? "text-[#E74133]" : ""
+                    location.pathname === "/seller/reviews"
+                      ? "text-[#E74133]"
+                      : ""
                   }`}
                 >
                   Reviews
@@ -122,9 +132,11 @@ const SellerNav = ({ alertHandler }) => {
               </li>
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0">
                 <Link
-                  to="/earnings"
+                  to="/seller/earnings"
                   className={`${
-                    location.pathname === "/earnings" ? "text-[#E74133]" : ""
+                    location.pathname === "/seller/earnings"
+                      ? "text-[#E74133]"
+                      : ""
                   }`}
                 >
                   Earnings

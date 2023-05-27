@@ -1,5 +1,5 @@
 import React from "react";
-import Orders from "../../components/Orders";
+import ActiveOrders from "../../components/ActiveOrders";
 
 const dashBoard = () => {
   return (
@@ -15,19 +15,19 @@ const dashBoard = () => {
               <h2 className="text-lg font-semibold text-[#4280EA] my-2">
                 Active Orders
               </h2>
-              <Orders />
+              <ActiveOrders />
             </div>
             <div className="completed">
-              <h2 className="text-lg font-semibold text-[#4280EA] my-2">
+              <h2 className="text-lg font-semibold text-green-600 my-2">
                 Completed Orders
               </h2>
-              <Orders />
+              <ActiveOrders />
             </div>
             <div className="cancel">
-              <h2 className="text-lg font-semibold text-[#4280EA] my-2">
+              <h2 className="text-lg font-semibold text-red-600 my-2">
                 Cancel Orders
               </h2>
-              <Orders />
+              <ActiveOrders />
             </div>
           </div>
         </section>

@@ -24,7 +24,7 @@ const SellerSignIn = ({ alertHandler }) => {
     try {
       await dispatch(sellerSignIn(enteredInp));
       // alertHandler("Sign in successfully!", "success");
-      navigate("/seller-home");
+      navigate("/seller");
     } catch (error) {
       console.log(error);
       // alertHandler("Please enter the correct credentials!", "error");

@@ -9,7 +9,7 @@ import Services from "./pages/buyers/services";
 import SignUp from "./pages/buyers/signUp";
 import ServiceProvider from "./pages/seller/serviceProvider";
 import ProfileCreation from "./pages/seller/profile";
-import Booking from "./pages/buyers/booking";
+import Booking from "./components/BookingForm";
 import ContactUs from "./pages/buyers/contact";
 import Navbar from "./components/Navbar";
 import BackToTopButton from "./UI/BackToTopButton";
@@ -23,6 +23,7 @@ import SellerSignIn from "./components/SellerSignIn";
 import SellerNav from "./components/SellerNav";
 import MyProfile from "./pages/seller/myProfile";
 import DashBoard from "./pages/buyers/dashBoard";
+import OrderComp from "./components/OrderComp";
 
 const App = () => {
   const [showAlert, setShowAlert] = useState(null);
@@ -37,7 +38,7 @@ const App = () => {
   };
 
   const location = useLocation();
-  const isSellerDashboard = location.pathname.includes("seller-home");
+  const isSellerDashboard = location.pathname.includes("seller");
 
   return (
     <>
@@ -68,12 +69,19 @@ const App = () => {
           exact
         />
 
-        <Route path="/seller-home" element={<SellerHome />} exact />
         <Route path="/service-seaker" element={<SeakerHomePage />} exact />
         <Route path="/about" element={<About />} exact />
         <Route path="/services" element={<Services />} exact />
-        <Route path="/seaker-orders" element={<DashBoard />} exact />
-
+        <Route path="/service-providers" element={<ServiceProList />} exact />
+        <Route path="/seaker/orders" element={<DashBoard />} exact />
+        <Route path="/api/orders/:id" element={<OrderComp />} exact />
+        <Route path="/api/profile-detail/:id" element={<Profile />} exact />
+        <Route path="/service-provider" element={<ServiceProvider />} exact />
+        <Route
+          path="/book-service/:id"
+          element={<Booking alertHandler={showAlertHandler} />}
+          exact
+        />
         <Route
           path="/contact"
           element={<ContactUs alertHandler={showAlertHandler} />}
@@ -86,22 +94,13 @@ const App = () => {
           alertHandler={showAlertHandler}
           exact
         />
-
+        <Route path="/seller" element={<SellerHome />} exact />
         <Route
           path="/create-profile"
           element={<ProfileCreation alertHandler={showAlertHandler} />}
           exact
         />
-        <Route path="/my-profile" element={<MyProfile />} exact />
-        <Route path="/service-providers" element={<ServiceProList />} exact />
-        <Route path="/api/profile-detail/:id" element={<Profile />} exact />
-        <Route path="/service-provider" element={<ServiceProvider />} exact />
-        <Route path="/service-providers" element={<ServiceProList />} exact />
-        <Route
-          path="/book-service"
-          element={<Booking alertHandler={showAlertHandler} />}
-          exact
-        />
+        <Route path="/seller/my-profile" element={<MyProfile />} exact />
       </Routes>
 
       <BackToTopButton />

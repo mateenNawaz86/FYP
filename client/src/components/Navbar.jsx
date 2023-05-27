@@ -104,9 +104,9 @@ const Navbar = ({ alertHandler }) => {
               </li>
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
                 <Link
-                  to="/seaker-orders"
+                  to="/seaker/orders"
                   className={` hover:translate-x-2 transition duration-300 ease-in-out ${
-                    location.pathname === "/seaker-orders"
+                    location.pathname === "/seaker/orders"
                       ? "text-[#E74133]"
                       : ""
                   }`}

@@ -26,6 +26,10 @@ const bookingSchema = new Schema({
     type: String,
     required: true,
   },
+  price: {
+    type: Number,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
@@ -33,6 +37,16 @@ const bookingSchema = new Schema({
   date: {
     type: Date,
     default: Date.now,
+  },
+  status: {
+    type: String,
+    enum: ["active", "complete", "cancel"],
+    default: "active",
+  },
+  serviceProvider: {
+    type: Schema.Types.ObjectId,
+    ref: "Profile",
+    required: true,
   },
 });
 
