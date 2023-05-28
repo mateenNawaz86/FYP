@@ -21,18 +21,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  booking: {
-    orders: [
-      {
-        orderId: {
-          type: Schema.Types.ObjectId,
-          ref: "Booking",
-          required: true,
-        },
-        quantity: { type: Number, required: true },
-      },
-    ],
-  },
+  
   resetToken: String,
   resetTokenExpiration: Date,
 

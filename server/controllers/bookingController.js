@@ -18,6 +18,9 @@ exports.bookService = async (req, res, next) => {
     // Get the service provider ID
     const serviceProviderId = req.params.id; // Assuming the ID is passed as a parameter
 
+    // Get the logged-in user's ID
+    const userId = req.user.id;
+
     // Create a new booking instance
     const newBooking = new BookService({
       name,
@@ -29,6 +32,7 @@ exports.bookService = async (req, res, next) => {
       price,
       description,
       serviceProvider: serviceProviderId, // Associate the booking with the service provider
+      user: userId, // Associate the booking with the logged-in user
     });
 
     // Save the booking to the database
@@ -67,11 +71,11 @@ exports.updateOrderStatus = async (req, res) => {
 // 3. Controller for getting the current order
 exports.getOrders = async (req, res) => {
   try {
-    // Assuming you have a logged-in seller ID stored in req.seller
-    const order = await BookService.find();
+    const userId = req.user.id; // Get the logged-in user's ID
 
-    // Return the profile data
-    res.status(200).json(order);
+    const orders = await BookService.find({ user: userId });
+
+    res.status(200).json(orders);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });

@@ -26,12 +26,15 @@ const BookingForm = ({ alertHandler }) => {
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
+    const token = localStorage.getItem("token"); // Get the JWT token from local storage
+
     const response = await fetch(
       `http://localhost:5000/api/service-providers/${id}/bookings`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "auth-token": token,
         },
         body: JSON.stringify({
           name: enteredInput.name,

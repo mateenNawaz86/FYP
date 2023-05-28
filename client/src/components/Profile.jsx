@@ -62,7 +62,7 @@ const Profile = () => {
                   </div>
                 </div>
                 <Link
-                  to="/book-service"
+                  to={`/book-service/${profile._id}`}
                   className="bg-[#4280EA] text-white rounded-full py-1 px-4 w-fit hover:bg-[#000000] hover:ease-in duration-200"
                 >
                   Booking

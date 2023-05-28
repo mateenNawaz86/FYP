@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Orders = () => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/orders");
+      const response = await fetch("http://localhost:5000/api/orders", {
+        method: "GET", // or "PATCH" depending on your API implementation
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": token,
+        },
+      });
       if (!response.ok) {
         throw new Error("Request failed");
       }
@@ -32,6 +41,7 @@ const Orders = () => {
           method: "PUT", // or "PATCH" depending on your API implementation
           headers: {
             "Content-Type": "application/json",
+            "auth-token": token,
           },
           body: JSON.stringify({ status }),
         }
@@ -48,8 +58,6 @@ const Orders = () => {
       console.log(error.message);
     }
   };
-
-  
 
   return (
     <>
