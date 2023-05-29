@@ -3,7 +3,7 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Orders = () => {
+const Orders = (props) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
@@ -16,7 +16,7 @@ const Orders = () => {
   const fetchData = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/orders", {
-        method: "GET", // or "PATCH" depending on your API implementation
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           "auth-token": token,
@@ -59,9 +59,11 @@ const Orders = () => {
     }
   };
 
+  const filteredOrders = data.filter((item) => item.status === props.status);
+
   return (
     <>
-      {data.map((item) => {
+      {filteredOrders.map((item) => {
         const formattedTime = moment(item.date).format("HH:mm");
         return (
           <div

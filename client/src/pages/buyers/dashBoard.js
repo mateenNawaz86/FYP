@@ -1,7 +1,7 @@
 import React from "react";
-import ActiveOrders from "../../components/ActiveOrders";
+import Orders from "../../components/Orders";
 
-const dashBoard = () => {
+const Dashboard = () => {
   return (
     <>
       <main className="py-4 md:py-8">
@@ -15,19 +15,19 @@ const dashBoard = () => {
               <h2 className="text-lg font-semibold text-[#4280EA] my-2">
                 Active Orders
               </h2>
-              <ActiveOrders />
+              <Orders status="active" />
             </div>
             <div className="completed">
               <h2 className="text-lg font-semibold text-green-600 my-2">
                 Completed Orders
               </h2>
-              <ActiveOrders />
+              <Orders status="complete" />
             </div>
             <div className="cancel">
               <h2 className="text-lg font-semibold text-red-600 my-2">
-                Cancel Orders
+                Cancelled Orders
               </h2>
-              <ActiveOrders />
+              <Orders status="cancel" />
             </div>
           </div>
         </section>
@@ -37,4 +37,4 @@ const dashBoard = () => {
   );
 };
 
-export default dashBoard;
+export default Dashboard;
