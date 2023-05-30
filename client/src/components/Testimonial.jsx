@@ -6,7 +6,7 @@ import userFourImg from "../assets/user-4.jpg";
 import { FaStar } from "react-icons/fa";
 
 const Testimonial = () => {
-  const rating = [...Array(5)].map(() => <FaStar />);
+  const rating = [...Array(5)].map((_, i) => <FaStar key={i} />);
   const userData = [
     {
       name: "Marry",

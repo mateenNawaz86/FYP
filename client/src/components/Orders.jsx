@@ -8,6 +8,8 @@ const Orders = (props) => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
 
+  const { setSelectedServiceProvider } = props;
+
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line
@@ -50,6 +52,13 @@ const Orders = (props) => {
       if (!response.ok) {
         throw new Error("Request failed");
       }
+
+      // Find the selected service provider based on the order ID
+      const selectedProvider = data.find(
+        (item) => item._id === orderId
+      ).serviceProvider;
+
+      setSelectedServiceProvider(selectedProvider);
 
       // Refresh the order data
       fetchData();

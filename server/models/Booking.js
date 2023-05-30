@@ -52,6 +52,8 @@ const bookingSchema = new Schema({
     ref: "Profile",
     required: true,
   },
+
+
 });
 
 const BookService = mongoose.model("Booking", bookingSchema);

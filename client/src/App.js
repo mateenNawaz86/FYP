@@ -23,11 +23,11 @@ import SellerSignIn from "./components/SellerSignIn";
 import SellerNav from "./components/SellerNav";
 import MyProfile from "./pages/seller/myProfile";
 import DashBoard from "./pages/buyers/dashBoard";
-import OrderComp from "./components/OrderComp";
+import FeedbackComp from "./components/FeedbackComp";
 
 const App = () => {
   const [showAlert, setShowAlert] = useState(null);
-  // const userRole = useSelector((state) => state.profile.userRole);
+  const [selectedServiceProvider, setSelectedServiceProvider] = useState(null);
 
   const showAlertHandler = (messsage, alertType) => {
     setShowAlert({
@@ -73,8 +73,22 @@ const App = () => {
         <Route path="/about" element={<About />} exact />
         <Route path="/services" element={<Services />} exact />
         <Route path="/service-providers" element={<ServiceProList />} exact />
-        <Route path="/seaker/orders" element={<DashBoard />} exact />
-        <Route path="/api/orders/:id" element={<OrderComp />} exact />
+        <Route
+          path="/seaker/orders"
+          element={
+            <DashBoard
+              setSelectedServiceProvider={setSelectedServiceProvider}
+            />
+          }
+          exact
+        />
+        <Route
+          path="/api/orders/:id"
+          element={
+            <FeedbackComp selectedServiceProvider={selectedServiceProvider} />
+          }
+          exact
+        />
         <Route path="/api/profile-detail/:id" element={<Profile />} exact />
         <Route path="/service-provider" element={<ServiceProvider />} exact />
         <Route

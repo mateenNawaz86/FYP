@@ -81,3 +81,26 @@ exports.getOrders = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+// Controller for submit the rating and feedback
+// exports.submitRatingAndFeedback = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { rating, feedback } = req.body;
+
+//     const order = await BookService.findByIdAndUpdate(
+//       id,
+//       { rating, feedback },
+//       { new: true }
+//     );
+
+//     if (!order) {
+//       return res.status(404).json({ message: "Order not found" });
+//     }
+
+//     res.status(200).json({ message: "Rating and feedback submitted successfully" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Server Error" });
+//   }
+// };

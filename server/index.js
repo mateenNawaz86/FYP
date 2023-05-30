@@ -12,6 +12,8 @@ const authRoute = require("./routes/auth");
 const profileRoutes = require("./routes/profile");
 const bookingRoute = require("./routes/booking");
 const contactRoute = require("./routes/contact");
+const feedbackRoute = require("./routes/feedback");
+const experieneRoute = require("./routes/experience");
 
 // create server using express
 const app = express();
@@ -24,14 +26,13 @@ app.use(express.urlencoded({ extended: false }));
 // Invoke cross-origin sharing policy
 app.use(cors());
 
-app.set("view engine", "ejs");
-app.set("views", "views"); // set the dynamic route for file
-
 // ROUTES
 app.use("/api", authRoute);
 app.use("/api", profileRoutes);
 app.use("/api", bookingRoute);
 app.use("/api", contactRoute);
+app.use("/api", feedbackRoute);
+app.use("/api", experieneRoute);
 
 app.listen(port, () => {
   console.log(`FYP application listening on ${port}`);

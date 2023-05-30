@@ -17,4 +17,5 @@ router.get("/orders", authenticate, bookingController.getOrders);
 // 3. Route for UPDATE the current order
 router.put("/orders/:id/status", bookingController.updateOrderStatus);
 
+
 module.exports = router;

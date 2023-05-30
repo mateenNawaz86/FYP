@@ -1,7 +1,7 @@
 import React from "react";
 import Orders from "../../components/Orders";
 
-const Dashboard = () => {
+const Dashboard = ({ setSelectedServiceProvider }) => {
   return (
     <>
       <main className="py-4 md:py-8">
@@ -15,7 +15,10 @@ const Dashboard = () => {
               <h2 className="text-lg font-semibold text-[#4280EA] my-2">
                 Active Orders
               </h2>
-              <Orders status="active" />
+              <Orders
+                status="active"
+                setSelectedServiceProvider={setSelectedServiceProvider}
+              />
             </div>
             <div className="completed">
               <h2 className="text-lg font-semibold text-green-600 my-2">
