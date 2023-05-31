@@ -1,5 +1,4 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import experienceImg from "../assets/goal.png";
 import phoneImg from "../assets/phone.png";
 import simImg from "../assets/sim.png";
@@ -7,6 +6,9 @@ import centreImg from "../assets/Business-center.png";
 import ageImg from "../assets/age.png";
 import bgCheckImg from "../assets/bgcheck.png";
 import SellerItem from "./SellerItem";
+import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Requirements = () => {
   const reqData = [
@@ -41,10 +43,17 @@ const Requirements = () => {
       desc: `The Background Check process may include drug tests, police reports, credit checks etc.`,
     },
   ];
+
+  const token = useSelector((state) => state.profile.token);
+
+  const navigate = useNavigate();
+  const routeChangeHandler = () => {
+    navigate(`/seller/experience/${token}`);
+  };
   return (
     <>
       <main className="py-8">
-        <section className="w-4/5 m-auto">
+        <section className="w-4/5 m-auto my-4">
           <h1 className="text-base uppercase sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-12">
             Requirements
           </h1>
@@ -61,16 +70,19 @@ const Requirements = () => {
               );
             })}
           </div>
+
+          <div className="text-center">
+            <Button
+              type="submit"
+              variant="contained"
+              className="w-fit"
+              onClick={routeChangeHandler}
+            >
+              Add Experiences
+            </Button>
+          </div>
         </section>
 
-        {/* <div className="flex justify-center items-center mb-10">
-          <Link
-            to="/create-profile"
-            className="bg-transparent text-[#f44336] border border-[#f44336] hover:text-[#fff] hover:bg-[#f44336] transition-all duration-300 rounded-sm w-fit p-1 px-4"
-          >
-            Become Service Provider
-          </Link>
-        </div> */}
         <hr />
       </main>
     </>

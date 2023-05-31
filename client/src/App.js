@@ -7,7 +7,6 @@ import SellerHome from "./pages/seller/sellerHome";
 import About from "./pages/buyers/about";
 import Services from "./pages/buyers/services";
 import SignUp from "./pages/buyers/signUp";
-import ServiceProvider from "./pages/seller/serviceProvider";
 import ProfileCreation from "./pages/seller/profile";
 import Booking from "./components/BookingForm";
 import ContactUs from "./pages/buyers/contact";
@@ -24,6 +23,8 @@ import SellerNav from "./components/SellerNav";
 import MyProfile from "./pages/seller/myProfile";
 import DashBoard from "./pages/buyers/dashBoard";
 import FeedbackComp from "./components/FeedbackComp";
+import ExperienceForm from "./components/ExperienceForm";
+import Experiences from "./components/Experiences";
 
 const App = () => {
   const [showAlert, setShowAlert] = useState(null);
@@ -90,7 +91,6 @@ const App = () => {
           exact
         />
         <Route path="/api/profile-detail/:id" element={<Profile />} exact />
-        <Route path="/service-provider" element={<ServiceProvider />} exact />
         <Route
           path="/book-service/:id"
           element={<Booking alertHandler={showAlertHandler} />}
@@ -115,6 +115,12 @@ const App = () => {
           exact
         />
         <Route path="/seller/my-profile" element={<MyProfile />} exact />
+        <Route
+          path="/seller/experience/:token"
+          element={<ExperienceForm alertHandler={showAlertHandler} />}
+          exact
+        />
+        <Route path="/seller/my-services" element={<Experiences />} exact />
       </Routes>
 
       <BackToTopButton />

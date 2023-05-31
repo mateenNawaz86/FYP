@@ -2,13 +2,21 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const expSchema = new Schema({
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "Profile",
+  },
   title: {
     type: String,
     required: true,
   },
-  date: {
-    type: Date,
-    required: [true, "Date is required"],
+  start: {
+    type: String,
+    required: true,
+  },
+  end: {
+    type: String,
+    required: true,
   },
   companyName: {
     type: String,

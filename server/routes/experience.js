@@ -2,12 +2,13 @@ const express = require("express");
 const router = express.Router();
 
 const expController = require("../controllers/experienceController");
-const { validateDate, validate } = require("../middleware/dateValidator");
 const authenticate = require("../middleware/authenticate");
+const { validateDate, validate } = require("../middleware/dateValidator");
 
 // 1. POST route for experience
 router.post(
   "/experience",
+  authenticate,
   validateDate,
   validate,
   expController.postExperience
