@@ -18,6 +18,7 @@ export const sellerSignIn = createAsyncThunk(
 
       // Store the token in local storage or Redux state
       localStorage.setItem("token", data.authToken);
+      localStorage.setItem("userId", data.user._id);
       localStorage.setItem("user", data.user.name); // Store the user's name
       return { token: data.token, user: data.user };
     } else {
@@ -30,10 +31,10 @@ export const sellerSignIn = createAsyncThunk(
 // Async thunk action to fetch profile by ID
 export const fetchProfileById = createAsyncThunk(
   "profile/fetchProfileById",
-  async (id, { rejectWithValue }) => {
+  async (token, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/profile-detail/${id}`
+        `http://localhost:5000/api/profile-detail/${token}`
       );
       const jsonData = await response.json();
       return jsonData;
@@ -48,6 +49,7 @@ const profileSlice = createSlice({
   name: "profile",
   initialState: {
     token: localStorage.getItem("token"),
+    userId: localStorage.getItem("userId"),
     user: localStorage.getItem("user"),
     profile: null,
     loading: false,
@@ -80,14 +82,14 @@ const profileSlice = createSlice({
     builder.addCase(fetchProfileById.fulfilled, (state, action) => {
       state.loading = false;
       state.error = null;
-      state.profile = action.payload;
+      state.profile = action.payload; // Update the profile state with the fetched data
     });
 
     // Handle the rejected state when there is an error fetching the profile
     builder.addCase(fetchProfileById.rejected, (state, action) => {
       state.loading = false;
-      state.error = action.payload;
-      state.profile = null;
+      state.error = action.payload; // Update the error state with the error payload
+      state.profile = null; // Reset the profile state
     });
   },
 });

@@ -106,7 +106,7 @@ exports.signSeller = async (req, res) => {
 };
 
 // Controller for getting the single product detail
-exports.getProfile = async (req, res) => {
+exports.getProfileDetail = async (req, res) => {
   const profileId = req.params.id;
 
   try {
@@ -139,6 +139,20 @@ exports.getSearchedProfile = async (req, res) => {
     const filteredProfiles = await Profile.find({ skill });
 
     res.json(filteredProfiles);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+// Get single profile
+exports.getProfile = async (req, res) => {
+  try {
+    const userId = req.userId; // Updated to req.userId
+
+    const profile = await Profile.findOne({ _id: userId }); // Updated to findOne
+
+    res.status(200).json(profile);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });

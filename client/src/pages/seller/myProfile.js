@@ -1,7 +1,12 @@
 import React from "react";
+import SellerProfile from "../../components/SellerProfile";
 
 const myProfile = () => {
-  return <div>myProfile</div>;
+  return (
+    <>
+      <SellerProfile />
+    </>
+  );
 };
 
 export default myProfile;
