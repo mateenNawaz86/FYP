@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-const Orders = (props) => {
+const SellerOrders = (props) => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
-  const token = useSelector((state) => state.auth.token);
-
-  const { setSelectedServiceProvider } = props;
+  const token = useSelector((state) => state.profile.token);
 
   useEffect(() => {
     fetchData();
@@ -17,7 +13,7 @@ const Orders = (props) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/orders", {
+      const response = await fetch("http://localhost:5000/api/seller-orders", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +34,7 @@ const Orders = (props) => {
   const handleStatusUpdate = async (orderId, status) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/orders/${orderId}/status`,
+        `http://localhost:5000/api/seller-orders/${orderId}/status`,
         {
           method: "PUT", // or "PATCH" depending on your API implementation
           headers: {
@@ -53,16 +49,8 @@ const Orders = (props) => {
         throw new Error("Request failed");
       }
 
-      // Find the selected service provider based on the order ID
-      const selectedProvider = data.find(
-        (item) => item._id === orderId
-      ).serviceProvider;
-
-      setSelectedServiceProvider(selectedProvider);
-
       // Refresh the order data
       fetchData();
-      navigate(`/api/orders/${orderId}`);
     } catch (error) {
       console.log(error.message);
     }
@@ -77,7 +65,7 @@ const Orders = (props) => {
         return (
           <div
             key={item._id}
-            className="flex justify-around items-center flex-col mb-3 sm:flex-row py-4 px-6 bg-[#f6f6f6] rounded shadow-md w-full"
+            className="flex justify-around items-center flex-col sm:flex-row py-4 px-6 bg-[#f6f6f6] rounded shadow-md w-full"
           >
             <p>${item.price}</p>
             <p>{formattedTime}</p>
@@ -107,4 +95,4 @@ const Orders = (props) => {
   );
 };
 
-export default Orders;
+export default SellerOrders;

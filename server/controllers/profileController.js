@@ -1,4 +1,6 @@
 const Profile = require("../models/Profile");
+const BookService = require("../models/Booking");
+
 const bcrypt = require("bcryptjs"); // used for hash password
 const jwt = require("jsonwebtoken"); // used for generate JWT_token
 
@@ -153,6 +155,21 @@ exports.getProfile = async (req, res) => {
     const profile = await Profile.findOne({ _id: userId }); // Updated to findOne
 
     res.status(200).json(profile);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+// Controller for GET the order
+exports.getOrders = async (req, res) => {
+  try {
+    const sellerId = req.userId; // Use req.userId instead of req.user.id
+
+    // Query the database for orders associated with the sellerId
+    const orders = await BookService.find({ serviceProvider: sellerId });
+
+    res.status(200).json(orders);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });

@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const profileController = require("../controllers/profileController");
-const authenticate = require("../middleware/authenticate");
+const bookingController = require("../controllers/bookingController");
+const authMiddleware = require("../middleware/authMiddleware");
 const { validateUser, validate } = require("../middleware/profileValidator");
 
 // 1. Route for getting the user profile
@@ -26,6 +27,12 @@ router.get("/profile-detail/:id", profileController.getProfileDetail);
 router.get("/search-profile", profileController.getSearchedProfile);
 
 // 6. Route for GET profile
-router.get("/profile-detail", authenticate, profileController.getProfile);
+router.get("/profile-detail", authMiddleware, profileController.getProfile);
+
+// 7. Route for GET the orders
+router.get("/seller-orders", authMiddleware, profileController.getOrders);
+
+// 8. Route for UPDATE the current order
+router.put("/seller-orders/:id/status", bookingController.updateOrderStatus);
 
 module.exports = router;

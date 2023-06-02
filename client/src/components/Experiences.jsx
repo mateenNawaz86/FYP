@@ -39,40 +39,46 @@ const Experiences = () => {
             {name} Experience
           </h1>
 
-          <div className="grid grid-cols-1 gap-4">
-            {data.map((item, index) => {
-              return (
-                <div
-                  key={index}
-                  className="flex flex-col bg-[#f6f6f6] p-6 rounded-lg shadow-2xl active:shadow-2xl transition-all duration-200 hover:shadow-none"
-                >
-                  <div className="flex flex-col sm:flex-row justify-between">
-                    <h2 className="text-sm sm:text-lg font-medium text-purple-500">
-                      {item.title}
-                    </h2>
-                    <div className="flex items-center">
-                      <p className="mr-2 text-pink-500 text-xs sm:text-base">
-                        {item.start}
-                      </p>
-                      -
-                      <p className="ml-2 text-pink-500 text-xs sm:text-base">
-                        {item.end}
-                      </p>
+          {!data ? (
+            <h2 className="text-red-500 font-semibold text-2xl text-center">
+              No Experience Yet!
+            </h2>
+          ) : (
+            <div className="grid grid-cols-1 gap-4">
+              {data.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex flex-col bg-[#f6f6f6] p-6 rounded-lg shadow-2xl active:shadow-2xl transition-all duration-200 hover:shadow-none"
+                  >
+                    <div className="flex flex-col sm:flex-row justify-between">
+                      <h2 className="text-sm sm:text-lg font-medium text-purple-500">
+                        {item.title}
+                      </h2>
+                      <div className="flex items-center">
+                        <p className="mr-2 text-pink-500 text-xs sm:text-base">
+                          {item.start}
+                        </p>
+                        -
+                        <p className="ml-2 text-pink-500 text-xs sm:text-base">
+                          {item.end}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-sm sm:text-lg text-orange-500 mt-1 mb-2">
+                      {item.companyName}
+                    </div>
+                    <div className="keys">
+                      <h2 className="text-base sm:text-xl text-blue-600 font-medium">
+                        Key Responsibilities:
+                      </h2>
+                      <p className="text-xs sm:text-base">{item.description}</p>
                     </div>
                   </div>
-                  <div className="text-sm sm:text-lg text-orange-500 mt-1 mb-2">
-                    {item.companyName}
-                  </div>
-                  <div className="keys">
-                    <h2 className="text-base sm:text-xl text-blue-600 font-medium">
-                      Key Responsibilities:
-                    </h2>
-                    <p className="text-xs sm:text-base">{item.description}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </section>
         <hr />
       </main>

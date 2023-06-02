@@ -25,6 +25,7 @@ import DashBoard from "./pages/buyers/dashBoard";
 import FeedbackComp from "./components/FeedbackComp";
 import ExperienceForm from "./components/ExperienceForm";
 import Experiences from "./components/Experiences";
+import Orders from "./pages/seller/orders";
 
 const App = () => {
   const [showAlert, setShowAlert] = useState(null);
@@ -121,6 +122,7 @@ const App = () => {
           exact
         />
         <Route path="/seller/my-services" element={<Experiences />} exact />
+        <Route path="/seller/orders" element={<Orders />} exact />
       </Routes>
 
       <BackToTopButton />
