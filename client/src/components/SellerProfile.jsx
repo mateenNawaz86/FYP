@@ -7,12 +7,13 @@ import { FcCallback } from "react-icons/fc";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { GiSkills } from "react-icons/gi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SellerProfile = () => {
   const [profile, setProfile] = useState(null);
   const token = useSelector((state) => state.profile.token);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProfile();
@@ -53,10 +54,14 @@ const SellerProfile = () => {
   if (!profile) {
     return (
       <div className="flex justify-center items-center text-red-600 font-semibold tracking-wider">
-        No profile found.
+        Profile NOT Found!
       </div>
     );
   }
+
+  const handleEditProfile = () => {
+    navigate(`/update-profile`, { state: { profileData: profile } });
+  };
 
   return (
     <main className="py-4 md:py-10">
@@ -73,7 +78,7 @@ const SellerProfile = () => {
           />
 
           <div className="ml-8">
-            <h1 className="text-3xl font-semibold tracking-wide text-purple-600">
+            <h1 className="text-lg sm:text-3xl font-semibold tracking-wide text-purple-600">
               {profile.name}
             </h1>
             <p className="text-[#757575] text-xs sm:text-base my-3">
@@ -103,12 +108,12 @@ const SellerProfile = () => {
               <HiOutlineLocationMarker className="text-pink-500" />
               <p className="ml-2 text-[#757575]">{profile.address}</p>
             </div>
-            <Link
-              to="/edit"
+            <button
+              onClick={handleEditProfile}
               className="bg-[#4280EA] text-white text-lg rounded py-1 px-4 hover:bg-[#000000] hover:ease-in duration-200 "
             >
               Edit
-            </Link>
+            </button>
           </div>
         </article>
       </section>

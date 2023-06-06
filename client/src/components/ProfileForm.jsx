@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Button } from "@mui/material";
 
 const ProfileForm = ({ alertHandler }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const token = useSelector((state) => state.profile.token);
+
   const [enteredInput, setEnteredInput] = useState({
     name: "",
     email: "",
@@ -16,6 +20,23 @@ const ProfileForm = ({ alertHandler }) => {
     description: "",
   });
 
+  useEffect(() => {
+    if (location.state && location.state.profileData) {
+      const profileData = location.state.profileData;
+      setEnteredInput({
+        name: profileData.name,
+        email: profileData.email,
+        password: profileData.password,
+        contactNum: profileData.contactNum,
+        cnicNumber: profileData.cnicNumber,
+        address: profileData.address,
+        skill: profileData.skill,
+        imgURL: profileData.imgURL,
+        description: profileData.description,
+      });
+    }
+  }, [location.state]);
+
   const inputChangeHandler = (event) => {
     setEnteredInput({
       ...enteredInput,
@@ -25,43 +46,56 @@ const ProfileForm = ({ alertHandler }) => {
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
-    const response = await fetch("http://localhost:5000/api/create-profile", {
-      method: "POST",
+
+    let apiUrl = "";
+    let method = "";
+
+    if (location.state && location.state.profileData) {
+      // Updating existing profile
+      apiUrl = "http://localhost:5000/api/update-profile";
+      method = "PUT";
+    } else {
+      // Creating a new profile
+      apiUrl = "http://localhost:5000/api/create-profile";
+      method = "POST";
+    }
+
+    const response = await fetch(apiUrl, {
+      method: method,
       headers: {
         "Content-Type": "application/json",
+        "auth-token": token,
       },
-      body: JSON.stringify({
-        name: enteredInput.name,
-        email: enteredInput.email,
-        password: enteredInput.password,
-        contactNum: enteredInput.contactNum,
-        cnicNumber: enteredInput.cnicNumber,
-        address: enteredInput.address,
-        skill: enteredInput.skill,
-        imgURL: enteredInput.imgURL,
-        description: enteredInput.description,
-      }),
+      body: JSON.stringify(enteredInput),
     });
 
-    const profile = await response.json();
-    if (profile) {
-      navigate("/seller-signIn");
-      alertHandler("Profile Register successfully!", "success");
+    const updatedProfile = await response.json();
+    if (updatedProfile) {
+      if (method === "POST") {
+        navigate("/seller-signIn");
+        alertHandler("Profile created successfully!", "success");
+      } else {
+        navigate("/seller/my-profile");
+        alertHandler("Profile updated successfully!", "success");
+      }
     } else {
       console.log("Error");
-      alertHandler("Something goes wrong..!", "error");
+      alertHandler("Something went wrong..!", "error");
     }
   };
 
   const isFormValid = Object.values(enteredInput).every(
     (value) => value.trim() !== ""
   );
+
   return (
     <>
       <main className="py-8">
         <section className="max-w-eighty m-auto mb-12">
           <h1 className="text-base uppercase underline underline-offset-4 sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-14">
-            Create your profile
+            {location.state && location.state.profileData
+              ? "Update your profile"
+              : "Create your profile"}
           </h1>
           <form
             onSubmit={formSubmitHandler}
@@ -235,7 +269,9 @@ const ProfileForm = ({ alertHandler }) => {
               }}
               disabled={!isFormValid}
             >
-              Create Profile
+              {location.state && location.state.profileData
+                ? "Update Profile"
+                : "Create Profile"}
             </Button>
           </form>
         </section>

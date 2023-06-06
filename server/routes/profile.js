@@ -35,4 +35,13 @@ router.get("/seller-orders", authMiddleware, profileController.getOrders);
 // 8. Route for UPDATE the current order
 router.put("/seller-orders/:id/status", bookingController.updateOrderStatus);
 
+// 9. Route for Update the seller profile
+router.put(
+  "/update-profile",
+  validateUser,
+  validate,
+  authMiddleware,
+  profileController.updateProfile
+);
+
 module.exports = router;

@@ -175,3 +175,46 @@ exports.getOrders = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
+// Controller for UPDATE the profile
+exports.updateProfile = async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      contactNum,
+      cnicNumber,
+      address,
+      skill,
+      imgURL,
+      description,
+    } = req.body;
+
+    const profileId = req.userId; // Get the profile ID from the authenticated user
+
+    // Find the profile by ID and update its fields
+    const updatedProfile = await Profile.findByIdAndUpdate(
+      profileId,
+      {
+        name: name,
+        email: email,
+        contactNum: contactNum,
+        cnicNumber: cnicNumber,
+        address: address,
+        skill: skill,
+        imgURL: imgURL,
+        description: description,
+      },
+      { new: true } // Return the updated profile
+    );
+
+    if (!updatedProfile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    res.status(200).json(updatedProfile);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
