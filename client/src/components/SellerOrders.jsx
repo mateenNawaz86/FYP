@@ -62,13 +62,17 @@ const SellerOrders = (props) => {
     <>
       {filteredOrders.map((item) => {
         const formattedTime = moment(item.date).format("HH:mm");
+        const formattedDate = moment(item.date).format("DD-MM-YYYY");
         return (
           <div
             key={item._id}
-            className="flex justify-around items-center flex-col sm:flex-row py-4 px-6 bg-[#f6f6f6] rounded shadow-md w-full"
+            className="flex justify-around items-center flex-col mb-3 sm:flex-row py-4 px-6 bg-[#f6f6f6] rounded shadow-md w-full"
           >
             <p>${item.price}</p>
-            <p>{formattedTime}</p>
+            <div className="flex flex-col justify-center items-center">
+              <p>{formattedTime}</p>
+              <p>{formattedDate}</p>
+            </div>
             <p>{item.status}</p>
             <div className="flex flex-col gap-2 mt-4 sm:mt-0">
               {item.status === "active" && (

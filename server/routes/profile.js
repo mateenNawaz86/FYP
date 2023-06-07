@@ -44,4 +44,7 @@ router.put(
   profileController.updateProfile
 );
 
+// 10. Route for GET earnings
+router.get("/seller-earnings", authMiddleware, profileController.getEarnings);
+
 module.exports = router;

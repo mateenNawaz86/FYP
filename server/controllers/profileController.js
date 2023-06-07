@@ -3,6 +3,7 @@ const BookService = require("../models/Booking");
 
 const bcrypt = require("bcryptjs"); // used for hash password
 const jwt = require("jsonwebtoken"); // used for generate JWT_token
+const mongoose = require("mongoose");
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -205,7 +206,7 @@ exports.updateProfile = async (req, res) => {
         imgURL: imgURL,
         description: description,
       },
-      { new: true } // Return the updated profile
+      { new: true, omitUndefined: true, select: "-password" } // Return the updated profile excluding the password field
     );
 
     if (!updatedProfile) {
@@ -215,6 +216,68 @@ exports.updateProfile = async (req, res) => {
     res.status(200).json(updatedProfile);
   } catch (error) {
     console.log(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+// Controller for GET earnings
+exports.getEarnings = async (req, res) => {
+  try {
+    const sellerId = req.userId;
+
+    // Calculate the total earnings for the current month
+    const currentMonthStartDate = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1
+    );
+    const currentMonthEndDate = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth() + 1,
+      0
+    );
+
+    const currentMonthEarnings = await BookService.aggregate([
+      {
+        $match: {
+          serviceProvider: mongoose.Types.ObjectId(sellerId),
+          status: "complete",
+          date: {
+            $gte: currentMonthStartDate,
+            $lte: currentMonthEndDate,
+          },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalEarnings: { $sum: "$price" },
+        },
+      },
+    ]);
+
+    // Calculate the total earnings overall
+    const totalEarnings = await BookService.aggregate([
+      {
+        $match: {
+          serviceProvider: mongoose.Types.ObjectId(sellerId),
+          status: "complete",
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalEarnings: { $sum: "$price" },
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      currentMonthEarnings: currentMonthEarnings[0]?.totalEarnings || 0,
+      totalEarnings: totalEarnings[0]?.totalEarnings || 0,
+    });
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ message: "Server Error" });
   }
 };
