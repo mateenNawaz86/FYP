@@ -107,8 +107,7 @@ const App = () => {
 
         <Route
           path="/seller-signIn"
-          element={<SellerSignIn />}
-          alertHandler={showAlertHandler}
+          element={<SellerSignIn alertHandler={showAlertHandler} />}
           exact
         />
         <Route path="/seller" element={<SellerHome />} exact />

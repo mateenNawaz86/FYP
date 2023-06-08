@@ -40,7 +40,7 @@ const ExperienceForm = ({ alertHandler }) => {
 
     const profile = await response.json();
     if (profile) {
-      navigate("/seller");
+      navigate("/seller/my-services");
       alertHandler("Experience add successfully!", "success");
     } else {
       console.log("Error");

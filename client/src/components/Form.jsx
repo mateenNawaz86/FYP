@@ -53,19 +53,23 @@ const Form = ({ alertHandler }) => {
     }
   };
 
-  const signIn = (values) => {
+  const signInHandler = async (values) => {
     try {
-      dispatch(signin(values));
-      alertHandler("Sign in successfully!", "success");
-      navigate("/service-seaker");
+      const response = await dispatch(signin(values));
+      if (response.payload) {
+        alertHandler("Sign in successfully!", "success");
+        navigate("/service-seaker");
+      } else {
+        alertHandler("Please enter the correct credentials!", "error");
+      }
     } catch (error) {
       console.log(error);
-      alertHandler("Please enter a correct credentials!", "error");
+      alertHandler("An error occurred. Please try again later.", "error");
     }
   };
 
   const submitHandler = async (values, onSubmitProps) => {
-    if (isLogin) signIn(values, onSubmitProps);
+    if (isLogin) signInHandler(values, onSubmitProps);
     if (isRegister) await register(values, onSubmitProps);
   };
 

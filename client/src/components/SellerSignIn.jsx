@@ -22,12 +22,16 @@ const SellerSignIn = ({ alertHandler }) => {
   const signInHandler = async (event) => {
     event.preventDefault();
     try {
-      await dispatch(sellerSignIn(enteredInp));
-      // alertHandler("Sign in successfully!", "success");
-      navigate("/seller");
+      const response = await dispatch(sellerSignIn(enteredInp));
+      if (response.payload) {
+        alertHandler("Sign in successfully!", "success");
+        navigate("/seller");
+      } else {
+        alertHandler("Please enter the correct credentials!", "error");
+      }
     } catch (error) {
       console.log(error);
-      // alertHandler("Please enter the correct credentials!", "error");
+      alertHandler("An error occurred. Please try again later.", "error");
     }
   };
 
