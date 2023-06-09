@@ -1,9 +1,16 @@
 const BookService = require("../models/Booking");
+const Profile = require("../models/Profile");
+
+const { emailTransporter, twilioClient } = require("../utils/notification");
+const PhoneNumber = require("awesome-phonenumber"); // Import the phone number validation library
+
+const dotenv = require("dotenv");
+dotenv.config();
 
 // 1. Controller for booking a service
 exports.bookService = async (req, res, next) => {
   try {
-    // grab all input data from request body
+    // Grab all input data from the request body
     const {
       name,
       email,
@@ -38,9 +45,47 @@ exports.bookService = async (req, res, next) => {
     // Save the booking to the database
     await newBooking.save();
 
+    // Retrieve the service provider's contact details
+    const serviceProvider = await Profile.findById(serviceProviderId);
+
+    // Send booking email
+    const mailOptions = {
+      from: email,
+      to: serviceProvider.email,
+      subject: "New Service Booking",
+      text: `A new service has been booked by ${name}.`,
+    };
+
+    emailTransporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending booking email:", error);
+      } else {
+        console.log("Booking email sent:", info.response);
+      }
+    });
+
+    // Validate the phone number using regular expression
+    const phoneNumberRegex = /^\+\d{1,3}\d{3,14}$/;
+    if (phoneNumberRegex.test(phoneNumber)) {
+      // Send booking SMS
+      const message = `A new service has been booked by ${name}.`;
+
+      await twilioClient.messages
+        .create({
+          body: message,
+          from: process.env.TWILIO_PHONE_NUMBER,
+          to: phoneNumber,
+        })
+        .then((message) => console.log("Booking SMS sent:", message.sid))
+        .catch((error) => console.error("Error sending booking SMS:", error));
+    } else {
+      console.error("Invalid phone number:", phoneNumber);
+    }
+
     res.status(201).json({ message: "Booking created successfully" });
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
   }
 };
 

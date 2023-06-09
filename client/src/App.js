@@ -106,13 +106,13 @@ const App = () => {
         />
 
         <Route
-          path="/seller-signIn"
+          path="/seller/signIn"
           element={<SellerSignIn alertHandler={showAlertHandler} />}
           exact
         />
         <Route path="/seller" element={<SellerHome />} exact />
         <Route
-          path="/create-profile"
+          path="/seller/create-profile"
           element={<ProfileCreation alertHandler={showAlertHandler} />}
           exact
         />

@@ -23,7 +23,7 @@ const SignUp = ({ alertHandler }) => {
             Welcome to HandyHome
           </h1>
 
-          <Link to="/seller-signIn" className="inline-block">
+          <Link to="/seller/signIn" className="inline-block">
             <Button variant="contained" endIcon={<MdOutlineArrowRightAlt />}>
               Seller
             </Button>

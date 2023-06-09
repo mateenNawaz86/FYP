@@ -32,7 +32,10 @@ const SellerNav = ({ alertHandler }) => {
   const sellerName = user.slice(0, 6);
 
   const routeChange = () => {
-    navigate("/seller-signIn");
+    navigate("/seller/signIn");
+  };
+  const buyerChangeHandler = () => {
+    navigate("/");
   };
 
   const logoutHandler = () => {
@@ -165,9 +168,14 @@ const SellerNav = ({ alertHandler }) => {
                 </Select>
               </FormControl>
             ) : (
-              <Button variant="contained" onClick={routeChange}>
-                Login
-              </Button>
+              <>
+                <Button variant="contained" onClick={buyerChangeHandler}>
+                  Back to Buyer
+                </Button>
+                <Button variant="contained" onClick={routeChange}>
+                  Login
+                </Button>
+              </>
             )}
           </FlexBetween>
         </div>
