@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { Button } from "@mui/material";
 import { useSelector } from "react-redux";
 
-const FeedbackComp = ({ selectedServiceProvider }) => {
+const FeedbackComp = () => {
+  const { sellerId } = useParams();
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState("");
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
 
-  const handleFeedbackSubmit = async (selectedServiceProviderId) => {
+  const handleFeedbackSubmit = async () => {
     try {
       const response = await fetch("http://localhost:5000/api/feedback", {
         method: "POST",
@@ -19,7 +20,7 @@ const FeedbackComp = ({ selectedServiceProvider }) => {
           "auth-token": token,
         },
         body: JSON.stringify({
-          serviceProviderId: selectedServiceProviderId,
+          sellerId,
           rating,
           feedback,
         }),
@@ -30,6 +31,7 @@ const FeedbackComp = ({ selectedServiceProvider }) => {
       }
 
       // Handle successful feedback submission, e.g., show a success message or redirect to a confirmation page
+      navigate("/service-seeker");
     } catch (error) {
       console.log(error.message);
     }
@@ -37,8 +39,7 @@ const FeedbackComp = ({ selectedServiceProvider }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    handleFeedbackSubmit(selectedServiceProvider._id);
-    navigate("/service-seaker");
+    handleFeedbackSubmit();
   };
 
   const handleStarClick = (selectedRating) => {
@@ -96,7 +97,7 @@ const FeedbackComp = ({ selectedServiceProvider }) => {
             ></textarea>
           </div>
           <Button type="submit" variant="contained" className="w-fit">
-            Booking
+            Submit Feedback
           </Button>
         </form>
       </section>

@@ -31,7 +31,6 @@ import SellerEarnings from "./components/SellerEarnings";
 
 const App = () => {
   const [showAlert, setShowAlert] = useState(null);
-  const [selectedServiceProvider, setSelectedServiceProvider] = useState(null);
 
   const showAlertHandler = (messsage, alertType) => {
     setShowAlert({
@@ -73,24 +72,14 @@ const App = () => {
           exact
         />
 
-        <Route path="/service-seaker" element={<SeakerHomePage />} exact />
+        <Route path="/service-seeker" element={<SeakerHomePage />} exact />
         <Route path="/about" element={<About />} exact />
         <Route path="/services" element={<Services />} exact />
         <Route path="/service-providers" element={<ServiceProList />} exact />
+        <Route path="/seaker/orders" element={<DashBoard />} exact />
         <Route
-          path="/seaker/orders"
-          element={
-            <DashBoard
-              setSelectedServiceProvider={setSelectedServiceProvider}
-            />
-          }
-          exact
-        />
-        <Route
-          path="/api/orders/:id"
-          element={
-            <FeedbackComp selectedServiceProvider={selectedServiceProvider} />
-          }
+          path="/feedback/:sellerId"
+          element={<FeedbackComp alertHandler={showAlertHandler} />}
           exact
         />
         <Route path="/api/profile-detail/:id" element={<Profile />} exact />

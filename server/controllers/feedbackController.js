@@ -2,15 +2,14 @@ const Feedback = require("../models/Feedback");
 
 exports.postFeedback = async (req, res) => {
   try {
-    const { serviceProviderId, rating, feedback } = req.body;
-    console.log(req.body);
+    const { sellerId, rating, feedback } = req.body;
 
     // Create a new feedback instance
     const feedbackObj = new Feedback({
-      serviceProviderId,
+      sellerId,
       rating,
       feedback,
-      userId: req.user.id, // Assuming you have implemented authentication middleware to get the user ID
+      userId: req.userId, // Assuming you have implemented authentication middleware to get the user ID
     });
 
     // Save the feedback to the database

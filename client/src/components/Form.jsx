@@ -58,7 +58,7 @@ const Form = ({ alertHandler }) => {
       const response = await dispatch(signin(values));
       if (response.payload) {
         alertHandler("Sign in successfully!", "success");
-        navigate("/service-seaker");
+        navigate("/service-seeker");
       } else {
         alertHandler("Please enter the correct credentials!", "error");
       }

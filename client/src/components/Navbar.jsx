@@ -59,7 +59,7 @@ const Navbar = ({ alertHandler }) => {
         </div>
         <nav className="flex justify-between items-center lg:order-1">
           <Link
-            to={isAuthenticated ? "/service-seaker" : "/"}
+            to={isAuthenticated ? "/service-seeker" : "/"}
             className="text-[#4280EA] font-bold text-xs sm:text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
           >
             HandyHome
@@ -72,9 +72,9 @@ const Navbar = ({ alertHandler }) => {
             >
               <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
                 <Link
-                  to="/service-seaker"
+                  to="/service-seeker"
                   className={`${
-                    location.pathname === "/service-seaker"
+                    location.pathname === "/service-seeker"
                       ? "text-[#E74133]"
                       : ""
                   }`}

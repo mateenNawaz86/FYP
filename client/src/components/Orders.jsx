@@ -8,8 +8,6 @@ const Orders = (props) => {
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
 
-  const { setSelectedServiceProvider } = props;
-
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line
@@ -35,12 +33,12 @@ const Orders = (props) => {
     }
   };
 
-  const handleStatusUpdate = async (orderId, status) => {
+  const handleStatusUpdate = async (orderId, status, serviceProviderId) => {
     try {
       const response = await fetch(
         `http://localhost:5000/api/orders/${orderId}/status`,
         {
-          method: "PUT", // or "PATCH" depending on your API implementation
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             "auth-token": token,
@@ -53,16 +51,13 @@ const Orders = (props) => {
         throw new Error("Request failed");
       }
 
-      // Find the selected service provider based on the order ID
+      // Set the selected service provider
       const selectedProvider = data.find(
-        (item) => item._id === orderId
-      ).serviceProvider;
+        (item) => item.serviceProvider._id === serviceProviderId
+      );
 
-      setSelectedServiceProvider(selectedProvider);
-
-      // Refresh the order data
-      fetchData();
-      navigate(`/api/orders/${orderId}`);
+      const sellerId = selectedProvider.serviceProvider;
+      navigate(`/feedback/${sellerId}`);
     } catch (error) {
       console.log(error.message);
     }

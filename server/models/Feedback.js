@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const feedbackSchema = new mongoose.Schema({
-  serviceProviderId: {
+  sellerId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Profile", // Replace with your service provider model name
     required: true,
