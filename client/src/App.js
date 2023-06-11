@@ -61,14 +61,33 @@ const App = () => {
           exact
         />
 
+        {/* user routes */}
         <Route
-          path="/reset-password"
-          element={<ForgotPsw alertHandler={showAlertHandler} />}
+          path="/user/forgot-password"
+          element={
+            <ForgotPsw userType="user" alertHandler={showAlertHandler} />
+          }
           exact
         />
         <Route
-          path="/reset-password/:token"
-          element={<ResetPsw alertHandler={showAlertHandler} />}
+          path="/user/reset-password/:token"
+          element={<ResetPsw userType="user" alertHandler={showAlertHandler} />}
+          exact
+        />
+
+        {/* Seller routes */}
+        <Route
+          path="/seller/forgot-password"
+          element={
+            <ForgotPsw userType="seller" alertHandler={showAlertHandler} />
+          }
+          exact
+        />
+        <Route
+          path="/seller/reset-password/:token"
+          element={
+            <ResetPsw userType="seller" alertHandler={showAlertHandler} />
+          }
           exact
         />
 

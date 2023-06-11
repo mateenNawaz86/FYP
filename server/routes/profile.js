@@ -3,6 +3,7 @@ const router = express.Router();
 
 const profileController = require("../controllers/profileController");
 const bookingController = require("../controllers/bookingController");
+
 const authMiddleware = require("../middleware/authMiddleware");
 const { validateUser, validate } = require("../middleware/profileValidator");
 
@@ -19,6 +20,12 @@ router.post(
 
 // 3. Route for sign in seller profile
 router.post("/seller-signIn", profileController.signSeller);
+
+// POST route for initiating password reset for sellers
+router.post("/seller/forgot-password", profileController.forgotPsw);
+
+// POST route for changing password through reset token for sellers
+router.post("/seller/reset-password/:token", profileController.postResetPsw);
 
 // 4. Route for getting the single profile detail
 router.get("/profile-detail/:id", profileController.getProfileDetail);

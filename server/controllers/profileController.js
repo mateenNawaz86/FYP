@@ -1,5 +1,6 @@
 const Profile = require("../models/Profile");
 const BookService = require("../models/Booking");
+const { sendPasswordResetEmail } = require("../utils/email");
 
 const bcrypt = require("bcryptjs"); // used for hash password
 const jwt = require("jsonwebtoken"); // used for generate JWT_token
@@ -105,6 +106,66 @@ exports.signSeller = async (req, res) => {
     res.status(200).json({ authToken, user });
   } catch (error) {
     console.log(error);
+  }
+};
+
+// Forogt-Psw controller
+exports.forgotPsw = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const profile = await Profile.findOne({ email });
+
+    if (!profile) {
+      return res.status(404).json({ message: "Seller not found" });
+    }
+
+    // Generate a password reset token
+    profile.generatePasswordResetToken();
+
+    // Save the user with the reset token
+    await profile.save();
+
+    // Send password reset email
+    await sendPasswordResetEmail(profile.email, profile.resetToken, "seller");
+
+    res
+      .status(200)
+      .json({ message: "Password reset email sent successfully!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Reset-Psw controller
+exports.postResetPsw = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  try {
+    // Verify the reset token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const sellerId = decoded.sellerId;
+
+    // Find the user
+    const seller = await Profile.findById(sellerId);
+
+    // IF user NOT exist with that ID
+    if (!seller) {
+      return res.status(404).json({ message: "Seller not found" });
+    }
+
+    // Update the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+    seller.password = hashedPassword;
+    seller.resetToken = undefined;
+    await seller.save();
+
+    res.status(200).json({ message: "Password reset successfully!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 

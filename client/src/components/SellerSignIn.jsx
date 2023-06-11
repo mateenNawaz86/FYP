@@ -76,7 +76,7 @@ const SellerSignIn = ({ alertHandler }) => {
               />
             </div>
             <Link
-              to="/reset-password"
+              to="/seller/forgot-password"
               className="text-xs text-purple-600 hover:underline"
             >
               Forget Password?

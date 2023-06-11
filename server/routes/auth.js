@@ -14,10 +14,10 @@ router.post("/signup", validateUser, validate, authController.signUp);
 router.post("/signin", authController.signIn);
 
 // 5. Create a POST route for reset-password email sending
-router.post("/reset-password", authController.forgotPassword);
+router.post("/user/forgot-password", authController.forgotPassword);
 
 // 6. Create a POST route for chaning psw through link
-router.post("/reset-password/:token", authController.postResetPsw);
+router.post("/user/reset-password/:token", authController.postResetPsw);
 
 // Export the router
 module.exports = router;

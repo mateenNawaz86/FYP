@@ -145,7 +145,7 @@ const Form = ({ alertHandler }) => {
               </Box>
 
               <Link
-                to="/reset-password"
+                to="/user/forgot-password"
                 className="underline text-cyan-700 text-base cursor-pointer hover:text-cyan-900"
               >
                 Forgot Password
