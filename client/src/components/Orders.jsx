@@ -56,6 +56,7 @@ const Orders = (props) => {
         (item) => item.serviceProvider._id === serviceProviderId
       );
 
+      console.log(selectedProvider);
       const sellerId = selectedProvider.serviceProvider;
       navigate(`/feedback/${sellerId}`);
     } catch (error) {

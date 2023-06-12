@@ -28,6 +28,7 @@ import Experiences from "./components/Experiences";
 import Orders from "./pages/seller/orders";
 import ProfileForm from "./components/ProfileForm";
 import SellerEarnings from "./components/SellerEarnings";
+import Feedbacks from "./components/Feedbacks";
 
 const App = () => {
   const [showAlert, setShowAlert] = useState(null);
@@ -114,16 +115,16 @@ const App = () => {
         />
 
         <Route
+          path="/seller/create-profile"
+          element={<ProfileCreation alertHandler={showAlertHandler} />}
+          exact
+        />
+        <Route
           path="/seller/signIn"
           element={<SellerSignIn alertHandler={showAlertHandler} />}
           exact
         />
         <Route path="/seller" element={<SellerHome />} exact />
-        <Route
-          path="/seller/create-profile"
-          element={<ProfileCreation alertHandler={showAlertHandler} />}
-          exact
-        />
         <Route path="/seller/my-profile" element={<MyProfile />} exact />
         <Route
           path="/seller/experience/:token"
@@ -133,6 +134,7 @@ const App = () => {
         <Route path="/seller/my-services" element={<Experiences />} exact />
         <Route path="/seller/orders" element={<Orders />} exact />
         <Route path="/update-profile" element={<ProfileForm />} exact />
+        <Route path="/seller/reviews" element={<Feedbacks />} exact />
         <Route path="/seller/earnings" element={<SellerEarnings />} exact />
       </Routes>
 

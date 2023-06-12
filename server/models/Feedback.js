@@ -21,6 +21,10 @@ const feedbackSchema = new mongoose.Schema({
     ref: "user", // Replace with your user model name
     required: true,
   },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const Feedback = mongoose.model("Feedback", feedbackSchema);

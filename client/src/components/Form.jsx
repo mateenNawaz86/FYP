@@ -21,6 +21,7 @@ const initialValForRegister = {
   name: "",
   email: "",
   password: "",
+  imgURL: "",
 };
 
 const initialValForLogin = {
@@ -105,6 +106,16 @@ const Form = ({ alertHandler }) => {
                     name="name"
                     error={Boolean(touched.name) && Boolean(errors.name)}
                     helperText={touched.name && errors.name}
+                    sx={{ gridColumn: "span 4" }}
+                  />
+                  <TextField
+                    label="ImgURL"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.imgURL}
+                    name="imgURL"
+                    error={Boolean(touched.imgURL) && Boolean(errors.imgURL)}
+                    helperText={touched.mgURL && errors.imgURL}
                     sx={{ gridColumn: "span 4" }}
                   />
                 </>

@@ -62,7 +62,7 @@ const SellerNav = ({ alertHandler }) => {
         </div>
         <nav className="flex justify-between items-center lg:order-1">
           <Link
-            to={isAuthenticated ? "/seller" : "/seller-signIn"}
+            to={isAuthenticated ? "/seller" : "/seller/signIn"}
             className="text-[#4280EA] font-bold text-xs sm:text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
           >
             HandyHome

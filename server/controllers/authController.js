@@ -10,7 +10,7 @@ dotenv.config();
 exports.signUp = async (req, res) => {
   try {
     // destructure the data from the request body
-    const { name, email, password } = req.body;
+    const { name, email, password, imgURL } = req.body;
 
     // Match requested email with already exists emails
     let user = await userModel.findOne({ email: email });
@@ -31,6 +31,7 @@ exports.signUp = async (req, res) => {
       name: name,
       email: email,
       password: secPsw,
+      imgURL: imgURL,
     });
 
     // Save user into database

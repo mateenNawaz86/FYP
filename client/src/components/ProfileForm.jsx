@@ -72,7 +72,7 @@ const ProfileForm = ({ alertHandler }) => {
     const updatedProfile = await response.json();
     if (updatedProfile) {
       if (method === "POST") {
-        navigate("/seller-signIn");
+        navigate("/seller/signIn");
         alertHandler("Profile created successfully!", "success");
       } else {
         navigate("/seller/my-profile");
