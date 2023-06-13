@@ -2,7 +2,6 @@ const BookService = require("../models/Booking");
 const Profile = require("../models/Profile");
 
 const { emailTransporter, twilioClient } = require("../utils/notification");
-const PhoneNumber = require("awesome-phonenumber"); // Import the phone number validation library
 
 const dotenv = require("dotenv");
 dotenv.config();
@@ -10,7 +9,6 @@ dotenv.config();
 // 1. Controller for booking a service
 exports.bookService = async (req, res, next) => {
   try {
-    // Grab all input data from the request body
     const {
       name,
       email,
@@ -22,13 +20,9 @@ exports.bookService = async (req, res, next) => {
       description,
     } = req.body;
 
-    // Get the service provider ID
-    const serviceProviderId = req.params.id; // Assuming the ID is passed as a parameter
-
-    // Get the logged-in user's ID
+    const serviceProviderId = req.params.id;
     const userId = req.user.id;
 
-    // Create a new booking instance
     const newBooking = new BookService({
       name,
       email,
@@ -38,19 +32,16 @@ exports.bookService = async (req, res, next) => {
       postalCode,
       price,
       description,
-      serviceProvider: serviceProviderId, // Associate the booking with the service provider
-      user: userId, // Associate the booking with the logged-in user
+      serviceProvider: serviceProviderId,
+      user: userId,
     });
 
-    // Save the booking to the database
     await newBooking.save();
 
-    // Retrieve the service provider's contact details
     const serviceProvider = await Profile.findById(serviceProviderId);
 
-    // Send booking email
     const mailOptions = {
-      from: email,
+      from: emailTransporter.options.auth.user,
       to: serviceProvider.email,
       subject: "New Service Booking",
       text: `A new service has been booked by ${name}.`,
@@ -64,10 +55,8 @@ exports.bookService = async (req, res, next) => {
       }
     });
 
-    // Validate the phone number using regular expression
     const phoneNumberRegex = /^\+\d{1,3}\d{3,14}$/;
     if (phoneNumberRegex.test(phoneNumber)) {
-      // Send booking SMS
       const message = `A new service has been booked by ${name}.`;
 
       await twilioClient.messages

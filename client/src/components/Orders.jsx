@@ -33,7 +33,7 @@ const Orders = (props) => {
     }
   };
 
-  const handleStatusUpdate = async (orderId, status, serviceProviderId) => {
+  const handleStatusUpdate = async (orderId, status) => {
     try {
       const response = await fetch(
         `http://localhost:5000/api/orders/${orderId}/status`,
@@ -52,11 +52,12 @@ const Orders = (props) => {
       }
 
       // Set the selected service provider
-      const selectedProvider = data.find(
-        (item) => item.serviceProvider._id === serviceProviderId
-      );
+      const selectedProvider = data.find((item) => item._id === orderId);
 
-      console.log(selectedProvider);
+      if (!selectedProvider) {
+        throw new Error("Service provider not found");
+      }
+
       const sellerId = selectedProvider.serviceProvider;
       navigate(`/feedback/${sellerId}`);
     } catch (error) {

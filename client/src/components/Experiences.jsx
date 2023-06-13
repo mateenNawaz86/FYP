@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import Spinner from "../UI/Spinner";
 
 const Experiences = () => {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
@@ -25,8 +27,10 @@ const Experiences = () => {
       const jsonData = await response.json();
 
       setData(jsonData);
+      setIsLoading(false);
     } catch (error) {
       console.log(error.message);
+      setIsLoading(false);
     }
   };
 
@@ -39,7 +43,11 @@ const Experiences = () => {
             {name} Experience
           </h1>
 
-          {!data ? (
+          {isLoading ? (
+            <div className="flex justify-center items-center">
+              <Spinner />
+            </div>
+          ) : data.length === 0 ? (
             <h2 className="text-red-500 font-semibold text-2xl text-center">
               No Experience Yet!
             </h2>

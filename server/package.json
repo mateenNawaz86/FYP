@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/mateenNawaz86/FYP#readme",
   "dependencies": {
-    "awesome-phonenumber": "^5.8.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
