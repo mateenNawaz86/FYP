@@ -31,29 +31,15 @@ const SellerOrders = (props) => {
     }
   };
 
-  const handleStatusUpdate = async (orderId, status) => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/seller-orders/${orderId}/status`,
-        {
-          method: "PUT", // or "PATCH" depending on your API implementation
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": token,
-          },
-          body: JSON.stringify({ status }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Request failed");
-      }
-
-      // Refresh the order data
-      fetchData();
-    } catch (error) {
-      console.log(error.message);
+  const getStatusClassName = (status) => {
+    if (status === "active") {
+      return "bg-green-600";
+    } else if (status === "complete") {
+      return "bg-orange-500";
+    } else if (status === "cancel") {
+      return "bg-red-500";
     }
+    return ""; // Return an empty string if the status doesn't match any condition
   };
 
   const filteredOrders = data.filter((item) => item.status === props.status);
@@ -73,25 +59,13 @@ const SellerOrders = (props) => {
               <p>{formattedTime}</p>
               <p>{formattedDate}</p>
             </div>
-            <p>{item.status}</p>
-            <div className="flex flex-col gap-2 mt-4 sm:mt-0">
-              {item.status === "active" && (
-                <button
-                  onClick={() => handleStatusUpdate(item._id, "complete")}
-                  className="bg-green-500 hover:bg-green-600 transition-all ease-linear py-1 px-2 rounded text-white"
-                >
-                  Mark as Complete
-                </button>
-              )}
-              {item.status === "active" && (
-                <button
-                  onClick={() => handleStatusUpdate(item._id, "cancel")}
-                  className="bg-red-500 hover:bg-red-600 transition-all ease-linear py-1 px-2 rounded text-white"
-                >
-                  Cancel Order
-                </button>
-              )}
-            </div>
+            <p
+              className={`text-white font-medium text-lg py-1 mt-3 sm:mt-0 px-3 rounded ${getStatusClassName(
+                item.status
+              )}`}
+            >
+              {item.status}
+            </p>
           </div>
         );
       })}
