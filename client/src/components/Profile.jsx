@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { fetchProfileById } from "../state/profileSlice";
 import Spinner from "../UI/Spinner";
 
@@ -11,6 +11,7 @@ const Profile = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { profile, loading, error } = useSelector((state) => state.profile);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchProfileById(id));
@@ -23,6 +24,12 @@ const Profile = () => {
   if (!profile) {
     return <div>No profile found.</div>;
   }
+
+  const handleFetchReviews = (sellerId) => {
+    // Redirect the user to the reviews page with the selected seller's ID
+    // Use the react-router-dom's useHistory hook to navigate programmatically
+    navigate(`/reviews/${sellerId}`);
+  };
 
   return (
     <>
@@ -61,12 +68,21 @@ const Profile = () => {
                     <p className="ml-3 text-[#757575]">{profile.skill}</p>
                   </div>
                 </div>
-                <Link
-                  to={`/book-service/${profile._id}`}
-                  className="bg-[#4280EA] text-white rounded-full py-1 px-4 w-fit hover:bg-[#000000] hover:ease-in duration-200"
-                >
-                  Booking
-                </Link>
+                <div className="flex gap-3">
+                  <Link
+                    to={`/book-service/${profile._id}`}
+                    className="bg-[#4280EA] text-white rounded-full py-1 px-4 w-fit hover:bg-[#000000] hover:ease-in duration-200"
+                  >
+                    Booking
+                  </Link>
+
+                  <button
+                    className="bg-[#4280EA] text-white rounded-full py-1 px-4 w-fit hover:bg-[#000000] hover:ease-in duration-200"
+                    onClick={() => handleFetchReviews(profile._id)}
+                  >
+                    Reviews
+                  </button>
+                </div>
               </div>
             </article>
           </section>

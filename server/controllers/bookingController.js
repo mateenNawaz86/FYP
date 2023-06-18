@@ -59,14 +59,16 @@ exports.bookService = async (req, res, next) => {
     if (phoneNumberRegex.test(phoneNumber)) {
       const message = `A new service has been booked by ${name}.`;
 
-      await twilioClient.messages
-        .create({
+      try {
+        const smsMessage = await twilioClient.messages.create({
           body: message,
           from: process.env.TWILIO_PHONE_NUMBER,
           to: phoneNumber,
-        })
-        .then((message) => console.log("Booking SMS sent:", message.sid))
-        .catch((error) => console.error("Error sending booking SMS:", error));
+        });
+        console.log("Booking SMS sent:", smsMessage.sid);
+      } catch (error) {
+        console.error("Error sending booking SMS:", error);
+      }
     } else {
       console.error("Invalid phone number:", phoneNumber);
     }
