@@ -7,12 +7,14 @@ import { FcCallback } from "react-icons/fc";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { GiSkills } from "react-icons/gi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
+import { FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const SellerProfile = () => {
   const [profile, setProfile] = useState(null);
   const token = useSelector((state) => state.profile.token);
   const [loading, setLoading] = useState(false);
+  const [totalRating, setTotalRating] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +39,8 @@ const SellerProfile = () => {
       setLoading(true);
       const profileData = await response.json();
       setLoading(false);
-      setProfile(profileData);
+      setProfile(profileData.profile);
+      setTotalRating(profileData.totalRating);
     } catch (error) {
       console.log(error.message);
     }
@@ -62,6 +65,10 @@ const SellerProfile = () => {
   const handleEditProfile = () => {
     navigate(`/update-profile`, { state: { profileData: profile } });
   };
+
+  const filledStars = Math.floor(totalRating);
+  const hasFraction = totalRating % 1 !== 0;
+  const emptyStars = 5 - filledStars - (hasFraction ? 1 : 0);
 
   return (
     <main className="py-4 md:py-10">
@@ -108,16 +115,31 @@ const SellerProfile = () => {
               <HiOutlineLocationMarker className="text-pink-500" />
               <p className="ml-2 text-[#757575]">{profile.address}</p>
             </div>
+            <div className="flex items-center mb-3">
+              <div className="flex items-center">
+                <p className="text-[#757575]">Rating: </p>
+                <div className="flex items-center ml-2">
+                  {[...Array(filledStars)].map((_, index) => (
+                    <FaStar key={index} className="h-5 w-5 text-yellow-400" />
+                  ))}
+                  {hasFraction && (
+                    <FaStar className="h-5 w-5 text-yellow-400" half />
+                  )}
+                  {[...Array(emptyStars)].map((_, index) => (
+                    <FaStar key={index} className="h-5 w-5 text-gray-300" />
+                  ))}
+                </div>
+              </div>
+            </div>
             <button
               onClick={handleEditProfile}
-              className="bg-[#4280EA] text-white text-lg rounded py-1 px-4 hover:bg-[#000000] hover:ease-in duration-200 "
+              className="bg-[#4280EA] text-white text-lg rounded py-1 px-4 hover:bg-[#000000] hover:ease-in duration-200"
             >
               Edit
             </button>
           </div>
         </article>
       </section>
-      <hr />
     </main>
   );
 };

@@ -35,7 +35,7 @@ const SellerOrders = (props) => {
     if (status === "active") {
       return "bg-green-600";
     } else if (status === "complete") {
-      return "bg-orange-500";
+      return "bg-blue-500";
     } else if (status === "cancel") {
       return "bg-red-500";
     }

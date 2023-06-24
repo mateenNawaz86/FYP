@@ -6,6 +6,7 @@ import Spinner from "../UI/Spinner";
 
 import { SlLocationPin } from "react-icons/sl";
 import { FcBusiness, FcCallback } from "react-icons/fc";
+import { FaStar, FaRegStar } from "react-icons/fa";
 
 const Profile = () => {
   const { id } = useParams();
@@ -25,10 +26,28 @@ const Profile = () => {
     return <div>No profile found.</div>;
   }
 
-  const handleFetchReviews = (sellerId) => {
-    // Redirect the user to the reviews page with the selected seller's ID
-    // Use the react-router-dom's useHistory hook to navigate programmatically
-    navigate(`/reviews/${sellerId}`);
+  const renderRatingStars = () => {
+    const rating = profile.averageRating;
+    const starCount = 5;
+    const filledStars = Math.round(rating);
+    const emptyStars = starCount - filledStars;
+
+    const stars = [];
+    for (let i = 0; i < filledStars; i++) {
+      stars.push(<FaStar key={i} className="text-yellow-500" />);
+    }
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(
+        <FaRegStar key={filledStars + i} className="text-yellow-500" />
+      );
+    }
+
+    return (
+      <>
+        <span className="mr-1">{rating.toFixed(1)}</span>
+        {stars}
+      </>
+    );
   };
 
   return (
@@ -46,7 +65,7 @@ const Profile = () => {
 
             <article className="flex flex-col md:flex-row gap-8 justify-between items-center mt-12 shadow-xl p-8 rounded-sm">
               <img
-                className="rounded-full w-40  border-dashed border-2 border-orange-600 hover:shadow-lg sm:rounded-sm"
+                className="rounded-full w-40 border-dashed border-2 border-orange-600 hover:shadow-lg sm:rounded-sm"
                 src={profile.imgURL}
                 alt="Profile"
               />
@@ -68,7 +87,9 @@ const Profile = () => {
                     <p className="ml-3 text-[#757575]">{profile.skill}</p>
                   </div>
                 </div>
-                <div className="flex gap-3">
+
+                <div className="flex items-center">{renderRatingStars()}</div>
+                <div className="flex gap-3 mt-3">
                   <Link
                     to={`/book-service/${profile._id}`}
                     className="bg-[#4280EA] text-white rounded-full py-1 px-4 w-fit hover:bg-[#000000] hover:ease-in duration-200"
@@ -76,12 +97,12 @@ const Profile = () => {
                     Booking
                   </Link>
 
-                  <button
+                  {/* <button
                     className="bg-[#4280EA] text-white rounded-full py-1 px-4 w-fit hover:bg-[#000000] hover:ease-in duration-200"
                     onClick={() => handleFetchReviews(profile._id)}
                   >
                     Reviews
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </article>

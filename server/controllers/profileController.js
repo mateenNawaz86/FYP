@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken"); // used for generate JWT_token
 const mongoose = require("mongoose");
 
 const dotenv = require("dotenv");
+const Feedback = require("../models/Feedback");
 dotenv.config();
 
 // 1. Controller for getting the seller profile
@@ -182,8 +183,29 @@ exports.getProfileDetail = async (req, res) => {
       return res.status(404).json({ error: "Profile not found" });
     }
 
-    // Return the profile detail as a JSON response
-    res.json(profile);
+    // Retrieve the average rating for the seller using Feedback model
+    const feedback = await Feedback.aggregate([
+      {
+        $match: { sellerId: mongoose.Types.ObjectId(profile._id) },
+      },
+      {
+        $group: {
+          _id: null,
+          averageRating: { $avg: "$rating" },
+        },
+      },
+    ]);
+
+    const averageRating = feedback.length > 0 ? feedback[0].averageRating : 0;
+
+    // Add the average rating to the profile object
+    const profileWithRating = {
+      ...profile._doc,
+      averageRating,
+    };
+
+    // Return the profile detail with average rating as a JSON response
+    res.json(profileWithRating);
   } catch (error) {
     console.error("Error retrieving profile:", error);
     res.status(500).json({ error: "Server error" });
@@ -212,11 +234,25 @@ exports.getSearchedProfile = async (req, res) => {
 // Get single profile
 exports.getProfile = async (req, res) => {
   try {
-    const userId = req.userId; // Updated to req.userId
+    const sellerId = req.userId; // Updated to req.userId
+    const profile = await Profile.findOne({ _id: sellerId }); // Updated to findOne
 
-    const profile = await Profile.findOne({ _id: userId }); // Updated to findOne
+    // calculate the feedback
+    const feedback = await Feedback.aggregate([
+      {
+        $match: { sellerId: mongoose.Types.ObjectId(sellerId) },
+      },
+      {
+        $group: {
+          _id: null,
+          averageRating: { $avg: "$rating" },
+        },
+      },
+    ]);
 
-    res.status(200).json(profile);
+    const totalRating = feedback.length > 0 ? feedback[0].averageRating : 0;
+
+    res.status(200).json({ profile, totalRating });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
