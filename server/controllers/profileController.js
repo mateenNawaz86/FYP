@@ -237,10 +237,15 @@ exports.getProfile = async (req, res) => {
     const sellerId = req.userId; // Updated to req.userId
     const profile = await Profile.findOne({ _id: sellerId }); // Updated to findOne
 
+    // IF profile NOT exist with this specific ID
+    if (!profile) {
+      return res.status(404).json({ error: "Profile not found" });
+    }
+
     // calculate the feedback
     const feedback = await Feedback.aggregate([
       {
-        $match: { sellerId: mongoose.Types.ObjectId(sellerId) },
+        $match: { sellerId: mongoose.Types.ObjectId(profile._id) },
       },
       {
         $group: {
@@ -250,9 +255,15 @@ exports.getProfile = async (req, res) => {
       },
     ]);
 
-    const totalRating = feedback.length > 0 ? feedback[0].averageRating : 0;
+    const averageRating = feedback.length > 0 ? feedback[0].averageRating : 0;
 
-    res.status(200).json({ profile, totalRating });
+    // Add the average rating to the profile object
+    const profileWithRating = {
+      ...profile._doc,
+      averageRating,
+    };
+
+    res.status(200).json(profileWithRating);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
@@ -376,5 +387,40 @@ exports.getEarnings = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server Error" });
+  }
+};
+
+// controller for getting the reviews
+exports.getReviews = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const feedbacks = await Feedback.aggregate([
+      {
+        $match: { sellerId: mongoose.Types.ObjectId(id) },
+      },
+      {
+        $lookup: {
+          from: "users", // Use the actual name of the User collection
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $project: {
+          feedback: 1,
+          rating: 1,
+          userName: { $arrayElemAt: ["$user.name", 0] },
+          imgURL: { $arrayElemAt: ["$user.imgURL", 0] },
+          date: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({ feedbacks });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 };

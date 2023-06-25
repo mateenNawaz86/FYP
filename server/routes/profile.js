@@ -54,4 +54,7 @@ router.put(
 // 10. Route for GET earnings
 router.get("/seller-earnings", authMiddleware, profileController.getEarnings);
 
+// 11. Route for getting the reviews
+router.get("/reviews/:id", profileController.getReviews);
+
 module.exports = router;

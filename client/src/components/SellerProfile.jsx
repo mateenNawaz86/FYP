@@ -7,14 +7,14 @@ import { FcCallback } from "react-icons/fc";
 import { BsFillPersonVcardFill } from "react-icons/bs";
 import { GiSkills } from "react-icons/gi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaRegStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const SellerProfile = () => {
   const [profile, setProfile] = useState(null);
   const token = useSelector((state) => state.profile.token);
   const [loading, setLoading] = useState(false);
-  const [totalRating, setTotalRating] = useState(0);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,8 +39,7 @@ const SellerProfile = () => {
       setLoading(true);
       const profileData = await response.json();
       setLoading(false);
-      setProfile(profileData.profile);
-      setTotalRating(profileData.totalRating);
+      setProfile(profileData);
     } catch (error) {
       console.log(error.message);
     }
@@ -66,9 +65,29 @@ const SellerProfile = () => {
     navigate(`/update-profile`, { state: { profileData: profile } });
   };
 
-  const filledStars = Math.floor(totalRating);
-  const hasFraction = totalRating % 1 !== 0;
-  const emptyStars = 5 - filledStars - (hasFraction ? 1 : 0);
+  const renderRatingStars = () => {
+    const rating = profile.averageRating;
+    const starCount = 5;
+    const filledStars = Math.round(rating);
+    const emptyStars = starCount - filledStars;
+
+    const stars = [];
+    for (let i = 0; i < filledStars; i++) {
+      stars.push(<FaStar key={i} className="text-yellow-500" />);
+    }
+    for (let i = 0; i < emptyStars; i++) {
+      stars.push(
+        <FaRegStar key={filledStars + i} className="text-yellow-500" />
+      );
+    }
+
+    return (
+      <>
+        <span className="mr-1">{rating.toFixed(1)}</span>
+        {stars}
+      </>
+    );
+  };
 
   return (
     <main className="py-4 md:py-10">
@@ -85,9 +104,10 @@ const SellerProfile = () => {
           />
 
           <div className="ml-8">
-            <h1 className="text-lg sm:text-3xl font-semibold tracking-wide text-purple-600">
-              {profile.name}
-            </h1>
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-semibold">{profile.name}</h2>
+              <p className="flex items-center">{renderRatingStars()}</p>
+            </div>
             <p className="text-[#757575] text-xs sm:text-base my-3">
               {profile.description}
             </p>
@@ -115,22 +135,7 @@ const SellerProfile = () => {
               <HiOutlineLocationMarker className="text-pink-500" />
               <p className="ml-2 text-[#757575]">{profile.address}</p>
             </div>
-            <div className="flex items-center mb-3">
-              <div className="flex items-center">
-                <p className="text-[#757575]">Rating: </p>
-                <div className="flex items-center ml-2">
-                  {[...Array(filledStars)].map((_, index) => (
-                    <FaStar key={index} className="h-5 w-5 text-yellow-400" />
-                  ))}
-                  {hasFraction && (
-                    <FaStar className="h-5 w-5 text-yellow-400" half />
-                  )}
-                  {[...Array(emptyStars)].map((_, index) => (
-                    <FaStar key={index} className="h-5 w-5 text-gray-300" />
-                  ))}
-                </div>
-              </div>
-            </div>
+            <div className="flex items-center mb-3"></div>
             <button
               onClick={handleEditProfile}
               className="bg-[#4280EA] text-white text-lg rounded py-1 px-4 hover:bg-[#000000] hover:ease-in duration-200"

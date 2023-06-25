@@ -29,6 +29,7 @@ import Orders from "./pages/seller/orders";
 import ProfileForm from "./components/ProfileForm";
 import SellerEarnings from "./components/SellerEarnings";
 import Feedbacks from "./components/Feedbacks";
+import SellerReviews from "./components/SellerReviews";
 
 const App = () => {
   const [showAlert, setShowAlert] = useState(null);
@@ -96,6 +97,7 @@ const App = () => {
         <Route path="/about" element={<About />} exact />
         <Route path="/services" element={<Services />} exact />
         <Route path="/service-providers" element={<ServiceProList />} exact />
+        <Route path="/reviews/:id" element={<SellerReviews />} exact />
         <Route path="/seaker/orders" element={<DashBoard />} exact />
         <Route
           path="/feedback/:sellerId"

@@ -14,6 +14,10 @@ const Profile = () => {
   const { profile, loading, error } = useSelector((state) => state.profile);
   const navigate = useNavigate();
 
+  const handleFetchReviews = () => {
+    navigate(`/reviews/${id}`);
+  };
+
   useEffect(() => {
     dispatch(fetchProfileById(id));
   }, [dispatch, id]);
@@ -71,7 +75,10 @@ const Profile = () => {
               />
 
               <div className="flex-grow flex flex-col">
-                <h2 className="text-lg font-semibold">{profile.name}</h2>
+                <div className="flex justify-between items-center">
+                  <h2 className="text-lg font-semibold">{profile.name}</h2>
+                  <p className="flex items-center">{renderRatingStars()}</p>
+                </div>
                 <p className="text-[#757575] my-2">{profile.description}</p>
                 <div className="flex justify-between flex-col gap-3 sm:flex-row sm:items-center my-4">
                   <div className="flex items-center">
@@ -88,7 +95,6 @@ const Profile = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center">{renderRatingStars()}</div>
                 <div className="flex gap-3 mt-3">
                   <Link
                     to={`/book-service/${profile._id}`}
@@ -97,12 +103,12 @@ const Profile = () => {
                     Booking
                   </Link>
 
-                  {/* <button
+                  <button
                     className="bg-[#4280EA] text-white rounded-full py-1 px-4 w-fit hover:bg-[#000000] hover:ease-in duration-200"
                     onClick={() => handleFetchReviews(profile._id)}
                   >
                     Reviews
-                  </button> */}
+                  </button>
                 </div>
               </div>
             </article>
