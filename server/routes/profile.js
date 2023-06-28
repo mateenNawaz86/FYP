@@ -57,4 +57,10 @@ router.get("/seller-earnings", authMiddleware, profileController.getEarnings);
 // 11. Route for getting the reviews
 router.get("/reviews/:id", profileController.getReviews);
 
+// 12. Define the route for searching profiles by rating
+router.get(
+  "/search-profile-by-rating",
+  profileController.getSearchedProfileByRating
+);
+
 module.exports = router;

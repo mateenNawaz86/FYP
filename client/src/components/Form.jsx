@@ -5,6 +5,8 @@ import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signin } from "../state/userSlice";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const registerSchema = yup.object().shape({
   name: yup.string().required("required"),
@@ -33,6 +35,9 @@ const Form = ({ alertHandler }) => {
   const [pageType, setPageType] = useState("login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
@@ -149,7 +154,11 @@ const Form = ({ alertHandler }) => {
                 <Button
                   type="submit"
                   variant="contained"
-                  sx={{ margin: "10px 0" }}
+                  sx={{
+                    margin: isSmallScreen ? "10px 0" : "15px 0",
+                    padding: isSmallScreen ? "2px 4px" : "5px 15px",
+                    fontSize: isSmallScreen ? "12px" : "14px",
+                  }}
                 >
                   {isLogin ? "LOGIN" : "SIGN UP"}
                 </Button>
@@ -157,7 +166,7 @@ const Form = ({ alertHandler }) => {
 
               <Link
                 to="/user/forgot-password"
-                className="underline text-cyan-700 text-base cursor-pointer hover:text-cyan-900"
+                className="underline text-cyan-700 text-xs sm:text-base cursor-pointer hover:text-cyan-900"
               >
                 Forgot Password
               </Link>

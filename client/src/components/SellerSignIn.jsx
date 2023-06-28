@@ -3,10 +3,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { sellerSignIn } from "../state/profileSlice";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import Button from "@mui/material/Button";
 
 const SellerSignIn = ({ alertHandler }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [enteredInp, setEnteredInp] = useState({
     email: "",
     password: "",
@@ -33,6 +40,10 @@ const SellerSignIn = ({ alertHandler }) => {
       console.log(error);
       alertHandler("An error occurred. Please try again later.", "error");
     }
+  };
+
+  const buyerChangeHandler = () => {
+    navigate("/");
   };
 
   return (
@@ -81,13 +92,24 @@ const SellerSignIn = ({ alertHandler }) => {
             >
               Forget Password?
             </Link>
-            <div className="mt-6">
+            <div className="flex flex-col mt-6">
               <button
                 type="submit"
                 className="w-full sm:w-fit px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
               >
                 Login
               </button>
+              <Button
+                variant="contained"
+                onClick={buyerChangeHandler}
+                sx={{
+                  margin: isSmallScreen ? "10px 0" : "15px 0",
+                  padding: isSmallScreen ? "2px 4px" : "5px 15px",
+                  fontSize: isSmallScreen ? "12px" : "14px",
+                }}
+              >
+                Back to Buyer
+              </Button>
             </div>
           </form>
 

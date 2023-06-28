@@ -3,9 +3,10 @@ const mongoose = require("mongoose");
 const feedbackSchema = new mongoose.Schema({
   sellerId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Profile", // Replace with your service provider model name
+    ref: "Profile", // Replace with your profile model name
     required: true,
   },
+
   rating: {
     type: Number,
     min: 1,

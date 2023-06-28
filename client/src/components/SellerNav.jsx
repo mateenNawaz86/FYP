@@ -9,6 +9,8 @@ import { setLogout } from "../state/profileSlice";
 import { BsList } from "react-icons/bs";
 import { VscSearch } from "react-icons/vsc";
 import { IoClose } from "react-icons/io5";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 import {
   FormControl,
@@ -22,6 +24,9 @@ const SellerNav = ({ alertHandler }) => {
   const isAuthenticated = useSelector((state) => state.profile.token);
   const user = useSelector((state) => state.profile.user);
 
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,9 +39,7 @@ const SellerNav = ({ alertHandler }) => {
   const routeChange = () => {
     navigate("/seller/signIn");
   };
-  const buyerChangeHandler = () => {
-    navigate("/");
-  };
+  
 
   const logoutHandler = () => {
     dispatch(setLogout());
@@ -48,13 +51,15 @@ const SellerNav = ({ alertHandler }) => {
     <>
       <div className="flex justify-between items-center border-b-2 bg-white h-14 px-4 md:px-8 lg:px-16">
         <div className="flex justify-between items-center space-x-3 lg:order-2">
-          <p onClick={() => showMenuHandler()}>
-            {showMenu ? (
-              <IoClose className="text-2xl cursor-pointer lg:hidden" />
-            ) : (
-              <BsList className="text-2xl cursor-pointer lg:hidden" />
-            )}
-          </p>
+          {isAuthenticated && (
+            <p onClick={() => showMenuHandler()}>
+              {showMenu ? (
+                <IoClose className="text-2xl cursor-pointer lg:hidden" />
+              ) : (
+                <BsList className="text-2xl cursor-pointer lg:hidden" />
+              )}
+            </p>
+          )}
           <VscSearch
             className="text-lg cursor-pointer hidden"
             title="Search Microsoft.com"
@@ -169,10 +174,15 @@ const SellerNav = ({ alertHandler }) => {
               </FormControl>
             ) : (
               <>
-                <Button variant="contained" onClick={buyerChangeHandler}>
-                  Back to Buyer
-                </Button>
-                <Button variant="contained" onClick={routeChange}>
+                <Button
+                  variant="contained"
+                  onClick={routeChange}
+                  sx={{
+                    margin: isSmallScreen ? "10px 0" : "15px 0",
+                    padding: isSmallScreen ? "2px 4px" : "5px 15px",
+                    fontSize: isSmallScreen ? "12px" : "14px",
+                  }}
+                >
                   Login
                 </Button>
               </>

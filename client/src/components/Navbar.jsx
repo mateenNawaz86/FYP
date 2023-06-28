@@ -7,8 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { setLogout } from "../state/userSlice";
 
 import { BsList } from "react-icons/bs";
-import { VscSearch } from "react-icons/vsc";
 import { IoClose } from "react-icons/io5";
+import { MdOutlineArrowRightAlt } from "react-icons/md";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 import {
   FormControl,
@@ -20,6 +22,9 @@ import {
 
 const Navbar = ({ alertHandler }) => {
   const isAuthenticated = useSelector((state) => state.auth.token);
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
@@ -44,18 +49,30 @@ const Navbar = ({ alertHandler }) => {
   return (
     <>
       <div className="flex justify-between items-center border-b-2 bg-white h-14 px-4 md:px-8 lg:px-16">
-        <div className="flex justify-between items-center space-x-3 lg:order-2">
-          <p onClick={() => showMenuHandler()}>
-            {showMenu ? (
-              <IoClose className="text-2xl cursor-pointer lg:hidden" />
-            ) : (
-              <BsList className="text-2xl cursor-pointer lg:hidden" />
-            )}
-          </p>
-          <VscSearch
-            className="text-lg cursor-pointer hidden"
-            title="Search Microsoft.com"
-          />
+        <div className="flex justify-between items-center space-x-3">
+          {isAuthenticated ? (
+            <p onClick={() => showMenuHandler()}>
+              {showMenu ? (
+                <IoClose className="text-2xl cursor-pointer lg:hidden" />
+              ) : (
+                <BsList className="text-2xl cursor-pointer lg:hidden" />
+              )}
+            </p>
+          ) : (
+            <Link to="/seller/signIn" className="inline-block">
+              <Button
+                variant="contained"
+                endIcon={<MdOutlineArrowRightAlt />}
+                sx={{
+                  margin: isSmallScreen ? "10px 0" : "15px 0",
+                  padding: isSmallScreen ? "2px 4px" : "5px 15px",
+                  fontSize: isSmallScreen ? "12px" : "14px",
+                }}
+              >
+                Seller
+              </Button>
+            </Link>
+          )}
         </div>
         <nav className="flex justify-between items-center lg:order-1">
           <Link
@@ -158,7 +175,15 @@ const Navbar = ({ alertHandler }) => {
                 </Select>
               </FormControl>
             ) : (
-              <Button variant="contained" onClick={routeChange}>
+              <Button
+                variant="contained"
+                onClick={routeChange}
+                sx={{
+                  margin: isSmallScreen ? "10px 0" : "15px 0",
+                  padding: isSmallScreen ? "2px 4px" : "5px 15px",
+                  fontSize: isSmallScreen ? "12px" : "14px",
+                }}
+              >
                 Login
               </Button>
             )}
