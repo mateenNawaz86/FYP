@@ -5,41 +5,23 @@ import SearchBar from "../UI/SearchBar";
 const ServiceProList = () => {
   const [data, setData] = useState([]);
   const [skill, setSkill] = useState("");
-  const [rating, setRating] = useState("");
-  const [showNoProfiles, setShowNoProfiles] = useState(false);
+  const [showNoProfiles, setShowNoProfiles] = useState();
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line
   }, []);
 
   const fetchData = async () => {
     try {
-      let url = "http://localhost:5000/api/profile";
-
-      // Check if skill and rating are provided
-      if (skill && rating) {
-        url = `http://localhost:5000/api/search-profile-by-rating?skill=${skill}&rating=${rating}`;
-      }
-      // Check if only skill is provided
-      else if (skill) {
-        url = `http://localhost:5000/api/search-profile?skill=${skill}`;
-      }
-
-      const response = await fetch(url);
+      const response = await fetch("http://localhost:5000/api/profile");
       if (!response.ok) {
         throw new Error("Request failed");
       }
       const jsonData = await response.json();
 
-      if (jsonData.length === 0) {
-        setShowNoProfiles(true);
-      } else {
-        setShowNoProfiles(false);
-        setData(jsonData);
-      }
+      setData(jsonData);
     } catch (error) {
-      console.error(error);
+      console.log(error.message);
     }
   };
 
@@ -48,16 +30,25 @@ const ServiceProList = () => {
     navigate(`/api/profile-detail/${id}`);
   };
 
-  const searchByRating = (selectedRating) => {
-    setRating(selectedRating);
-    fetchData();
+  // API call for search seller
+  const searchHandler = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/search-profile?skill=${skill}`
+      );
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      const jsonData = await response.json();
+
+      setData(jsonData);
+      setShowNoProfiles(jsonData.length === 0); // Set state to show "No profiles found" message if the array is empty
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const searchHandler = () => {
-    fetchData();
-  };
-
-  const skillChangeHandler = (event) => {
+  const inpGetHandler = (event) => {
     setSkill(event.target.value);
   };
 
@@ -71,35 +62,14 @@ const ServiceProList = () => {
           <div className="w-full sm:w-1/2 my-8 ">
             <SearchBar
               category={skill}
-              changeHandler={skillChangeHandler}
+              changeHandler={inpGetHandler}
               searchHandler={searchHandler}
             />
           </div>
 
-          <div className="w-full sm:w-1/2 my-8 ">
-            <select
-              className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              value={rating}
-              onChange={(event) => setRating(event.target.value)}
-            >
-              <option value="">Select Rating</option>
-              <option value="1">1 Star</option>
-              <option value="2">2 Stars</option>
-              <option value="3">3 Stars</option>
-              <option value="4">4 Stars</option>
-              <option value="5">5 Stars</option>
-            </select>
-            <button
-              className="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-              onClick={() => searchByRating(rating)}
-            >
-              Search
-            </button>
-          </div>
-
           {showNoProfiles ? (
             <p className="text-center text-lg text-red-600 font-medium">
-              No service providers found.
+              No service providers have registered under the specified category.
             </p>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

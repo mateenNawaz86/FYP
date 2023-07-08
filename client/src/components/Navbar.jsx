@@ -25,6 +25,7 @@ const Navbar = ({ alertHandler }) => {
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isLargeScreen = useMediaQuery(theme.breakpoints.down("lg"));
 
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
@@ -51,13 +52,22 @@ const Navbar = ({ alertHandler }) => {
       <div className="flex justify-between items-center border-b-2 bg-white h-14 px-4 md:px-8 lg:px-16">
         <div className="flex justify-between items-center space-x-3">
           {isAuthenticated ? (
-            <p onClick={() => showMenuHandler()}>
-              {showMenu ? (
-                <IoClose className="text-2xl cursor-pointer lg:hidden" />
-              ) : (
-                <BsList className="text-2xl cursor-pointer lg:hidden" />
-              )}
-            </p>
+            isLargeScreen ? (
+              <p onClick={() => showMenuHandler()}>
+                {showMenu ? (
+                  <IoClose className="text-2xl cursor-pointer lg:hidden" />
+                ) : (
+                  <BsList className="text-2xl cursor-pointer lg:hidden" />
+                )}
+              </p>
+            ) : (
+              <Link
+                to={isAuthenticated ? "/service-seeker" : "/"}
+                className="text-[#4280EA] font-bold text-xs sm:text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer "
+              >
+                HandyHome
+              </Link>
+            )
           ) : (
             <Link to="/seller/signIn" className="inline-block">
               <Button
@@ -77,7 +87,7 @@ const Navbar = ({ alertHandler }) => {
         <nav className="flex justify-between items-center lg:order-1">
           <Link
             to={isAuthenticated ? "/service-seeker" : "/"}
-            className="text-[#4280EA] font-bold text-xs sm:text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer"
+            className="text-[#4280EA] font-bold text-xs sm:text-sm md:text-lg transition ease-in-out duration-300 hover:text-[#0f48aa] hover:cursor-pointer block lg:hidden"
           >
             HandyHome
           </Link>
@@ -154,6 +164,7 @@ const Navbar = ({ alertHandler }) => {
                   sx={{
                     backgroundColor: "#3366C0",
                     width: "auto",
+
                     borderRadius: "0.25rem",
                     color: "#fff",
                     p: "0.25rem 1rem",
