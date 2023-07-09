@@ -35,6 +35,7 @@ exports.postProfile = async (req, res) => {
       cnicNumber,
       address,
       skill,
+      postalCode,
       imgURL,
       description,
     } = req.body;
@@ -62,6 +63,7 @@ exports.postProfile = async (req, res) => {
       cnicNumber: cnicNumber,
       address: address,
       skill: skill,
+      postalCode: postalCode,
       imgURL: imgURL,
       description: description,
     });
@@ -227,6 +229,37 @@ exports.getSearchedProfile = async (req, res) => {
     if (filteredProfiles.length === 0) {
       return res.json([]); // Return empty array when no profiles are found
     }
+
+    res.json(filteredProfiles);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+// controller for getting profile by rating
+exports.getSearchedProfileByRating = async (req, res) => {
+  try {
+    const { rating } = req.query;
+
+    if (!rating) {
+      return res.status(400).json({ message: "Rating parameter is required." });
+    }
+
+    // Find profiles with the specified rating using Mongoose
+    const filteredProfiles = await Profile.aggregate([
+      {
+        $lookup: {
+          from: "Feedback", // Use the actual name of the Feedback collection
+          localField: "_id",
+          foreignField: "sellerId",
+          as: "feedbacks",
+        },
+      },
+      {
+        $match: { "feedbacks.rating": parseFloat(rating) },
+      },
+    ]);
 
     res.json(filteredProfiles);
   } catch (error) {

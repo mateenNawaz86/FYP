@@ -16,6 +16,7 @@ const ProfileForm = ({ alertHandler }) => {
     cnicNumber: "",
     address: "",
     skill: "",
+    postalCode: "",
     imgURL: "",
     description: "",
   });
@@ -31,6 +32,7 @@ const ProfileForm = ({ alertHandler }) => {
         cnicNumber: profileData.cnicNumber,
         address: profileData.address,
         skill: profileData.skill,
+        postalCode: profileData.postalCode,
         imgURL: profileData.imgURL,
         description: profileData.description,
       });
@@ -208,6 +210,23 @@ const ProfileForm = ({ alertHandler }) => {
                   />
                 </div>
               </div>
+            </div>
+            <div className="w-full my-6">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                htmlFor="postalCode"
+              >
+                Postel Code
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="postelCode"
+                type="text"
+                placeholder="Postel Code"
+                value={enteredInput.postalCode}
+                onChange={inputChangeHandler}
+                name="postalCode"
+              />
             </div>
             <div className="w-full my-6">
               <label

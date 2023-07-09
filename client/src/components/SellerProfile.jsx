@@ -8,6 +8,7 @@ import { BsFillPersonVcardFill } from "react-icons/bs";
 import { GiSkills } from "react-icons/gi";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { FaStar, FaRegStar } from "react-icons/fa";
+import { AiOutlineCodeSandbox } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 const SellerProfile = () => {
@@ -111,7 +112,7 @@ const SellerProfile = () => {
             <p className="text-[#757575] text-xs sm:text-base my-3">
               {profile.description}
             </p>
-            <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row  justify-between">
+            <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row justify-between">
               <div className="flex items-center">
                 <MdOutlineMarkEmailRead className="text-red-400" />
                 <p className="ml-2 text-[#757575]">{profile.email}</p>
@@ -131,11 +132,18 @@ const SellerProfile = () => {
                 <p className="ml-2 text-[#757575]">{profile.skill}</p>
               </div>
             </div>
-            <div className="flex items-center mb-3">
-              <HiOutlineLocationMarker className="text-pink-500" />
-              <p className="ml-2 text-[#757575]">{profile.address}</p>
+
+            <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row my-2 justify-between">
+              <div className="flex items-center mb-3">
+                <HiOutlineLocationMarker className="text-pink-500" />
+                <p className="ml-2 text-[#757575]">{profile.address}</p>
+              </div>
+              <div className="flex items-center mb-3">
+                <AiOutlineCodeSandbox className="text-pink-500" />
+                <p className="ml-2 text-[#757575]">{profile.postalCode}</p>
+              </div>
             </div>
-            <div className="flex items-center mb-3"></div>
+
             <button
               onClick={handleEditProfile}
               className="bg-[#4280EA] text-white text-lg rounded py-1 px-4 hover:bg-[#000000] hover:ease-in duration-200"
