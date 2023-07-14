@@ -36,6 +36,10 @@ const Profile = () => {
     const filledStars = Math.round(rating);
     const emptyStars = starCount - filledStars;
 
+    if (!rating) {
+      return <span className="text-lg text-red-500 font-medium">Not reviewed yet</span>;
+    }
+
     const stars = [];
     for (let i = 0; i < filledStars; i++) {
       stars.push(<FaStar key={i} className="text-yellow-500" />);
@@ -48,8 +52,8 @@ const Profile = () => {
 
     return (
       <>
-        <span className="mr-1">{rating.toFixed(1)}</span>
         {stars}
+        <span className="ml-1">{rating.toFixed(1)}</span>
       </>
     );
   };
@@ -62,7 +66,7 @@ const Profile = () => {
             <Spinner />
           </div>
         ) : (
-          <section className="w-4/5 m-auto mb-12">
+          <section className="w-11/12 m-auto mb-12">
             <h1 className="text-lg uppercase sm:text-xl md:text-3xl text-orange-500 font-semibold text-center">
               {profile.name} Detail
             </h1>

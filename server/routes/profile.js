@@ -33,6 +33,9 @@ router.get("/profile-detail/:id", profileController.getProfileDetail);
 // 5. Route for search a profile with skill
 router.get("/search-profile", profileController.getSearchedProfile);
 
+// Route for search a profile with postal code
+router.get("/postalCode-search", profileController.getPostalCodeSearch);
+
 // 6. Route for GET profile
 router.get("/profile-detail", authMiddleware, profileController.getProfile);
 

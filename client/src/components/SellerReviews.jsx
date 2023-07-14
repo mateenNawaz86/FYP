@@ -70,7 +70,7 @@ const BuyerReviews = () => {
             {data.length === 0 ? (
               <div className="flex items-center justify-center">
                 <p className="text-red-500 text-center text-xl font-medium">
-                  No reviews found
+                  Not Reviewd Yet!
                 </p>
               </div>
             ) : (

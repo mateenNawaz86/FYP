@@ -31,10 +31,10 @@ export const sellerSignIn = createAsyncThunk(
 // Async thunk action to fetch profile by ID
 export const fetchProfileById = createAsyncThunk(
   "profile/fetchProfileById",
-  async (token, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/profile-detail/${token}`
+        `http://localhost:5000/api/profile-detail/${id}`
       );
       const jsonData = await response.json();
       return jsonData;

@@ -5,6 +5,7 @@ import SearchBar from "../UI/SearchBar";
 const ServiceProList = () => {
   const [data, setData] = useState([]);
   const [skill, setSkill] = useState("");
+  const [postalCode, setPostalCode] = useState("");
   const [showNoProfiles, setShowNoProfiles] = useState();
 
   useEffect(() => {
@@ -30,8 +31,8 @@ const ServiceProList = () => {
     navigate(`/api/profile-detail/${id}`);
   };
 
-  // API call for search seller
-  const searchHandler = async () => {
+  // API call for search seller using skill
+  const skillSearchHandler = async () => {
     try {
       const response = await fetch(
         `http://localhost:5000/api/search-profile?skill=${skill}`
@@ -47,9 +48,30 @@ const ServiceProList = () => {
       console.error(error);
     }
   };
+  // API call for search seller using postal code
+  const postalCodeSearch = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/api/postalCode-search?postalCode=${postalCode}`
+      );
+      if (!response.ok) {
+        throw new Error("Request failed");
+      }
+      const jsonData = await response.json();
 
-  const inpGetHandler = (event) => {
+      setData(jsonData);
+      setShowNoProfiles(jsonData.length === 0); // Set state to show "No profiles found" message if the array is empty
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const skillInpHandler = (event) => {
     setSkill(event.target.value);
+  };
+
+  const postalCodeInpHandler = (event) => {
+    setPostalCode(event.target.value);
   };
 
   return (
@@ -59,12 +81,31 @@ const ServiceProList = () => {
           <h1 className="text-lg uppercase underline underline-offset-4 sm:text-xl md:text-3xl text-orange-500 font-semibold text-center mb-14">
             Service Providers
           </h1>
-          <div className="w-full sm:w-1/2 my-8 ">
-            <SearchBar
-              category={skill}
-              changeHandler={inpGetHandler}
-              searchHandler={searchHandler}
-            />
+          <div className="flex justify-between gap-4 flex-col md:flex-row mb-4">
+            <div className="w-full">
+              <div className="flex flex-col gap-2">
+                <p className="text-lg font-semibold text-blue-400 ml-2">
+                  Search by Skill
+                </p>
+                <SearchBar
+                  category={skill}
+                  changeHandler={skillInpHandler}
+                  searchHandler={skillSearchHandler}
+                />
+              </div>
+            </div>
+            <div className="w-full">
+              <div className="flex flex-col gap-2">
+                <p className="text-lg font-semibold text-blue-400 ml-2">
+                  Search by Postal Code
+                </p>
+                <SearchBar
+                  category={postalCode}
+                  changeHandler={postalCodeInpHandler}
+                  searchHandler={postalCodeSearch}
+                />
+              </div>
+            </div>
           </div>
 
           {showNoProfiles ? (

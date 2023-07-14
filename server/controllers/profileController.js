@@ -237,29 +237,23 @@ exports.getSearchedProfile = async (req, res) => {
   }
 };
 
-// controller for getting profile by rating
-exports.getSearchedProfileByRating = async (req, res) => {
+// controller for getting searched profile by postal code
+exports.getPostalCodeSearch = async (req, res) => {
   try {
-    const { rating } = req.query;
+    const { postalCode } = req.query;
 
-    if (!rating) {
-      return res.status(400).json({ message: "Rating parameter is required." });
+    if (!postalCode) {
+      return res
+        .status(400)
+        .json({ message: "Postal code parameter is required." });
     }
 
-    // Find profiles with the specified rating using Mongoose
-    const filteredProfiles = await Profile.aggregate([
-      {
-        $lookup: {
-          from: "Feedback", // Use the actual name of the Feedback collection
-          localField: "_id",
-          foreignField: "sellerId",
-          as: "feedbacks",
-        },
-      },
-      {
-        $match: { "feedbacks.rating": parseFloat(rating) },
-      },
-    ]);
+    // Find profiles by postal code using Mongoose
+    const filteredProfiles = await Profile.find({ postalCode });
+
+    if (filteredProfiles.length === 0) {
+      return res.json([]); // Return empty array when no profiles are found
+    }
 
     res.json(filteredProfiles);
   } catch (error) {
