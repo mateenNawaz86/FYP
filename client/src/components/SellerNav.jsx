@@ -136,7 +136,8 @@ const SellerNav = ({ alertHandler }) => {
                       : ""
                   }`}
                 >
-                  Earnings
+                  Rating
+                  
                 </Link>
               </li>
             </ul>

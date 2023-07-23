@@ -72,6 +72,14 @@ const SellerProfile = () => {
     const filledStars = Math.round(rating);
     const emptyStars = starCount - filledStars;
 
+    if (!rating) {
+      return (
+        <span className="text-lg text-red-500 font-medium">
+          Not reviewed yet
+        </span>
+      );
+    }
+
     const stars = [];
     for (let i = 0; i < filledStars; i++) {
       stars.push(<FaStar key={i} className="text-yellow-500" />);
@@ -84,8 +92,8 @@ const SellerProfile = () => {
 
     return (
       <>
-        <span className="mr-1">{rating.toFixed(1)}</span>
         {stars}
+        <span className="ml-1">{rating.toFixed(1)}</span>
       </>
     );
   };

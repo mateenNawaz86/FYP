@@ -90,6 +90,12 @@ const ProfileForm = ({ alertHandler }) => {
     (value) => value.trim() !== ""
   );
 
+  // Determine whether to show the password input field based on the request method
+  const showPasswordInput =
+    !location.state ||
+    !location.state.profileData ||
+    location.state.isNewProfile;
+
   return (
     <>
       <main className="py-8">
@@ -228,23 +234,25 @@ const ProfileForm = ({ alertHandler }) => {
                 name="postalCode"
               />
             </div>
-            <div className="w-full my-6">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                htmlFor="password"
-              >
-                Password
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="password"
-                type="password"
-                placeholder="password"
-                value={enteredInput.password}
-                onChange={inputChangeHandler}
-                name="password"
-              />
-            </div>
+            {showPasswordInput && (
+              <div className="w-full my-6">
+                <label
+                  className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                  htmlFor="password"
+                >
+                  Password
+                </label>
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="password"
+                  type="password"
+                  placeholder="password"
+                  value={enteredInput.password}
+                  onChange={inputChangeHandler}
+                  name="password"
+                />
+              </div>
+            )}
             <div className="w-full my-6">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
